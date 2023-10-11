@@ -1,6 +1,6 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/mycotech/public_html/pilot-test-v2
+    - export DEPLOYPATH=/home/mycotech/public_html/mycl-pilot-new-pt
     - /bin/cp * $DEPLOYPATH
    
