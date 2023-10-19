@@ -6,8 +6,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ url('/operator_dashboard') }}">Home</a></li>
-            {{-- <li class="breadcrumb-item"><a href="{{ url('/operator/post-treatment') }}">Post Treatment</a></li> --}}
-            <li class="breadcrumb-item active" aria-current="page">Post Treatment II</li>
+             <li class="breadcrumb-item active" aria-current="page">Curing</li>
         </ol>
     </nav>
 </section>
@@ -25,7 +24,7 @@
     @endif
     {{-- End Alert Message --}}
 
-    <form action="{{url('admin/post-treatment/II')}}" method="GET">
+    <form action="{{url('admin/curing/')}}" method="GET">
         <p>
           <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseFilter" role="button" aria-expanded="false" aria-controls="collapseFilter">
             Filter
@@ -59,45 +58,27 @@
         </div>
   
     </form>
-    <div class="form-post-treatment">
-        <p>
-            <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                Form Input Data
-            </a>
-        </p>
-        <div class="collapse" id="collapseExample">
-            <div class="card card-body">
-                @include('operator.PostTreatment.FormInputDataPartialPTII')
-            </div>
-        </div>
-        <script>
-          $("#collapseExample").on('hidden.bs.collapse', function(){
-            document.getElementById("PT_ID").value = null;
-            document.getElementById("FormInputData").reset();
-          });
-         </script>
-    </div>
+ 
 
     <div>
         <table class="table">
             <tr class="sticky-header">
                 <th>Batch</th>
-                <th>Dyeing</th>
-                <th>Ferro Sulfat</th>
-                <th>Fat Liquor</th>
-                <th>Fixing</th>
-                <th>Moisturizing</th>
-                <th>Drying</th>
+                <th>Schedule Finish Curing</th>
+                <th>Actual Finish Curing</th>
+                <th>15 x 15</th>
+                <th>25 x 30 </th>
+                <th>>30 x 30 </th>
                 <th colspan= "2" class="text-center">Aksi</th>
             </tr>
-           @foreach($Data as $data)
-            <tr>
+           {{-- @foreach($Data as $data) --}}
+            {{-- <tr>
                 <td>
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#DetailsPTModal{{$data['id']}}">
                         {{$data['Batch']}} / {{$data['Tanggal']}}
                       </button>
                       {{-- Modal Batch Post Treatment --}}
-                       <div class="modal fade" id="DetailsPTModal{{$data['id']}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                       {{-- <div class="modal fade" id="DetailsPTModal{{$data['id']}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                           <div class="modal-content">
                             <div class="modal-header">
@@ -112,8 +93,8 @@
                             </div>
                           </div>
                         </div>
-                      </div>
-                <td>{{$data['PTData']->where('Proses','Dyeing')->sum('Jumlah')}}</td>
+                      </div> --}}
+                {{-- <td>{{$data['PTData']->where('Proses','Dyeing')->sum('Jumlah')}}</td>
                 <td>{{$data['PTData']->where('Proses','Ferro Sulfat')->sum('Jumlah')}}</td>
                 <td>{{$data['PTData']->where('Proses','Fat Liquor')->sum('Jumlah')}}</td>
                 <td>{{$data['PTData']->where('Proses','Fixing')->sum('Jumlah')}}</td>
@@ -141,20 +122,20 @@
                       </div>
                 </td>
                 <td><a href="{{url('/operator/post-treatment/archive', ['id'=>$data['id'],])}}">Archived</a></td>
-            </tr>
-            <script>
+            </tr> --}}
+            {{-- <script>
               $("#exampleModal{{$data['id']}}").on('hide.bs.modal', function(){
                 document.getElementById("id").value = '0';
                 document.getElementById("FormPostTreatment").reset()
               });
-             </script>
-            @endforeach
+             </script> --}}
+            {{-- @endforeach --}}
         </table>
-    </div>
-    <div class="d-flex justify-content-center">
+    </div> 
+    {{-- <div class="d-flex justify-content-center">
         {!! $Data->links() !!}
-     </div>
+     </div>  --}}
 
-</section>
+</section>  
 
 @endsection

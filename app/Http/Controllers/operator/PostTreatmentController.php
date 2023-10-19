@@ -100,6 +100,7 @@ class PostTreatmentController extends Controller
                 'Proses'=>$request['Proses'],
                 'Jumlah'=>$request['Jumlah'],
                 'Reject'=>$request['Reject'],
+                'Notes'=>$request['Notes'],
             ]);
             return redirect()->back()->with('message', 'Data Updated');
         }
@@ -112,6 +113,7 @@ class PostTreatmentController extends Controller
             'Proses'=>$request['Proses'],
             'Jumlah'=>$request['Jumlah'],
             'Reject'=>$request['Reject'],
+            'Notes'=>$request['Notes'],
         ]);
         return redirect()->back()->with('message', 'Form Submitted!');
     }

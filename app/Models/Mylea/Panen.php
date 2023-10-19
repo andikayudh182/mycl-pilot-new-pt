@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\PostTreatment\PostTreatmentDetails;
 use App\Models\PostTreatment\PTKerik;
+use App\Models\PostTreatment\PTRebus;
 
 class Panen extends Model
 {
@@ -33,5 +34,9 @@ class Panen extends Model
     public function Kerik(): HasMany
     {
         return $this->hasMany(PTKerik::class, 'PanenID');
+    }
+    public function Rebus(): HasMany
+    {
+        return $this->hasMany(PTRebus::class, 'PanenID');
     }
 }

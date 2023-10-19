@@ -21,6 +21,7 @@ class PTProses extends Model
         'Proses',
         'Jumlah',
         'Reject',
+        'Notes',
     ];
 
     public $sortable = [
@@ -32,5 +33,6 @@ class PTProses extends Model
         'Proses',
         'Jumlah',
         'Reject',
+        'Notes',
     ];
 }

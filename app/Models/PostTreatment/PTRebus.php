@@ -26,4 +26,9 @@ class PTRebus extends Model
         'Tanggal',
         'JumlahRebus',
     ];
+
+    // public function Panen(): BelongsTo
+    // {
+    //     return $this->belongsTo(Panen::class);
+    // }
 }

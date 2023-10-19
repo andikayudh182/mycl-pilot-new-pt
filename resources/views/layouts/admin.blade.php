@@ -76,7 +76,7 @@
                                     <a class="dropdown-item" href="{{ url('/admin/post-treatment/mylea-harvest') }}">Mylea Panen</a>
                                     <a class="dropdown-item" href="{{ url('/admin/post-treatment/I') }}">Post Treatment I</a>
                                     <a class="dropdown-item" href="{{ url('/admin/post-treatment/II') }}">Post Treatment II</a>
-                                    <a class="dropdown-item" href="#">Curing</a>
+                                    <a class="dropdown-item" href="{{ url('/admin/curing/') }}">Curing</a>
                                     <a class="dropdown-item" href="#">Reinforce</a>
                                     <a class="dropdown-item" href="#">Post Treatment III</a>
                                 </div>

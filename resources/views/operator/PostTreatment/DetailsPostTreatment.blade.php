@@ -74,6 +74,7 @@
             <th>Proses</th>
             <th>Jumlah</th>
             <th>Reject</th>
+            <th>Notes</th>
         </tr>
         <?php
             $id = 0;
@@ -84,6 +85,7 @@
             <td>{{$PT['Proses']}}</td>
             <td>{{$PT['Jumlah']}}</td>
             <td>{{$PT['Reject']}}</td>
+            <td>{{$PT['Notes']}}</td>
             <td>                    
                 <a class="btn btn-warning" onclick="EditProses({{$id}}, {{$data['PTData']}})" data-bs-toggle="modal" data-bs-target="#exampleModal{{$data['id']}}">
                     <i class="bi-pencil-square"></i>
@@ -101,6 +103,7 @@
                 document.getElementById("JamSelesai").value = data[id]['JamSelesai'];
                 document.getElementById("Jumlah").value = data[id]['Jumlah'];
                 document.getElementById("Reject").value = data[id]['Reject'];
+                document.getElementById("Notes").value = data[id]['Notes'];
                 $("#Proses").append(new Option(data[id]['Proses'], data[id]['Proses'], false, true));
             }
         </script>
