@@ -12,16 +12,17 @@
 </section>
 <section class="m-5">
     {{-- Alert Message --}}
-    @if(session()->has('message'))
-        <div class="alert alert-success">
-            {{ session()->get('message') }}
-        </div>
-    @endif
-    @if(session()->has('message2'))
-        <div class="alert alert-danger">
-            {{ session()->get('message2') }}
-        </div>
-    @endif
+    <div class="alertDiv">
+      @if(session()->has('Success'))
+          <div class="alert alert-success" role="alert">
+              {{session('Success')}}
+          </div>
+      @elseif(session()->has('Error'))
+      <div class="alert alert-danger" role="alert">
+          {{session('Error')}}
+      </div>
+      @endif
+  </div>
     {{-- End Alert Message --}}
 
     <form action="{{url('admin/curing/')}}" method="GET">
@@ -58,7 +59,6 @@
         </div>
   
     </form>
- 
 
     <div>
         <table class="table">
@@ -71,36 +71,48 @@
                 <th>>30 x 30 </th>
                 <th colspan= "2" class="text-center">Aksi</th>
             </tr>
-           {{-- @foreach($Data as $data) --}}
-            {{-- <tr>
+           @foreach($Data as $data)
+         <tr>
                 <td>
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#DetailsPTModal{{$data['id']}}">
-                        {{$data['Batch']}} / {{$data['Tanggal']}}
+                        {{$data['Batch']}} / {{$data['TanggalPostTreatment']}}
                       </button>
                       {{-- Modal Batch Post Treatment --}}
-                       {{-- <div class="modal fade" id="DetailsPTModal{{$data['id']}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                       <div class="modal fade" id="DetailsPTModal{{$data['id']}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                           <div class="modal-content">
                             <div class="modal-header">
-                              <h5 class="modal-title">{{$data['Batch']}} / {{$data['Tanggal']}}</h5>
+                              <h5 class="modal-title">{{$data['Batch']}} / {{$data['TanggalPostTreatment']}}</h5>
                               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                @include('operator.PostTreatment.DetailsPostTreatment')
+                                @include('admin.Curing.Partials.DetailPostTreatment')
                             </div>
                             <div class="modal-footer">
                               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             </div>
                           </div>
                         </div>
-                      </div> --}}
-                {{-- <td>{{$data['PTData']->where('Proses','Dyeing')->sum('Jumlah')}}</td>
-                <td>{{$data['PTData']->where('Proses','Ferro Sulfat')->sum('Jumlah')}}</td>
-                <td>{{$data['PTData']->where('Proses','Fat Liquor')->sum('Jumlah')}}</td>
-                <td>{{$data['PTData']->where('Proses','Fixing')->sum('Jumlah')}}</td>
-                <td>{{$data['PTData']->where('Proses','Moisturizing')->sum('Jumlah')}}</td>
-                <td>{{$data['PTData']->where('Proses','Drying')->sum('Jumlah')}}</td>
+                      </div>
+                </td>
+                <td>{{ $data['ScheduleFinishCuring'] }}</td>
                 <td>
+                  <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal{{$data['id']}}" style="text-decoration:none;">
+                    @if(isset($data['Curing'][0]))
+                      {{ $data['Curing'][0]['ActualFinishCuring'] }}
+                    @else
+                        -
+                    @endif
+                  </a>
+                  @include('admin.Curing.Partials.InputActualFinishCuring')
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                  button
+                </td>
+                {{-- <td>
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal{{$data['id']}}">
                         Update Post Treatment
                       </button>
@@ -120,21 +132,15 @@
                           </div>
                         </div>
                       </div>
-                </td>
-                <td><a href="{{url('/operator/post-treatment/archive', ['id'=>$data['id'],])}}">Archived</a></td>
-            </tr> --}}
-            {{-- <script>
-              $("#exampleModal{{$data['id']}}").on('hide.bs.modal', function(){
-                document.getElementById("id").value = '0';
-                document.getElementById("FormPostTreatment").reset()
-              });
-             </script> --}}
-            {{-- @endforeach --}}
+                </td> --}}
+                {{-- <td><a href="{{url('/operator/post-treatment/archive', ['id'=>$data['id'],])}}">Archived</a></td> --}}
+            </tr>
+            @endforeach
         </table>
     </div> 
-    {{-- <div class="d-flex justify-content-center">
+    <div class="d-flex justify-content-center">
         {!! $Data->links() !!}
-     </div>  --}}
+     </div> 
 
 </section>  
 
