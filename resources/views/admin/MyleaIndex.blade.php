@@ -47,7 +47,7 @@
     </table> 
    
 </section>
-{{ $MyleaDirect }}
+
 <section class="body m-5 align-middle">
     <div id="chartContainer4" style="height: 370px; width: 100%;"></div> <br>
     <h3>Success Rate Direct Transfer (Harvest Phase) %</h3>
