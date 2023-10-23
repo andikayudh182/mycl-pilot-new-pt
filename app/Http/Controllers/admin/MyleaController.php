@@ -27,7 +27,7 @@ class MyleaController extends Controller
         Carbon::now()->month;
 
         // $ProduksiMyleaDirect 
-        $ProduksiMyleaDirect = Produksi::orderBy('TanggalProduksi', 'desc')
+        $ProduksiMyleaDirect = Produksi::orderBy('TanggalProduksi', 'asc')
         ->whereYear('TanggalProduksi', $date)
         ->where(function($query) {
             $query->whereRaw('LOWER(KodeProduksi) LIKE ?', ['%d%'])
@@ -61,11 +61,12 @@ class MyleaController extends Controller
                     $data['JumlahPanen'] = $Panen->sum('Jumlah');
                     $Konta = Kontaminasi::where('KPMylea', $data['KodeProduksi'])->get();
                     $data['JumlahKonta'] = $Konta->sum('Jumlah');
-                    $JadwalPanen = $Mylea->GetTanggalPanen($data);
+                   
                     if(substr($TanggalPengerjaan, 5, 2) == $i){
                         $produksi = $produksi + $data['Jumlah'];
                         $panen = $panen + $data['JumlahPanen'];
                         $konta = $konta + $data['JumlahKonta'];
+                        $JadwalPanen = $Mylea->GetTanggalPanen($data);
                     }
                 }
                 $DataPoint[$i] = $produksi; 
@@ -88,7 +89,7 @@ class MyleaController extends Controller
                 if(substr($JadwalPanen, 5, 2) < substr($date, 5, 2)){
                     $DataMarker[$i] = "#23BFAA";
                 } else {
-                    $DataMarker[$i] = "red";
+                    $DataMarker[$i] = 'red';
                 }
               
 
@@ -141,6 +142,7 @@ class MyleaController extends Controller
             'DataPoint3'=>$DataPoint3,
             'DataPoint4'=>$DataPoint4,
             'DataMarker'=> $DataMarker,
+
             'DataPointDirect'=>$DataPointDirect,
             'DataPointDirect2'=>$DataPointDirect2,
             'DataPointDirect3'=>$DataPointDirect3,
@@ -154,8 +156,8 @@ class MyleaController extends Controller
         $resume = array();
         
         if (isset($request['TanggalAwal'])) {
-            $Date1 = date('Y-m-d', strtotime($request['TanggalAwal']));
-            $Date2 = date('Y-m-d', strtotime($request['TanggalAkhir']));
+            $Date1 = date('Y-m-d', strtotime($request['TanggalAwal']."+0 day"));
+            $Date2 = date('Y-m-d', strtotime($request['TanggalAkhir']. "+0 day"));
             
             $query = Produksi::sortable()
                 ->whereBetween('TanggalProduksi', [$Date1, $Date2]);
