@@ -95,6 +95,7 @@ Route::get('/admin/post-treatment/II', [App\Http\Controllers\admin\PostTreatment
 
 Route::get('/admin/curing/', [App\Http\Controllers\admin\CuringController::class, 'CuringIndex'])->name('CuringIndex')->middleware('auth');
 Route::post('/admin/curing/actual-finish-curing', [App\Http\Controllers\admin\CuringController::class,'UpdateActualFinishCuring'])->name('UpdateActualFinishCuring')->middleware('auth');
+Route::post('/admin/curing/curing-size', [App\Http\Controllers\admin\CuringController::class,'UpdateCuringSize'])->name('UpdateCuringSize')->middleware('auth');
 
 //Operator
 Route::get('/operator_dashboard', [App\Http\Controllers\operator\OperatorDashboard::class, 'index'])->middleware('auth');

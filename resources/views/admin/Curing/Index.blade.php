@@ -64,8 +64,9 @@
         <table class="table">
             <tr class="sticky-header">
                 <th>Batch</th>
-                <th>Schedule Finish Curing</th>
+                <th >Schedule Finish Curing</th>
                 <th>Actual Finish Curing</th>
+                <th>Tanggal Pengerjaan</th>
                 <th>15 x 15</th>
                 <th>25 x 30 </th>
                 <th>>30 x 30 </th>
@@ -106,12 +107,41 @@
                   </a>
                   @include('admin.Curing.Partials.InputActualFinishCuring')
                 </td>
-                <td></td>
-                <td></td>
-                <td></td>
                 <td>
-                  button
+                  @if(isset($data['Curing'][0]['TanggalPengerjaan']))
+                  {{ $data['Curing'][0]['TanggalPengerjaan'] }}
+                  @else
+                      -
+                  @endif
                 </td>
+                <td>
+                  @if(isset($data['Curing'][0]['SizeSatu']))
+                    {{ $data['Curing'][0]['SizeSatu'] }}
+                  @else
+                      0
+                  @endif
+                </td>
+                <td>
+                  @if(isset($data['Curing'][0]['SizeDua']))
+                   {{ $data['Curing'][0]['SizeDua'] }}
+                  @else
+                      0
+                  @endif
+                </td>
+                <td>
+                  @if(isset($data['Curing'][0]['SizeTiga']))
+                  {{ $data['Curing'][0]['SizeTiga'] }}
+                  @else
+                      0
+                  @endif
+                </td>
+                <td class="text-center">
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateModal{{ $data['id'] }}">
+                    Form Size
+                  </button>
+                
+                </td>
+                   @include('admin.Curing.Partials.FormSize')
                 {{-- <td>
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal{{$data['id']}}">
                         Update Post Treatment
