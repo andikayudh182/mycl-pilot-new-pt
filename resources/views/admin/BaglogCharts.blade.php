@@ -40,7 +40,7 @@ window.onload = function () {
  
 var chart = new CanvasJS.Chart("chartContainer3", {
 	title: {
-		text: "Produksi Baglog"
+		text: "Produksi Substrate Bag"
 	},
 	theme: "light2",
 	animationEnabled: true,
@@ -49,7 +49,7 @@ var chart = new CanvasJS.Chart("chartContainer3", {
 		reversed: true
 	},
 	axisY: {
-		title: "Jumlah Baglog",
+		title: "Jumlah Substrate Bag",
 		suffix: ""
 	},
 	legend: {
@@ -59,7 +59,7 @@ var chart = new CanvasJS.Chart("chartContainer3", {
 	data: [
 		{
 			type: "stackedColumn",
-			name: "Produksi Baglog",
+			name: "Produksi Substrate Bag",
 			showInLegend: true,
 			yValueFormatString: "#",
 			dataPoints: <?php echo json_encode($dataPoints1, JSON_NUMERIC_CHECK); ?>

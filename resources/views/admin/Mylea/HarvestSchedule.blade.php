@@ -43,7 +43,7 @@
         <tr>
             <th>Kode Produksi</th>
             <th>Tanggal Panen</th>
-            <th>In Stock</th>
+            <th>Under Incubation</th>
         </tr>
         @foreach($MyleaPanen->where('JadwalPanen', '>', $PanenDate)->sortByDesc('JadwalPanen', SORT_NATURAL) as $item)
             @if(isset($_GET['TanggalPanen']))

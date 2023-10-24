@@ -14,41 +14,42 @@
 </div>
 
 <div class="m-5">
-    <h2><b>Production Report</b></h2>
+    <h2><b>Mylea Production Report</b></h2>
     <div class="row">
         <div class="col-md-4">
             <div class="card">
+                <div class="card-header text-center">Summary</div>
                 <div class="card-body">
                     <table width="100%"  style="font-size: 1.0rem;">
                         <tr>
-                            <td width="50%">Total In Stock</td>
+                            <td>Total Production</td>
+                            <td>:</td>
+                            <td>{{$Data->sum('Jumlah')}}</td>
+                            <td>pcs</td>
+                        </tr>
+                        <tr>
+                            <td width="50%">Total Under Incubation</td>
                             <td width="5%">:</td>
                             <td width="17%">{{$Data->sum('InStock')}}</td>
                             <td>pcs</td>
+                        </tr>
+                        <tr>
+                            <td>Total Contamination</td>
+                            <td>:</td>
+                            <td>{{$Data->sum('Konta')}}</td>
+                            <td>pcs</td>
+                        </tr>
+                        <tr>
+                            <td>Total Contamination Rate</td>
+                            <td>:</td>
+                            <td>@if($Data->sum('Jumlah')){{round($Data->sum('Konta')/$Data->sum('Jumlah')*100, 2)}}@endif</td>
+                            <td>%</td>
                         </tr>
                         <tr>
                             <td>Total Harvest</td>
                             <td>:</td>
                             <td>{{$Data->sum('JumlahPanen')}}</td>
                             <td>pcs</td>
-                        </tr>
-                        <tr>
-                            <td>Total Tray</td>
-                            <td>:</td>
-                            <td>{{$Data->sum('Jumlah')}}</td>
-                            <td>pcs</td>
-                        </tr>
-                        <tr>
-                            <td>Contamination</td>
-                            <td>:</td>
-                            <td>{{$Data->sum('Konta')}}</td>
-                            <td>pcs</td>
-                        </tr>
-                        <tr>
-                            <td>Contamination Rate</td>
-                            <td>:</td>
-                            <td>@if($Data->sum('Jumlah')){{round($Data->sum('Konta')/$Data->sum('Jumlah')*100, 2)}}@endif</td>
-                            <td>%</td>
                         </tr>
                     </table>
                 </div>
@@ -90,7 +91,7 @@
                                 </div>
                             </div>
                             <div class="row mb-2">
-                                <label for="JumlahTray" class="col-sm-4 col-form-label col-form-label-sm">Amount of Trays </label>
+                                <label for="JumlahTray" class="col-sm-4 col-form-label col-form-label-sm">Amount of Production </label>
                                 <label class="col-sm-1 col-form-label col-form-label-sm">:</label>
                                 <div class="col-sm-2">
                                     <select name="JumlahTrayOperator" class="form-control">
@@ -160,7 +161,7 @@
                                 </div>
                             </div>
                             <div class="row mb-2">
-                                <label for="InStock" class="col-sm-4 col-form-label col-form-label-sm">In Stock </label>
+                                <label for="InStock" class="col-sm-4 col-form-label col-form-label-sm">Under Incubation </label>
                                 <label class="col-sm-1 col-form-label col-form-label-sm">:</label>
                                 <div class="col-sm-2">
                                     <select name="InStockOperator" class="form-control">
@@ -207,12 +208,11 @@
     height: 100%
 }
 </style>
-{{ $Data[0] }}
 <section class="m-5">
     {{-- <h3> Production Report</h3>
     <h4> Total In Stock : {{$Data->sum('InStock')}}</h4>
     <h4> Total Panen : {{$Data->sum('JumlahPanen')}}</h4>
-    <h4> Total Tray : {{$Data->sum('Jumlah')}}</h4>
+    <h4> Total Production : {{$Data->sum('Jumlah')}}</h4>
     <h4> Kontaminasi: {{$Data->sum('Konta')}}</h4>
     <h4> Total Kontaminasi: @if($Data->sum('Jumlah')){{round($Data->sum('Konta')/$Data->sum('Jumlah')*100, 2)}} %@endif</h4>
     --}}
@@ -253,7 +253,7 @@
                 <th>@sortablelink('KodeProduksi','Production Code')</th>
                 <th>@sortablelink('TanggalProduksi','Production Date')</th>
                 <th>@sortablelink('Keterangan','Notes')</th>
-                <th>@sortablelink('Jumlah', 'Total Tray')</th>
+                <th>@sortablelink('Jumlah', 'Total Production')</th>
                 <th>
                     <form>
                         @if(isset($_GET['KontaDir']))
@@ -310,26 +310,26 @@
                         @else
                             <input type="hidden" name="InStockDir" value="DESC">
                         @endif
-                        <input type="submit" name="SubmitInStockDir" value="In Stock" class="btn btn-link">
+                        <input type="submit" name="SubmitInStockDir" value="Under Incubation" class="btn btn-link">
                         <i class="bi bi-sort-up"></i>
                     </form>
                 </th>
                 <th>
                     <table class="table table-borderless baglog-table text-center">
                         <tr class="sticky-header">
-                            <td colspan="6">Baglog</td>
+                            <td colspan="6">Subsrate Bag</td>
                             <td>Total Conta</td>
                             <td>% Conta</td>
                             <td>Harvest Schedule</td>
                             <td>Total Harvest</td>
                         </tr>
                         <tr class="sticky-header">
-                            <td>Baglog Code</td>
-                            <td>Baglog Qty</td>
+                            <td>Subsrate Bag Code</td>
+                            <td>Subsrate Bag Qty</td>
                             <td>Spawn Batch</td>
                             <td>Spawn Code</td>
                             <td>Spawn Age (Day)</td>
-                            <td>Baglog Age (Week)</td>
+                            <td>Subsrate Bag Age (Week)</td>
                         </tr>
                     </table>
                 </th>
@@ -630,12 +630,12 @@
         <th>Total Kontaminasi (%)</th>
         <th>Panen</th>
         <th>In Stock</th>
-        <th>Kode Baglog</th>
-        <th>Jumlah Baglog</th>
+        <th>Kode Subsrate Bag</th>
+        <th>Jumlah Subsrate Bag</th>
         <th>Batch Bibit</th>
         <th>Jenis Bibit</th>
         <th>Umur Bibit</th>
-        <th>Umur Baglog</th>
+        <th>Umur Subsrate Bag</th>
         <th>Tanggal Konta</th>
         <th>Jumlah Konta</th>
         <th>% Konta</th>

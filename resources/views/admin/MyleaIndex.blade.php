@@ -14,7 +14,7 @@
     @include('admin.MyleaCharts')
 </section>
 <section class="body m-5 align-middle">
-    <h3>Success Rate (Harvest Phase) %</h3>
+    <h3>Harvest Rate (Harvest Phase) %</h3>
     <table class="table md-5">
         <tr>
             <th>Jan</th>
@@ -50,7 +50,7 @@
 
 <section class="body m-5 align-middle">
     <div id="chartContainer4" style="height: 370px; width: 100%;"></div> <br>
-    <h3>Success Rate Direct Transfer (Harvest Phase) %</h3>
+    <h3>Harvest Rate Direct Transfer (Harvest Phase) %</h3>
     <table class="table md-5">
         <tr>
             <th>Jan</th>

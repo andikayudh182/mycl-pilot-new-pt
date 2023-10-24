@@ -53,7 +53,7 @@
   <nav aria-label="breadcrumb">
       <ol class="breadcrumb" style="background-color: white">
           <li class="breadcrumb-item"><a href="{{url('/admin_dashboard')}}">Home</a></li>
-          <li class="breadcrumb-item"><a href="{{url('/admin/baglog')}}">Baglog</a></li>
+          <li class="breadcrumb-item"><a href="{{url('/admin/baglog')}}">Subsrate Bag</a></li>
           <li class="breadcrumb-item active" aria-current="page">Report</li>
       </ol>
   </nav>
@@ -151,7 +151,7 @@
           </th>
           <th>@sortablelink('KodeProduksi','Kode Produksi')</th>
           <th>@sortablelink('TanggalPengerjaan','Tanggal Pengerjaan')</th>
-          <th>@sortablelink('JumlahBaglog','Jumlah Baglog')</th>
+          <th>@sortablelink('JumlahBaglog','Jumlah Substrate Bag')</th>
           <th>
             <table class="table-borderless table text-center">
               <tr>

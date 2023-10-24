@@ -109,7 +109,7 @@ var chart = new CanvasJS.Chart("chartContainer3", {
 		reversed: true
 	},
 	axisY: {
-		title: "Jumlah Mylea",
+		title: "Total Mylea",
 		suffix: ""
 	},
 	legend: {
@@ -119,21 +119,21 @@ var chart = new CanvasJS.Chart("chartContainer3", {
 	data: [
 		{
 			type: "stackedColumn",
-			name: "Produksi Mylea",
+			name: "Mylea Production",
 			showInLegend: true,
 			yValueFormatString: "#",
 			dataPoints: <?php echo json_encode($dataPoints1, JSON_NUMERIC_CHECK); ?>
 		},
         {
 			type: "line",
-			name: "Jumlah Panen",
+			name: "Total Harvest",
 			showInLegend: true,
 			yValueFormatString: "#",
 			dataPoints: <?php echo json_encode($dataPoints2, JSON_NUMERIC_CHECK); ?>
 		},
 		{
 			type: "line",
-			name: "In Stock",
+			name: "Under Incubation",
 			showInLegend: true,
 			yValueFormatString: "#",
 			dataPoints: <?php echo json_encode($dataPoints4, JSON_NUMERIC_CHECK); ?>
@@ -154,7 +154,7 @@ var chart4 = new CanvasJS.Chart("chartContainer4", {
 			reversed: true
 		},
 		axisY: {
-			title: "Jumlah Mylea Direct",
+			title: "Total Mylea",
 			suffix: ""
 		},
 		legend: {
@@ -164,21 +164,21 @@ var chart4 = new CanvasJS.Chart("chartContainer4", {
 		data: [
 			{
 				type: "stackedColumn",
-				name: "Produksi Mylea Direct",
+				name: "Mylea Production",
 				showInLegend: true,
 				yValueFormatString: "#",
 				dataPoints: <?php echo json_encode($dataPointsDirect1, JSON_NUMERIC_CHECK); ?>
 			},
 			{
 				type: "line",
-				name: "Jumlah Panen Direct",
+				name: "Total Harvest",
 				showInLegend: true,
 				yValueFormatString: "#",
 				dataPoints: <?php echo json_encode($dataPointsDirect2, JSON_NUMERIC_CHECK); ?>
 			},
 			{
 				type: "line",
-				name: "In Stock Direct",
+				name: "Under Incubation",
 				showInLegend: true,
 				yValueFormatString: "#",
 				dataPoints: <?php echo json_encode($dataPointsDirect4, JSON_NUMERIC_CHECK); ?>

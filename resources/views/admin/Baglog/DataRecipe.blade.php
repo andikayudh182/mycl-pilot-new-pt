@@ -5,7 +5,7 @@
   <nav aria-label="breadcrumb">
       <ol class="breadcrumb" style="background-color: white">
           <li class="breadcrumb-item"><a href="{{url('/admin_dashboard')}}">Home</a></li>
-          <li class="breadcrumb-item"><a href="{{url('/admin/baglog')}}">Baglog</a></li>
+          <li class="breadcrumb-item"><a href="{{url('/admin/baglog')}}">Substrate Bag</a></li>
           <li class="breadcrumb-item active" aria-current="page">Resep Mixing</li>
       </ol>
   </nav>
@@ -17,7 +17,7 @@
             <th>No</th>
             <th>Tanggal</th>
             <th>Approval</th>
-            <th>Berat Baglog</th>
+            <th>Berat Substrate Bag</th>
             <th>Jumlah</th>
             <th colspan="2">Serbuk Kayu</th>
             <th colspan="2">Tapioka</th>

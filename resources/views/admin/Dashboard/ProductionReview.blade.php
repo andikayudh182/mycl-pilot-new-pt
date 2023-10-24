@@ -153,15 +153,15 @@
                 <th class="table-dark border-white">Nov</th>
                 <th class="table-dark border-white">Dec</th>
             </tr>
-            <tr>
+            {{-- <tr>
                 <td class="title sticky-header-left bg-light">Percentage baglog production to max capacity</td>
                 <td colspan="3" class="text-center">{{QuarterBaglog($Baglog, 1, $TargetBaglog['MaxCapacity'])['Capacity']}}%</td>
                 <td colspan="3" class="text-center">{{QuarterBaglog($Baglog, 2, $TargetBaglog['MaxCapacity'])['Capacity']}}%</td>
                 <td colspan="3" class="text-center">{{QuarterBaglog($Baglog, 3, $TargetBaglog['MaxCapacity'])['Capacity']}}%</td>
-                <td colspan="3" class="text-center">{{QuarterBaglog($Baglog, 4, $TargetBaglog['MaxCapacity'])['Capacity']}}%</td>
-            </tr>
+                <td colspan="3" class="text-center">{{QuarterBaglog($Baglog, 4, $TargetBaglog['MaxCapacity'])['Capacity']}}%</td> 
+            </tr> --}}
             <tr>
-                <th class="title sticky-header-left bg-light">Baglog Output</th>
+                <th class="title sticky-header-left bg-light">Substrate Bag Production</th>
                 <td>{{$Baglog->where('TanggalPengerjaan', '01')->sum('JumlahBaglog')}}</td>
                 <td>{{$Baglog->where('TanggalPengerjaan', '02')->sum('JumlahBaglog')}}</td>
                 <td>{{$Baglog->where('TanggalPengerjaan', '03')->sum('JumlahBaglog')}}</td>
@@ -175,7 +175,7 @@
                 <td>{{$Baglog->where('TanggalPengerjaan', '11')->sum('JumlahBaglog')}}</td>
                 <td>{{$Baglog->where('TanggalPengerjaan', '12')->sum('JumlahBaglog')}}</td>
             </tr>
-            <tr>
+            {{-- <tr>
                 <th class="title sticky-header-left bg-light">Baglog Success Rate</th>
                 <td>{{BaglogContamination($Baglog, '01')}} %</td>
                 <td>{{BaglogContamination($Baglog, '02')}} %</td>
@@ -189,21 +189,21 @@
                 <td>{{BaglogContamination($Baglog, '10')}} %</td>
                 <td>{{BaglogContamination($Baglog, '11')}} %</td>
                 <td>{{BaglogContamination($Baglog, '12')}} %</td>
-            </tr>
-            <tr>
+            </tr> --}}
+            {{-- <tr>
                 <td class="title sticky-header-left bg-light">Target Success Rate Baglog</td>
                 <td colspan="3" class="text-center">{{$TargetBaglog['Q1']}}%</td>
                 <td colspan="3" class="text-center">{{$TargetBaglog['Q2']}}%</td>
                 <td colspan="3" class="text-center">{{$TargetBaglog['Q3']}}%</td>
                 <td colspan="3" class="text-center">{{$TargetBaglog['Q4']}}%</td>
-            </tr>
-            <tr>
+            </tr> --}}
+            {{-- <tr>
                 <td class="title sticky-header-left bg-light">Actual Success Rate Baglog</td>
                 <td colspan="3" class="text-center {{SuccessRate(QuarterBaglog($Baglog, 1, $TargetBaglog['MaxCapacity']), $TargetBaglog['Q1'])['Style']}}">{{SuccessRate(QuarterBaglog($Baglog, 1, $TargetBaglog['MaxCapacity']), $TargetBaglog['Q1'])['Text']}}</td>
                 <td colspan="3" class="text-center {{SuccessRate(QuarterBaglog($Baglog, 2, $TargetBaglog['MaxCapacity']), $TargetBaglog['Q2'])['Style']}}">{{SuccessRate(QuarterBaglog($Baglog, 2, $TargetBaglog['MaxCapacity']), $TargetBaglog['Q2'])['Text']}}</td>
                 <td colspan="3" class="text-center {{SuccessRate(QuarterBaglog($Baglog, 3, $TargetBaglog['MaxCapacity']), $TargetBaglog['Q3'])['Style']}}">{{SuccessRate(QuarterBaglog($Baglog, 3, $TargetBaglog['MaxCapacity']), $TargetBaglog['Q3'])['Text']}}</td>
                 <td colspan="3" class="text-center {{SuccessRate(QuarterBaglog($Baglog, 4, $TargetBaglog['MaxCapacity']), $TargetBaglog['Q4'])['Style']}}">{{SuccessRate(QuarterBaglog($Baglog, 4, $TargetBaglog['MaxCapacity']), $TargetBaglog['Q4'])['Text']}}</td>
-            </tr>
+            </tr> --}}
             <tr>
                 <td class="title sticky-header-left bg-light">Percentage mylea production to max capacity</td>
                 <td colspan="3" class="text-center">{{QuarterMylea($Mylea, 1, $TargetMylea['MaxCapacity'])['Capacity']}}%</td>
@@ -212,7 +212,7 @@
                 <td colspan="3" class="text-center">{{QuarterMylea($Mylea, 4, $TargetMylea['MaxCapacity'])['Capacity']}}%</td>
             </tr>
             <tr>
-                <th class="title sticky-header-left bg-light">Mylea Output</th>
+                <th class="title sticky-header-left bg-light">Mylea Production</th>
                 <td>{{$Mylea->where('TanggalProduksi', '01')->sum('Jumlah')}}</td>
                 <td>{{$Mylea->where('TanggalProduksi', '02')->sum('Jumlah')}}</td>
                 <td>{{$Mylea->where('TanggalProduksi', '03')->sum('Jumlah')}}</td>
@@ -227,7 +227,7 @@
                 <td>{{$Mylea->where('TanggalProduksi', '12')->sum('Jumlah')}}</td>
             </tr>
             <tr>
-                <th class="title sticky-header-left bg-light">Mylea Success Rate</th>
+                <td class="title sticky-header-left bg-light">Harvest Rate</td>
                 <td>{{MyleaSuccessRate($Mylea, '01', $TodayDate)}} %</td>
                 <td>{{MyleaSuccessRate($Mylea, '02', $TodayDate)}} %</td>
                 <td>{{MyleaSuccessRate($Mylea, '03', $TodayDate)}} %</td>
@@ -242,14 +242,14 @@
                 <td>{{MyleaSuccessRate($Mylea, '12', $TodayDate)}} %</td>
             </tr>
             <tr>
-                <td class="title sticky-header-left bg-light">Target Success Rate Mylea</td>
+                <td class="title sticky-header-left bg-light">Target Harvest</td>
                 <td colspan="3" class="text-center">{{$TargetMylea['Q1']}}%</td>
                 <td colspan="3" class="text-center">{{$TargetMylea['Q2']}}%</td>
                 <td colspan="3" class="text-center">{{$TargetMylea['Q3']}}%</td>
                 <td colspan="3" class="text-center">{{$TargetMylea['Q4']}}%</td>
             </tr>
             <tr>
-                <td class="title sticky-header-left bg-light">Actual Success Rate Mylea</td>
+                <td class="title sticky-header-left bg-light">Actual Harvest Per Quarter</td>
                 <td colspan="3" class="text-center {{SuccessRate(QuarterMylea($Mylea, 1, $TargetMylea['MaxCapacity']), $TargetMylea['Q1'])['Style']}}">{{SuccessRate(QuarterMylea($Mylea, 1, $TargetMylea['MaxCapacity']), $TargetMylea['Q1'])['Text']}}</td>
                 <td colspan="3" class="text-center {{SuccessRate(QuarterMylea($Mylea, 2, $TargetMylea['MaxCapacity']), $TargetMylea['Q2'])['Style']}}">{{SuccessRate(QuarterMylea($Mylea, 2, $TargetMylea['MaxCapacity']), $TargetMylea['Q2'])['Text']}}</td>
                 <td colspan="3" class="text-center {{SuccessRate(QuarterMylea($Mylea, 3, $TargetMylea['MaxCapacity']), $TargetMylea['Q3'])['Style']}}">{{SuccessRate(QuarterMylea($Mylea, 3, $TargetMylea['MaxCapacity']), $TargetMylea['Q3'])['Text']}}</td>

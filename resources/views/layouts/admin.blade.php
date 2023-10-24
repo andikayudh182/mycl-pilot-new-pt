@@ -42,17 +42,18 @@
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="{{ url('/admin_dashboard') }}">Home</a>
                             </li>
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                                 <a class="nav-link" href="{{ url('/admin/baglog') }}">Baglog</a>
-                            </li>
+                            </li> --}}
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="baglogDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Baglog
+                                    Substrate Bag
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="baglogDropdown">
                                     <a class="dropdown-item" href="{{ url('/admin/baglog/report') }}">Report</a>
-                                    <a class="dropdown-item" href="{{ url('/admin/mylea') }}">Chart</a>
-                                    <a class="dropdown-item" href="{{ url('/admin/mylea/harvest-schedule') }}">Harvest Schedule</a>
+                                    <a class="dropdown-item" href="{{ url('/admin/baglog/') }}">Chart</a>
+                                    <a class="dropdown-item" href="{{ url('/admin/baglog/data-recipe') }}">Data Recipe</a>
+                                    <a class="dropdown-item" href="{{ url('/operator/baglog/inkubasi-baglog') }}">Monitoring Inkubasi</a>
                                 </div>
                             </li>
                             <li class="nav-item dropdown">
