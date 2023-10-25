@@ -242,12 +242,13 @@ class MyleaController extends Controller
         $BaglogRnD = BaglogRnD::where('StatusArchive', NULL)->orWhere('StatusArchive', '0')->get();
 
         $SortFilter =  new SortFilter();
+        $Mylea = $SortFilter->Filter($Mylea, $request);
         $Mylea = $SortFilter->SortKonta($Mylea, $request['KontaDir']);
         $Mylea = $SortFilter->SortPanen($Mylea, $request['PanenDir']);
         $Mylea = $SortFilter->SortPersenKonta($Mylea, $request['PersenKontaDir']);
         $Mylea = $SortFilter->SortInStock($Mylea, $request['InStockDir']);
 
-        $Mylea = $SortFilter->Filter($Mylea, $request);
+        
 
         return view('admin.Mylea.Report', [
             'Data' => $Mylea,

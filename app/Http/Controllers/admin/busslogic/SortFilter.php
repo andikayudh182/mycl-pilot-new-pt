@@ -67,13 +67,13 @@ class SortFilter {
             $Mylea = $Mylea->where('Jumlah', $request['JumlahTrayOperator'], $request['JumlahTrayNumber']);
         }
         if($request['KontaminasiNumber'] != ''){
-            $Mylea = $Mylea->where('Kontaminasi', $request['KontaminasiOperator'], $request['KontaminasiNumber']);
+            $Mylea = $Mylea->where('Konta', $request['KontaminasiOperator'], $request['KontaminasiNumber']);
         }
         if($request['PersenKontaNumber'] != ''){
             $Mylea = $Mylea->where('PersenKonta', $request['PersenKontaOperator'], $request['PersenKontaNumber']);
         }
         if($request['PanenNumber'] != ''){
-            $Mylea = $Mylea->where('Panen', $request['PanenOperator'], $request['PanenNumber']);
+            $Mylea = $Mylea->where('JumlahPanen', $request['PanenOperator'], $request['PanenNumber']);
         }
         if($request['InStockNumber'] != ''){
             $Mylea = $Mylea->where('InStock', $request['InStockOperator'], $request['InStockNumber']);
