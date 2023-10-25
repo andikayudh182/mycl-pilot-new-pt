@@ -77,7 +77,6 @@
           });
          </script>
     </div>
-    {{ $Data[1] }}
     <div>
         <table class="table">
             <tr class="sticky-header">
