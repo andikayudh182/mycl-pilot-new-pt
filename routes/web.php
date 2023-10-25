@@ -98,7 +98,8 @@ Route::post('/admin/curing/actual-finish-curing', [App\Http\Controllers\admin\Cu
 Route::post('/admin/curing/curing-size', [App\Http\Controllers\admin\CuringController::class,'UpdateCuringSize'])->name('UpdateCuringSize')->middleware('auth');
 
 
-// Route::get('/admin/curing/', [App\Http\Controllers\admin\CuringController::class, 'CuringIndex'])->name('CuringIndex')->middleware('auth');
+Route::get('/admin/reinforce/', [App\Http\Controllers\admin\ReinforceController::class, 'ReinforceIndex'])->name('ReinforceIndex')->middleware('auth');
+Route::post('/admin/reinforce/submit/', [App\Http\Controllers\admin\ReinforceController::class, 'ReinforceSubmit'])->name('ReinforceSubmit')->middleware('auth');
 
 //Operator
 Route::get('/operator_dashboard', [App\Http\Controllers\operator\OperatorDashboard::class, 'index'])->middleware('auth');
