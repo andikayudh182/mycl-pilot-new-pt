@@ -10,6 +10,15 @@ use App\Models\PostTreatment\Reinforce;
 class ReinforceController extends Controller
 {
     public function ReinforceIndex() {
+
+        $DataReinforce = Reinforce::join('curing', 'reinforce.CuringID', '=', 'curing.id')
+                         ->join('post_treatment', 'curing.PT_ID', '=', 'post_treatment.id')
+                         ->select('reinforce.*','post_treatment.Batch','curing.Warna')
+                         ->get();
+
+        
+        
+        // Buat pilihan batch
         $Data = Curing::join('post_treatment', 'curing.PT_ID', '=', 'post_treatment.id')
                 ->select('curing.id', 'curing.PT_ID', 'curing.Warna', 'curing.SizeSatu', 'curing.SizeDua', 'curing.SizeTiga', 'post_treatment.Batch')
                 ->get();
@@ -59,7 +68,9 @@ class ReinforceController extends Controller
         }
         
         return view('admin.Reinforce.Index', [
-            'FormData' => $transformedData
+            'Data' => $DataReinforce,
+            'FormData' => $transformedData,
+
         ]);
 
         

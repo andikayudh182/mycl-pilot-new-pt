@@ -25,8 +25,6 @@
         @endif
     </div>
       {{-- End Alert Message --}}
-
-
     {{-- <form action="{{url('admin/post-treatment/II')}}" method="GET"> --}}
         <p>
           <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseFilter" role="button" aria-expanded="false" aria-controls="collapseFilter">
@@ -87,8 +85,17 @@
                 <th>Warna</th>
                 <th>Size</th>
                 <th>Jumlah</th>
-                <th colspan= "2" class="text-center">Aksi</th>
+                {{-- <th colspan= "2" class="text-center">Aksi</th> --}}
             </tr>
+            @foreach ( $Data as $data )
+              <tr>
+                <td>{{ $data['TanggalPengerjaan'] }}</td>
+                <td>{{ $data['Batch'] }}</td>
+                <td>{{ $data['Warna'] }}</td>
+                <td>{{ $data['Size'] }}</td>
+                <td>{{ $data['Warna'] }}</td>
+              </tr>
+            @endforeach
            {{-- @foreach($Data as $data) --}}
             {{-- <tr>
                 <td>
