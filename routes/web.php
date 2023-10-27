@@ -100,6 +100,8 @@ Route::post('/admin/curing/curing-size', [App\Http\Controllers\admin\CuringContr
 
 Route::get('/admin/reinforce/', [App\Http\Controllers\admin\ReinforceController::class, 'ReinforceIndex'])->name('ReinforceIndex')->middleware('auth');
 Route::post('/admin/reinforce/submit/', [App\Http\Controllers\admin\ReinforceController::class, 'ReinforceSubmit'])->name('ReinforceSubmit')->middleware('auth');
+Route::post('/admin/reinforce/update/', [App\Http\Controllers\admin\ReinforceController::class, 'ReinforceUpdate'])->name('ReinforceUpdate')->middleware('auth');
+Route::get('/admin/reinforce/delete/{id}', [App\Http\Controllers\admin\ReinforceController::class, 'ReinforceDelete'])->name('ReinforceDelete')->middleware('auth');
 
 //Operator
 Route::get('/operator_dashboard', [App\Http\Controllers\operator\OperatorDashboard::class, 'index'])->middleware('auth');

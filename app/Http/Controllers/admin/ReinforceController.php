@@ -9,12 +9,30 @@ use App\Models\PostTreatment\Reinforce;
 
 class ReinforceController extends Controller
 {
-    public function ReinforceIndex() {
+    public function ReinforceIndex(Request $request) {
 
         $DataReinforce = Reinforce::join('curing', 'reinforce.CuringID', '=', 'curing.id')
-                         ->join('post_treatment', 'curing.PT_ID', '=', 'post_treatment.id')
-                         ->select('reinforce.*','post_treatment.Batch','curing.Warna')
-                         ->get();
+                        ->join('post_treatment', 'curing.PT_ID', '=', 'post_treatment.id')
+                        ->select('reinforce.*', 'post_treatment.Batch', 'curing.Warna')
+                        ->orderBy('reinforce.TanggalPengerjaan')
+                        ->orderBy('post_treatment.Batch')
+                        ->get();
+
+                            
+        if(isset($request->Filter)){
+            $Date1 = date('Y-m-d', strtotime($request['TanggalAwal']));
+            $Date2 = date('Y-m-d', strtotime($request['TanggalAkhir']));
+
+            $DataReinforce = Reinforce::join('curing', 'reinforce.CuringID', '=', 'curing.id')
+                            ->join('post_treatment', 'curing.PT_ID', '=', 'post_treatment.id')
+                            ->select('reinforce.*', 'post_treatment.Batch', 'curing.Warna')
+                            ->whereBetween('reinforce.TanggalPengerjaan', [$Date1, $Date2])
+                            ->orderBy('reinforce.TanggalPengerjaan')
+                            ->orderBy('post_treatment.Batch')
+                            ->get();
+
+        }
+                        
 
         
         
@@ -106,6 +124,46 @@ class ReinforceController extends Controller
             return redirect(route('ReinforceIndex'))->with('Error', ' Message : '. $e->getMessage());
         }
         
+    }
+    public function ReinforceUpdate (Request $request){
+
+        try {
+            $id = $request['id'];
+            $tanggalPengerjaan = $request['TanggalPengerjaan'];
+            $jumlah = $request['Jumlah'];
+            $selectedOption = $request['CuringID'];
+
+            if ($selectedOption) {
+                $valuesExplode = explode(",", $selectedOption);
+
+                if (count($valuesExplode) == 2) {
+                    Reinforce::where('id', $id)->update([
+                        'CuringID' => $valuesExplode[0],
+                        'Size' => $valuesExplode[1],
+                        'TanggalPengerjaan' => $tanggalPengerjaan,
+                        'Jumlah' => $jumlah,
+                        
+                    ]);
+                }
+            }
+
+            return redirect(route('ReinforceIndex'))->with('Success', 'Update Reinforce Data Success!');
+        } catch (\Exception $e) {
+            return redirect(route('ReinforceIndex'))->with('Error', ' Message : '. $e->getMessage());
+        }
+        
+    }
+
+    public function ReinforceDelete($id) {
+        try {
+
+            Reinforce::where('id', $id)->delete();
+
+            return redirect(route('ReinforceIndex'))->with('Success', 'Delete Reinforce Data Success!');
+            
+        } catch (\Exception $e) {
+            return redirect(route('ReinforceIndex'))->with('Error', ' Message : '. $e->getMessage());
+        }
     }
 
     // public function FormPostTreatmentSubmit(Request $request)

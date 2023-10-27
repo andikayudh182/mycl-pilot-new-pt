@@ -20,7 +20,7 @@
             <div class="card">
                 <div class="card-header text-center">Summary</div>
                 <div class="card-body">
-                    <table width="100%"  style="font-size: 1.0rem;">
+                    <table width="100%"  style="font-size: 0.9rem;">
                         <tr>
                             <td>Total Production</td>
                             <td>:</td>
@@ -317,19 +317,19 @@
                 <th>
                     <table class="table table-borderless baglog-table text-center">
                         <tr class="sticky-header">
-                            <td colspan="6">Subsrate Bag</td>
+                            <td colspan="6">Substrate Bag</td>
                             <td>Total Conta</td>
                             <td>% Conta</td>
                             <td>Harvest Schedule</td>
                             <td>Total Harvest</td>
                         </tr>
                         <tr class="sticky-header">
-                            <td>Subsrate Bag Code</td>
-                            <td>Subsrate Bag Qty</td>
+                            <td>Substrate Bag Code</td>
+                            <td>Substrate Bag Qty</td>
                             <td>Spawn Batch</td>
                             <td>Spawn Code</td>
                             <td>Spawn Age (Day)</td>
-                            <td>Subsrate Bag Age (Week)</td>
+                            <td>Substrate Bag Age (Week)</td>
                         </tr>
                     </table>
                 </th>
@@ -630,12 +630,12 @@
         <th>Total Kontaminasi (%)</th>
         <th>Panen</th>
         <th>In Stock</th>
-        <th>Kode Subsrate Bag</th>
-        <th>Jumlah Subsrate Bag</th>
+        <th>Kode Substrate Bag</th>
+        <th>Jumlah Substrate Bag</th>
         <th>Batch Bibit</th>
         <th>Jenis Bibit</th>
         <th>Umur Bibit</th>
-        <th>Umur Subsrate Bag</th>
+        <th>Umur Substrate Bag</th>
         <th>Tanggal Konta</th>
         <th>Jumlah Konta</th>
         <th>% Konta</th>
