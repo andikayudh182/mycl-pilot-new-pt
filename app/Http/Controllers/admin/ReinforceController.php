@@ -14,7 +14,7 @@ class ReinforceController extends Controller
         $DataReinforce = Reinforce::join('curing', 'reinforce.CuringID', '=', 'curing.id')
                         ->join('post_treatment', 'curing.PT_ID', '=', 'post_treatment.id')
                         ->select('reinforce.*', 'post_treatment.Batch', 'curing.Warna')
-                        ->orderBy('reinforce.TanggalPengerjaan')
+                        ->orderBy('reinforce.TanggalPengerjaan','desc')
                         ->orderBy('post_treatment.Batch')
                         ->get();
 
@@ -27,7 +27,7 @@ class ReinforceController extends Controller
                             ->join('post_treatment', 'curing.PT_ID', '=', 'post_treatment.id')
                             ->select('reinforce.*', 'post_treatment.Batch', 'curing.Warna')
                             ->whereBetween('reinforce.TanggalPengerjaan', [$Date1, $Date2])
-                            ->orderBy('reinforce.TanggalPengerjaan')
+                            ->orderBy('reinforce.TanggalPengerjaan','desc')
                             ->orderBy('post_treatment.Batch')
                             ->get();
 

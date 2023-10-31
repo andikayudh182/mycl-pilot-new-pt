@@ -353,7 +353,7 @@ class PostTreatmentController extends Controller
 
     public function PostTreatmentII(Request $request) {
 
-        $Data = PostTreatment::orderBy('Batch', 'desc')->where('Status', null)->paginate(80);
+        $Data = PostTreatment::orderBy('Tanggal', 'desc')->where('Status', null)->paginate(80);
         if(isset($request->Filter)){
             $Date1 = date('Y-m-d', strtotime($request['TanggalAwal']));
             $Date2 = date('Y-m-d', strtotime($request['TanggalAkhir']));

@@ -23,7 +23,9 @@
             <td>
                 <select name="data[0][CuringID]" class="form-control select2-single" id="CuringID" style="width:100%; background-color: #f8fafc;">
                     @foreach ($FormData as $item)
-                        <option value="{{$item['id'].",".$item['Size']}}">{{$item['Batch']}} - {{ $item['Warna'] }} - {{ $item['Size'] }} (Available : {{ $item['Jumlah'] }})</option>
+                        @if ($item['Jumlah'] > 0)
+                        <option value="{{$item['id'].",".$item['Size']}}">{{$item['Batch']}} - {{ $item['Warna'] }} - {{ $item['Size'] }} (Available : {{ $item['Jumlah'] }})</option>                
+                        @endif
                     @endforeach
                 </select>
             </td>

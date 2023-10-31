@@ -14,7 +14,7 @@ class CuringController extends Controller
 {
     public function CuringIndex(Request $request)
     {
-        $Data = PostTreatment::orderBy('Batch', 'desc')
+        $Data = PostTreatment::orderBy('post_treatment.Tanggal', 'desc')
         ->where('Status', null)
         ->join('post_treatment_proses', function ($join) {
             $join->on('post_treatment.id', '=', 'post_treatment_proses.PT_ID')

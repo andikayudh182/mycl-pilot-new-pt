@@ -43,6 +43,7 @@
         <tr>
             <th>Kode Produksi</th>
             <th>Tanggal Panen</th>
+            <th>Notes</th>
             <th>Under Incubation</th>
         </tr>
         @foreach($MyleaPanen->where('JadwalPanen', '>', $PanenDate)->sortByDesc('JadwalPanen', SORT_NATURAL) as $item)
@@ -51,6 +52,7 @@
                 <tr>
                     <td>{{$item['KodeProduksi']}}</td>
                     <td>{{$item['JadwalPanen']}}</td>
+                    <td>{{$item['Keterangan']}}</td>
                     <td>{{$item['InStock']}}</td>
                 </tr>
                 @endif
@@ -59,6 +61,7 @@
                 <tr>
                     <td>{{$item['KodeProduksi']}}</td>
                     <td>{{$item['JadwalPanen']}}</td>
+                    <td>{{$item['Keterangan']}}</td>
                     <td>{{$item['InStock']}}</td>
                 </tr>
                 @endif
