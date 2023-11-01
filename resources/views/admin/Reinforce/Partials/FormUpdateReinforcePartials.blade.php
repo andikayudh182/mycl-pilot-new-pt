@@ -24,9 +24,18 @@
                     </select>
                 </div>
                 <div class="mb-3">
+                    <label for="Jenis" class="form-label">Jenis</label>
+                    <select name="Jenis" id="Jenis" class="form-control" style="width:100%; background-color: #f8fafc">
+                        <option value="" {{ empty($data['Jenis']) ? 'selected' : '' }} disabled>Pilih Jenis</option>
+                        <option value="Euca Sateen" {{ "Euca Sateen" == $data['Jenis'] ? 'selected' : '' }} >Euca Sateen</option>
+                        <option value="Lyco Linen" {{ "Lyco Linen" == $data['Jenis'] ? 'selected' : '' }} >Lyco Linen</option>
+                        <option value="Other" {{ "Other" == $data['Jenis'] ? 'selected' : '' }} >Other</option>
+                    </select>
+                </div>
+                <div class="mb-3">
                     <label for="Jumlah" class="form-label">Jumlah</label>
                     <input type="number" class="form-control" id="Jumlah" name="Jumlah" value="{{$data['Jumlah']}}" required>
-                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

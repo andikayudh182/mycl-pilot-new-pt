@@ -18,6 +18,7 @@ class Reinforce extends Model
         'id',
         'CuringID',
         'TanggalPengerjaan',
+        'Jenis',
         'Jumlah',
         'Size'
     ];
@@ -27,6 +28,7 @@ class Reinforce extends Model
         'CuringID',
         'TanggalPengerjaan',
         'Jumlah',
+        'Jenis',
         'Size'
     ];
 }

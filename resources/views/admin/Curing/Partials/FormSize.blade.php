@@ -33,11 +33,13 @@
                         <div class="col-sm-6">
                             @if(isset($data['Curing'][0]))
                             <select name="Warna" id="Warna" class="form-control form-control-sm @error('Warna') is-invalid @enderror" id="colFormLabelSm" required>
+                               
                                 <option value="Original" {{ $data['Curing'][0]['Warna'] == 'Original' ? 'selected' : '' }}>Original</option>
                                 <option value="Black" {{ $data['Curing'][0]['Warna'] == 'Black' ? 'selected' : '' }}>Black</option>
                             </select>
                              @else
                                 <select name="Warna" id="Warna" class="form-control form-control-sm @error('Warna') is-invalid @enderror" id="colFormLabelSm" required>
+                                    <option value="" {{ empty($data['Curing'][0]['Warna']) ? 'selected' : '' }} disabled>Pilih Warna</option>
                                     <option value="Original">Original</option>
                                     <option value="Black">Black</option>
                                 </select>

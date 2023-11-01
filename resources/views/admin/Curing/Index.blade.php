@@ -67,6 +67,7 @@
                 <th >Schedule Finish Curing</th>
                 <th>Actual Finish Curing</th>
                 <th>Tanggal Pengerjaan</th>
+                <th>Warna</th>
                 <th>15 x 15</th>
                 <th>25 x 30 </th>
                 <th>>30 x 30 </th>
@@ -115,6 +116,13 @@
                   @endif
                 </td>
                 <td>
+                  @if(isset($data['Curing'][0]['Warna']))
+                  {{ $data['Curing'][0]['Warna'] }}
+                  @else
+                      -
+                  @endif
+                </td>
+                <td>
                   @if(isset($data['Curing'][0]['SizeSatu']))
                     {{ $data['Curing'][0]['SizeSatu'] }}
                   @else
@@ -142,28 +150,6 @@
                 
                 </td>
                    @include('admin.Curing.Partials.FormSize')
-                {{-- <td>
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal{{$data['id']}}">
-                        Update Post Treatment
-                      </button>
-                      <div class="modal fade" id="exampleModal{{$data['id']}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title">{{$data['Batch']}}</h5>
-                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                @include('operator.PostTreatment.FormPostTreatmentII')
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                </td> --}}
-                {{-- <td><a href="{{url('/operator/post-treatment/archive', ['id'=>$data['id'],])}}">Archived</a></td> --}}
             </tr>
             @endforeach
         </table>

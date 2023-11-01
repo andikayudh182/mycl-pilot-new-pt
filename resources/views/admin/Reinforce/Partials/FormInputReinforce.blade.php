@@ -17,6 +17,7 @@
     <table class="table table-bordered" id="dynamicAddRemove">
         <tr>
             <th>Batch - Warna - Size - Available</th>
+            <th>Jenis</th>
             <th>Jumlah</th>
         </tr>
         <tr>
@@ -27,6 +28,13 @@
                         <option value="{{$item['id'].",".$item['Size']}}">{{$item['Batch']}} - {{ $item['Warna'] }} - {{ $item['Size'] }} (Available : {{ $item['Jumlah'] }})</option>                
                         @endif
                     @endforeach
+                </select>
+            </td>
+            <td>
+                <select name="data[0][Jenis]" id="Jenis" class="form-control" style="width:100%; background-color: #f8fafc">
+                    <option value="Euca Sateen">Euca Sateen</option>
+                    <option value="Lyco Linen">Lyco Linen</option>
+                    <option value="Other">Other</option>
                 </select>
             </td>
             <td><input type="number" name="data[0][Jumlah]" class="form-control" /></td>
@@ -53,6 +61,13 @@
                         ' <option value="{{$item['id'].",".$item['Size']}}">{{$item['Batch']}} - {{ $item['Warna'] }} - {{ $item['Size'] }} (Available : {{ $item['Jumlah'] }})</option>' +
                     '@endforeach'+
                 '</select>' +
+            '</td>'+
+            '<td>' +
+                '<select name="data['+i+'][Jenis]" id="Jenis" class="form-control" style="width:100%; background-color: #f8fafc">'+
+                    '<option value="Euca Sateen">Euca Sateen</option>'+  
+                    '<option value="Lyco Linen">Lyco Linen</option>'+
+                    '<option value="Other">Other</option>'+ 
+                '</select>'+
             '</td>'+
             '<td><input type="number" name="data['+i+'][Jumlah]" class="form-control" /></td>' +
         '<td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td></tr>');

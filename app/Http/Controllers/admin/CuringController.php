@@ -113,25 +113,29 @@ class CuringController extends Controller
 
         
     }
-    public function UpdateCuringSize (Request $request) {
-        
+    public function UpdateCuringSize(Request $request)
+    {
         $PT_ID = $request['PT_ID'];
-
+    
+        $curing = Curing::where('PT_ID', $PT_ID)->first();
+    
+        if (!$curing) {
+            return redirect(route('CuringIndex'))->with('Error', 'Please input actual finish curing first !!' );
+        }
+    
         try {
-
-            Curing::where('PT_ID', $PT_ID)->update([
+            $curing->update([
                 'TanggalPengerjaan' => $request['TanggalPengerjaan'],
                 'Warna' => $request['Warna'],
                 'SizeSatu' => $request['SizeSatu'],
                 'SizeDua' => $request['SizeDua'],
                 'SizeTiga' => $request['SizeTiga'],
             ]);
-
+    
             return redirect(route('CuringIndex'))->with('Success', 'Update Curing Size Success!');
         } catch (\Exception $e) {
-            return redirect(route('CuringIndex'))->with('Error', 'Message : ' . $e->getMessage());
+            return redirect(route('CuringIndex'))->with('Error', 'Message: ' . $e->getMessage());
         }
-
-        
     }
+    
 }

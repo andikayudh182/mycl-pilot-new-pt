@@ -84,6 +84,7 @@
             <th>Batch</th>
             <th>Warna</th>
             <th>Size</th>
+            <th>Jenis</th>
             <th>Jumlah</th>
             <th colspan="2" class="text-center">Aksi</th>
         </tr>
@@ -103,6 +104,7 @@
                     <td>{{ $data['Batch'] }} </td>
                     <td>{{ $data['Warna'] }}</td>
                     <td>{{ $data['Size'] }}</td>
+                    <td>{{ $data['Jenis'] }}</td>
                     <td>{{ $data['Jumlah'] }}</td>
                     <td class="text-center">
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateModal{{ $data['id'] }}">

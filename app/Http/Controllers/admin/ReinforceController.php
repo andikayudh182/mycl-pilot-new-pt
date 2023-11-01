@@ -112,6 +112,7 @@ class ReinforceController extends Controller
                                 'CuringID' => $valuesExplode[0],
                                 'Size' => $valuesExplode[1],
                                 'TanggalPengerjaan' => $tanggalPengerjaan,
+                                'Jenis' => $value['Jenis'],
                                 'Jumlah' => $value['Jumlah'],
                             ]);
                         }
@@ -130,6 +131,7 @@ class ReinforceController extends Controller
         try {
             $id = $request['id'];
             $tanggalPengerjaan = $request['TanggalPengerjaan'];
+            $jenis = $request['Jenis'];
             $jumlah = $request['Jumlah'];
             $selectedOption = $request['CuringID'];
 
@@ -141,6 +143,7 @@ class ReinforceController extends Controller
                         'CuringID' => $valuesExplode[0],
                         'Size' => $valuesExplode[1],
                         'TanggalPengerjaan' => $tanggalPengerjaan,
+                        'Jenis' => $jenis,
                         'Jumlah' => $jumlah,
                         
                     ]);
