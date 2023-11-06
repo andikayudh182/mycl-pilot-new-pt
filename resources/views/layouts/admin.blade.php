@@ -79,7 +79,7 @@
                                     <a class="dropdown-item" href="{{ url('/admin/post-treatment/II') }}">Post Treatment II</a>
                                     <a class="dropdown-item" href="{{ url('/admin/curing/') }}">Curing</a>
                                     <a class="dropdown-item" href="{{ url('admin/reinforce') }}">Reinforce</a>
-                                    <a class="dropdown-item" href="#">Post Treatment III</a>
+                                    <a class="dropdown-item" href="{{ url('/admin/post-treatment/III') }}">Post Treatment III</a>
                                 </div>
                             </li>
                             <li class="nav-item dropdown">

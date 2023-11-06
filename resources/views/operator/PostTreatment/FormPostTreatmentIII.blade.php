@@ -1,5 +1,5 @@
 
-    <h3>Form Post Treatment II</h3>
+    <h3>Form Post Treatment III</h3>
     <form action="{{ url('/operator/post-treatment/proses-post-treatment-submit') }}" method="POST" enctype="multipart/form-data" id="FormPostTreatment">
         @csrf
         <input type="hidden" value="{{$data['id']}}" name="PT_ID">
@@ -51,12 +51,11 @@
             <label for="Proses" class="col-sm-5 col-form-label col-form-label-sm">Proses :</label>
             <div class="col-sm-5">
                 <select name="Proses" id="Proses" class="form-control form-control-sm">
-                    <option value="Dyeing">Dyeing</option>
-                    <option value="Ferro Sulfat">Ferro Sulfat</option>
-                    <option value="Fixing">Fixing</option>
-                    <option value="Fat Liquor">Fat Liquor</option>
-                    <option value="Moisturizing">Moisturizing</option>
-                    <option value="Drying">Drying</option>
+                    <option value="Amplas">Amplas</option>
+                    <option value="Clearing">Clearing</option>
+                    <option value="Filling">Filling</option>
+                    <option value="Coating">Coating</option>
+                    <option value="Finishing">Finishing</option>
                 </select>
                 @error('Proses')
                 <span class="invalid-feedback" role="alert">
