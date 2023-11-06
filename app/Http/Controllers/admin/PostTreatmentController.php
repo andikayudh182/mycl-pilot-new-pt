@@ -405,6 +405,60 @@ class PostTreatmentController extends Controller
             'FormData'=>$filteredData,
         ]);
     }
+    public function PostTreatmentIII(Request $request) {
+
+        $Data = PostTreatment::orderBy('Tanggal', 'desc')->where('Status', null)->paginate(80);
+        if(isset($request->Filter)){
+            $Date1 = date('Y-m-d', strtotime($request['TanggalAwal']));
+            $Date2 = date('Y-m-d', strtotime($request['TanggalAkhir']));
+            if($request['Status'] == ''){
+                $request['Status'] = NULL;
+            }
+            $Data = PostTreatment::orderBy('Tanggal', 'desc')->whereBetween('Tanggal', [$Date1, $Date2])->where('Status', $request['Status'])->paginate(80);
+        }
+        //Get Post Treatment Details (Penggunaan Mylea)
+        foreach ($Data as $data){
+            $Panen = PostTreatmentDetails::select([
+                'post_treatment_details.*',
+                'mylea_panen.KPMylea',
+            ])
+            ->where('PT_ID', $data['id'])
+            ->join('mylea_panen', 'mylea_panen.id', '=', 'post_treatment_details.Panen_ID')
+            ->get();
+            $data['PTData'] = PTProses::where('PT_ID', $data['id'])->get();
+            if(isset($Panen)){
+                $data['Mylea'] = $Panen;
+            }
+        }
+        // $PostTreatment = PTProses::all();
+
+        //Data untuk pilihan di form awal post treatment
+        
+        $Dat = Panen::with('PostTreatment', 'Rebus')
+        //->whereRaw('Jumlah - (SELECT SUM(Jumlah) FROM post_treatment_details WHERE Panen_ID = mylea_panen.id) != 0')
+        ->orderby('TanggalPanen', 'desc')
+        ->get();
+
+        $filteredData = [];
+
+        foreach($Dat as $data){
+            $TotalPT = $data['PostTreatment']->sum('Jumlah');
+            // $TotalRejectKerik = $data['Kerik']->sum('RejectBeforeKerik') + $data['Kerik']->sum('RejectAfterKerik');
+            foreach($data['PostTreatment'] as $item){
+                $item['Details'] = PostTreatment::where('id', $item['PT_ID'])->get()->first();
+            }
+
+            if(($data['Rebus']->sum('JumlahRebus') - $TotalPT) > 0){
+                $data['InStock'] = $data['Rebus']->sum('JumlahRebus') - $TotalPT;
+                $filteredData[] = $data;
+            }
+        }
+        return view('admin.PostTreatment.PostTreatmentIII', [
+            'Data'=>$Data,
+            // 'PTData'=>$PostTreatment,
+            'FormData'=>$filteredData,
+        ]);
+    }
 
     public function KerikSubmit(Request $request)
     {

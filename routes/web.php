@@ -92,6 +92,7 @@ Route::get('/admin/post-treatment/data-panen/delete-rebus/{ID}', [App\Http\Contr
 Route::get('/admin/post-treatment/mylea-harvest', [App\Http\Controllers\admin\PostTreatmentController::class, 'MyleaHarvest'])->middleware('auth');
 Route::get('/admin/post-treatment/I', [App\Http\Controllers\admin\PostTreatmentController::class, 'PostTreatmentI'])->middleware('auth');
 Route::get('/admin/post-treatment/II', [App\Http\Controllers\admin\PostTreatmentController::class, 'PostTreatmentII'])->middleware('auth');
+Route::get('/admin/post-treatment/III', [App\Http\Controllers\admin\PostTreatmentController::class, 'PostTreatmentIII'])->middleware('auth');
 
 Route::get('/admin/curing/', [App\Http\Controllers\admin\CuringController::class, 'CuringIndex'])->name('CuringIndex')->middleware('auth');
 Route::post('/admin/curing/actual-finish-curing', [App\Http\Controllers\admin\CuringController::class,'UpdateActualFinishCuring'])->name('UpdateActualFinishCuring')->middleware('auth');
