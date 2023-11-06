@@ -66,9 +66,9 @@
                                     <a class="dropdown-item" href="{{ url('/admin/mylea/harvest-schedule') }}">Harvest Schedule</a>
                                 </div>
                             </li>
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                                 <a class="nav-link" href="{{ url('/admin/post-treatment-index') }}">Post Treatment</a>
-                            </li>
+                            </li> --}}
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="postTreatmentDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Post Treatment
