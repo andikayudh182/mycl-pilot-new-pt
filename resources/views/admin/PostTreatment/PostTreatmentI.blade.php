@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends(auth()->user()->role === 'operator' ? 'layouts.operator' : 'layouts.admin')
 
 @section('content')
 <section class="m-5">
@@ -12,7 +12,7 @@
         {{ session()->get('message2') }}
     </div>
     @endif
-    <h3> Post Treatment I Summary </h3>
+    <h3> Scouring Summary </h3>
     <h5> Total Belum  Dikerik : {{ $TotalBelumKerik }}</h5>
     <h5> Total Sudah Dikerik : {{ $TotalSudahKerik }}</h5>
     <h5> Total Reject Kerik : {{ $TotalRejectKerik  }}</h5>
@@ -23,7 +23,7 @@
     
     
     
-    <form action="{{url('/admin/post-treatment/I')}}" method="GET">
+    <form action="{{url('/post-treatment/I')}}" method="GET">
         <p>
           <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
             Filter by Tanggal Panen

@@ -52,7 +52,7 @@
                         </div>
                     </div>
                     <div class="row mb-3 ">
-                        <label for="SizeSatu" class="col-sm-4 col-form-label col-form-label-sm">15 x 15</label>
+                        <label for="SizeSatu" class="col-sm-4 col-form-label col-form-label-sm">Grade A (26x46)</label>
                         <label for="SizeSatu" class="col-sm-1 col-form-label col-form-label-sm">:</label>
                         <div class="col-sm-6">
                             @if(isset($data['Curing'][0]))
@@ -69,7 +69,7 @@
                         </div>
                     </div>
                     <div class="row mb-3 ">
-                        <label for="SizeDua" class="col-sm-4 col-form-label col-form-label-sm">25 x 30</label>
+                        <label for="SizeDua" class="col-sm-4 col-form-label col-form-label-sm">Grade B (20x40)</label>
                         <label for="SizeDua" class="col-sm-1 col-form-label col-form-label-sm">:</label>
                         <div class="col-sm-6">
                             @if(isset($data['Curing'][0]))
@@ -86,7 +86,7 @@
                         </div>
                     </div>
                     <div class="row mb-3 ">
-                        <label for="SizeTiga" class="col-sm-4 col-form-label col-form-label-sm"> >30 x 30</label>
+                        <label for="SizeTiga" class="col-sm-4 col-form-label col-form-label-sm">Grade C (15x30)</label>
                         <label for="SizeTiga" class="col-sm-1 col-form-label col-form-label-sm">:</label>
                         <div class="col-sm-6">
                             @if(isset($data['Curing'][0]))
@@ -96,6 +96,23 @@
                             @endif
                             
                             @error('SizeTiga')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="row mb-3 ">
+                        <label for="SizeTiga" class="col-sm-4 col-form-label col-form-label-sm"> Grade D</label>
+                        <label for="SizeTiga" class="col-sm-1 col-form-label col-form-label-sm">:</label>
+                        <div class="col-sm-6">
+                            @if(isset($data['Curing'][0]))
+                                <input type="number"  name="SizeEmpat" class="form-control form-control-sm  @error('SizeEmpat') is-invalid @enderror" id="colFormLabelSm" value={{ $data['Curing'][0]['SizeEmpat'] }} required>
+                            @else
+                                <input type="number"  name="SizeEmpat" class="form-control form-control-sm  @error('SizeEmpat') is-invalid @enderror" id="colFormLabelSm" required>
+                            @endif
+                            
+                            @error('SizeEmpat')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>

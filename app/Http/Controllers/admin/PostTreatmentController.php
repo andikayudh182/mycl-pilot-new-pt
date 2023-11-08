@@ -15,6 +15,8 @@ use App\Models\PostTreatment\PTProses;
 use App\Models\PostTreatment\PostTreatmentDetails;
 use App\Models\PostTreatment\PTKerik;
 use App\Models\PostTreatment\PTRebus;
+use App\Models\PostTreatment\Reinforce;
+use App\Models\PostTreatment\Curing;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -419,18 +421,67 @@ class PostTreatmentController extends Controller
         //Get Post Treatment Details (Penggunaan Mylea)
         foreach ($Data as $data){
             $Panen = PostTreatmentDetails::select([
-                'post_treatment_details.*',
-                'mylea_panen.KPMylea',
+                    'post_treatment_details.*',
+                    'mylea_panen.KPMylea',
             ])
-            ->where('PT_ID', $data['id'])
-            ->join('mylea_panen', 'mylea_panen.id', '=', 'post_treatment_details.Panen_ID')
-            ->get();
+                    ->where('PT_ID', $data['id'])
+                    ->join('mylea_panen', 'mylea_panen.id', '=', 'post_treatment_details.Panen_ID')
+                    ->get();
             $data['PTData'] = PTProses::where('PT_ID', $data['id'])->get();
             if(isset($Panen)){
                 $data['Mylea'] = $Panen;
             }
+            // List Reinforce
+            $Reinforce = Reinforce::select('reinforce.*', 'curing.Warna')
+                        ->join('curing', 'reinforce.CuringID', '=', 'curing.id')
+                        ->where('curing.PT_ID', '=', $data['id'])
+                        ->orderBy('reinforce.TanggalPengerjaan','desc')
+                        ->get();
+
+           
+        
+            if (isset($Reinforce)) {
+                $data['Reinforce'] = $Reinforce;
+            }
+
+            // List Non Reinforce
+            $Curing = Curing::select('curing.*')
+                    ->where('PT_ID', $data['id'])
+                    ->get();
+
+            foreach ($Curing as $item){
+
+                $item['UsedSizeSatu'] = Curing::join('reinforce', 'curing.id', '=', 'reinforce.CuringID')
+                                        ->where('reinforce.CuringID', $item['id'])
+                                        ->where('reinforce.Size', 'Grade A (26x46)')
+                                        ->sum('reinforce.Jumlah');
+                $item['UsedSizeDua'] = Curing::join('reinforce', 'curing.id', '=', 'reinforce.CuringID')
+                                        ->where('reinforce.CuringID', $item['id'])
+                                        ->where('reinforce.Size', 'Grade B (20x40)')
+                                        ->sum('reinforce.Jumlah');
+                $item['UsedSizeTiga'] = Curing::join('reinforce', 'curing.id', '=', 'reinforce.CuringID')
+                                        ->where('reinforce.CuringID', $item['id'])
+                                        ->where('reinforce.Size', 'Grade C (15x30)')
+                                        ->sum('reinforce.Jumlah');
+                $item['UsedSizeEmpat'] = Curing::join('reinforce', 'curing.id', '=', 'reinforce.CuringID')
+                                        ->where('reinforce.CuringID', $item['id'])
+                                        ->where('reinforce.Size', 'Grade D')
+                                        ->sum('reinforce.Jumlah');
+
+                $item['SizeSatu'] = $item['SizeSatu'] - $item['UsedSizeSatu'];
+                $item['SizeDua'] = $item['SizeDua'] - $item['UsedSizeDua'];
+                $item['SizeTiga'] = $item['SizeTiga'] - $item['UsedSizeTiga'];
+                $item['SizeEmpat'] = $item['SizeEmpat'] - $item['UsedSizeEmpat'];
+            }
+                    
+
+            if (isset($Curing)) {
+                $data['Curing'] = $Curing;
+            }
         }
-        // $PostTreatment = PTProses::all();
+
+        
+    
 
         //Data untuk pilihan di form awal post treatment
         

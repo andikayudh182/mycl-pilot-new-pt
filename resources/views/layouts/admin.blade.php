@@ -74,12 +74,12 @@
                                     Post Treatment
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="postTreatmentDropdown">
-                                    <a class="dropdown-item" href="{{ url('/admin/post-treatment/mylea-harvest') }}">Mylea Panen</a>
-                                    <a class="dropdown-item" href="{{ url('/admin/post-treatment/I') }}">Post Treatment I</a>
-                                    <a class="dropdown-item" href="{{ url('/admin/post-treatment/II') }}">Post Treatment II</a>
-                                    <a class="dropdown-item" href="{{ url('/admin/curing/') }}">Curing</a>
-                                    <a class="dropdown-item" href="{{ url('admin/reinforce') }}">Reinforce</a>
-                                    <a class="dropdown-item" href="{{ url('/admin/post-treatment/III') }}">Post Treatment III</a>
+                                    <a class="dropdown-item" href="{{ url('/post-treatment/mylea-harvest') }}">Harvest</a>
+                                    <a class="dropdown-item" href="{{ url('/post-treatment/I') }}">Scouring</a>
+                                    <a class="dropdown-item" href="{{ url('/post-treatment/II') }}">Wet Process</a>
+                                    <a class="dropdown-item" href="{{ url('/curing/') }}">Curing</a>
+                                    <a class="dropdown-item" href="{{ url('/reinforce') }}">Reinforce</a>
+                                    <a class="dropdown-item" href="{{ url('/post-treatment/III') }}">Dry Process</a>
                                 </div>
                             </li>
                             <li class="nav-item dropdown">

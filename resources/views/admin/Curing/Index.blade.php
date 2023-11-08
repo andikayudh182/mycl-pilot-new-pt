@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends(auth()->user()->role === 'operator' ? 'layouts.operator' : 'layouts.admin')
 
 @section('content')
 
@@ -25,7 +25,7 @@
   </div>
     {{-- End Alert Message --}}
 
-    <form action="{{url('admin/curing/')}}" method="GET">
+    <form action="{{url('/curing/')}}" method="GET">
         <p>
           <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseFilter" role="button" aria-expanded="false" aria-controls="collapseFilter">
             Filter
@@ -68,9 +68,10 @@
                 <th>Actual Finish Curing</th>
                 <th>Tanggal Pengerjaan</th>
                 <th>Warna</th>
-                <th>15 x 15</th>
-                <th>25 x 30 </th>
-                <th>>30 x 30 </th>
+                <th>Grade A (26x46)</th>
+                <th>Grade B (20x40) </th>
+                <th>Grade C (15x40)</th>
+                <th>Grade D</th>
                 <th colspan= "2" class="text-center">Aksi</th>
             </tr>
            @foreach($Data as $data)
@@ -139,6 +140,13 @@
                 <td>
                   @if(isset($data['Curing'][0]['SizeTiga']))
                   {{ $data['Curing'][0]['SizeTiga'] }}
+                  @else
+                      0
+                  @endif
+                </td>
+                <td>
+                  @if(isset($data['Curing'][0]['SizeEmpat']))
+                  {{ $data['Curing'][0]['SizeEmpat'] }}
                   @else
                       0
                   @endif

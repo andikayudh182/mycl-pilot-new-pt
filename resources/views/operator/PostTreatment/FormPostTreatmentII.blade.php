@@ -1,5 +1,5 @@
 
-    <h3>Form Post Treatment II</h3>
+    <h3>Form Wet Process</h3>
     <form action="{{ url('/operator/post-treatment/proses-post-treatment-submit') }}" method="POST" enctype="multipart/form-data" id="FormPostTreatment">
         @csrf
         <input type="hidden" value="{{$data['id']}}" name="PT_ID">
@@ -17,7 +17,7 @@
         <div class="row mb-3 ">
             <label for="Tanggal" class="col-sm-5 col-form-label col-form-label-sm">Tanggal  :</label>
             <div class="col-sm-5">
-                <input type="date" id="Tanggal" name="Tanggal" class="form-control form-control-sm  @error('Tanggal') is-invalid @enderror" id="colFormLabelSm" value="{{ old('TanggalPengerjaaan') }}">
+                <input type="date" id="Tanggal" name="Tanggal" class="form-control form-control-sm  @error('Tanggal') is-invalid @enderror" id="colFormLabelSm" value="{{ old('Tanggal') }}">
                 @error('Tanggal')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>

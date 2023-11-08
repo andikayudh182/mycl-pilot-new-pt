@@ -22,6 +22,7 @@ class Curing extends Model
         'SizeSatu',
         'SizeDua',
         'SizeTiga',
+        'SizeEmpat',
     ];
 
     public $sortable = [
@@ -32,6 +33,7 @@ class Curing extends Model
         'SizeSatu',
         'SizeDua',
         'SizeTiga',
+        'SizeEmpat',
     ];
 
 

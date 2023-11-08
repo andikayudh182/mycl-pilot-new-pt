@@ -93,7 +93,7 @@ class PostTreatmentController extends Controller
 
         $id = Auth::user()->id;
         if($request['id'] != '0'){
-            PTProses::where('id', $request['id'])->create([
+            PTProses::where('id', $request['id'])->update([
                 'Tanggal'=>$request['Tanggal'],
                 'JamMulai'=>$request['JamMulai'],
                 'JamSelesai'=>$request['JamSelesai'],

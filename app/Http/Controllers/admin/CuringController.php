@@ -130,6 +130,7 @@ class CuringController extends Controller
                 'SizeSatu' => $request['SizeSatu'],
                 'SizeDua' => $request['SizeDua'],
                 'SizeTiga' => $request['SizeTiga'],
+                'SizeEmpat' => $request['SizeEmpat'],
             ]);
     
             return redirect(route('CuringIndex'))->with('Success', 'Update Curing Size Success!');

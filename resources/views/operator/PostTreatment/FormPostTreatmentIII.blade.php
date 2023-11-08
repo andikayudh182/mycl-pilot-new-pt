@@ -1,5 +1,5 @@
 
-    <h3>Form Post Treatment III</h3>
+    <h3>Form Dry Process</h3>
     <form action="{{ url('/operator/post-treatment/proses-post-treatment-submit') }}" method="POST" enctype="multipart/form-data" id="FormPostTreatment">
         @csrf
         <input type="hidden" value="{{$data['id']}}" name="PT_ID">
@@ -54,7 +54,9 @@
                     <option value="Amplas">Amplas</option>
                     <option value="Clearing">Clearing</option>
                     <option value="Filling">Filling</option>
-                    <option value="Coating">Coating</option>
+                    <option value="Coating 1">Coating 1</option>
+                    <option value="Coating 2">Coating 2</option>
+                    <option value="Coating 3">Coating 3</option>
                     <option value="Finishing">Finishing</option>
                 </select>
                 @error('Proses')

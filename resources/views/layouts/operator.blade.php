@@ -45,8 +45,21 @@
                             <li class="nav-item">
                             <a class="nav-link" href="{{ url('/operator/mylea') }}">Mylea</a>
                             </li>
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                                 <a class="nav-link" href="{{ url('/operator/post-treatment') }}">Post Treatment</a>
+                            </li> --}}
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="postTreatmentDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Post Treatment
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="postTreatmentDropdown">
+                                    <a class="dropdown-item" href="{{ url('/post-treatment/mylea-harvest') }}">Harvest</a>
+                                    <a class="dropdown-item" href="{{ url('/post-treatment/I') }}">Scouring</a>
+                                    <a class="dropdown-item" href="{{ url('/post-treatment/II') }}">Wet Process</a>
+                                    <a class="dropdown-item" href="{{ url('/curing/') }}">Curing</a>
+                                    <a class="dropdown-item" href="{{ url('/reinforce') }}">Reinforce</a>
+                                    <a class="dropdown-item" href="{{ url('/post-treatment/III') }}">Dry Process</a>
+                                </div>
                             </li>
                             <li class="nav-item">
                             <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Biobo</a>

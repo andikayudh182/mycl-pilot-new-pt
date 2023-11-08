@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends(auth()->user()->role === 'operator' ? 'layouts.operator' : 'layouts.admin')
 
 @section('content')
 
@@ -7,7 +7,7 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ url('/operator_dashboard') }}">Home</a></li>
             {{-- <li class="breadcrumb-item"><a href="{{ url('/operator/post-treatment') }}">Post Treatment</a></li> --}}
-            <li class="breadcrumb-item active" aria-current="page">Post Treatment II</li>
+            <li class="breadcrumb-item active" aria-current="page">Wet Process</li>
         </ol>
     </nav>
 </section>
@@ -25,7 +25,7 @@
     @endif
     {{-- End Alert Message --}}
 
-    <form action="{{url('admin/post-treatment/II')}}" method="GET">
+    <form action="{{url('/post-treatment/II')}}" method="GET">
         <p>
           <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseFilter" role="button" aria-expanded="false" aria-controls="collapseFilter">
             Filter
@@ -97,7 +97,7 @@
                       </button>
                       {{-- Modal Batch Post Treatment --}}
                        <div class="modal fade" id="DetailsPTModal{{$data['id']}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
+                        <div class="modal-dialog" style="max-width: 800px;">
                           <div class="modal-content">
                             <div class="modal-header">
                               <h5 class="modal-title">{{$data['Batch']}} / {{$data['Tanggal']}}</h5>

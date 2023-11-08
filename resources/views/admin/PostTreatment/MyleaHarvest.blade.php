@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends(auth()->user()->role === 'operator' ? 'layouts.operator' : 'layouts.admin')
 
 @section('content')
 {{-- <section class="m-5">
@@ -21,12 +21,12 @@
         {{ session()->get('message2') }}
     </div>
     @endif
-    <h3>Mylea Panen Summary </h3>
+    <h3>Mylea Harvest Summary </h3>
     <h5> Total Panen : {{ $Total }}</h5>
     <h5> Total Reject Panen : {{ $TotalRejectPanen  }}</h5>  
 
     
-    <form action="{{url('/admin/post-treatment/mylea-harvest')}}" method="GET">
+    <form action="{{url('/post-treatment/mylea-harvest')}}" method="GET">
         <p>
           <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
             Filter by Tanggal Panen

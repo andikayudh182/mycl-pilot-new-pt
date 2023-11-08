@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends(auth()->user()->role === 'operator' ? 'layouts.operator' : 'layouts.admin')
 
 @section('content')
 
@@ -7,7 +7,7 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ url('/operator_dashboard') }}">Home</a></li>
             {{-- <li class="breadcrumb-item"><a href="{{ url('/operator/post-treatment') }}">Post Treatment</a></li> --}}
-            <li class="breadcrumb-item active" aria-current="page">Post Treatment III</li>
+            <li class="breadcrumb-item active" aria-current="page">Dry Process</li>
         </ol>
     </nav>
 </section>
@@ -25,7 +25,7 @@
     @endif
     {{-- End Alert Message --}}
 
-    <form action="{{url('admin/post-treatment/II')}}" method="GET">
+    <form action="{{url('/post-treatment/III')}}" method="GET">
         <p>
           <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseFilter" role="button" aria-expanded="false" aria-controls="collapseFilter">
             Filter
@@ -59,6 +59,7 @@
         </div>
   
     </form>
+
     <div>
         <table class="table">
             <tr class="sticky-header">
@@ -66,7 +67,9 @@
                 <th>Amplas</th>
                 <th>Clearing</th>
                 <th>Filling</th>
-                <th>Coating</th>
+                <th>Coating 1</th>
+                <th>Coating 2</th>
+                <th>Coating 3</th>
                 <th>Finishing</th>
                 <th colspan= "2" class="text-center">Aksi</th>
             </tr>
@@ -78,14 +81,14 @@
                       </button>
                       {{-- Modal Batch Post Treatment --}}
                        <div class="modal fade" id="DetailsPTModal{{$data['id']}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
+                        <div class="modal-dialog" style="max-width: 800px;  ">
                           <div class="modal-content">
                             <div class="modal-header">
                               <h5 class="modal-title">{{$data['Batch']}} / {{$data['Tanggal']}}</h5>
                               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                @include('operator.PostTreatment.DetailsPostTreatment')
+                                @include('operator.PostTreatment.DetailsPostTreatmentIII')
                             </div>
                             <div class="modal-footer">
                               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -96,7 +99,9 @@
                 <td>{{$data['PTData']->where('Proses','Amplas')->sum('Jumlah')}}</td>
                 <td>{{$data['PTData']->where('Proses','Clearing')->sum('Jumlah')}}</td>
                 <td>{{$data['PTData']->where('Proses','Filling')->sum('Jumlah')}}</td>
-                <td>{{$data['PTData']->where('Proses','Coating')->sum('Jumlah')}}</td>
+                <td>{{$data['PTData']->where('Proses','Coating 1')->sum('Jumlah')}}</td>
+                <td>{{$data['PTData']->where('Proses','Coating 2')->sum('Jumlah')}}</td>
+                <td>{{$data['PTData']->where('Proses','Coating 3')->sum('Jumlah')}}</td>
                 <td>{{$data['PTData']->where('Proses','Finishing')->sum('Jumlah')}}</td>
                 <td>
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal{{$data['id']}}">

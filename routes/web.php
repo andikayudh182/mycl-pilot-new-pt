@@ -89,17 +89,17 @@ Route::post('/admin/post-treatment/data-panen/submit-rebus', [App\Http\Controlle
 Route::get('/admin/post-treatment/data-panen/delete-rebus/{ID}', [App\Http\Controllers\admin\PostTreatmentController::class, 'RebusDelete'])->middleware('auth');
 
 // Recreate Post Treatment
-Route::get('/admin/post-treatment/mylea-harvest', [App\Http\Controllers\admin\PostTreatmentController::class, 'MyleaHarvest'])->middleware('auth');
-Route::get('/admin/post-treatment/I', [App\Http\Controllers\admin\PostTreatmentController::class, 'PostTreatmentI'])->middleware('auth');
-Route::get('/admin/post-treatment/II', [App\Http\Controllers\admin\PostTreatmentController::class, 'PostTreatmentII'])->middleware('auth');
-Route::get('/admin/post-treatment/III', [App\Http\Controllers\admin\PostTreatmentController::class, 'PostTreatmentIII'])->middleware('auth');
+Route::get('/post-treatment/mylea-harvest', [App\Http\Controllers\admin\PostTreatmentController::class, 'MyleaHarvest'])->middleware('auth');
+Route::get('/post-treatment/I', [App\Http\Controllers\admin\PostTreatmentController::class, 'PostTreatmentI'])->middleware('auth');
+Route::get('/post-treatment/II', [App\Http\Controllers\admin\PostTreatmentController::class, 'PostTreatmentII'])->middleware('auth');
+Route::get('/post-treatment/III', [App\Http\Controllers\admin\PostTreatmentController::class, 'PostTreatmentIII'])->middleware('auth');
 
-Route::get('/admin/curing/', [App\Http\Controllers\admin\CuringController::class, 'CuringIndex'])->name('CuringIndex')->middleware('auth');
+Route::get('/curing/', [App\Http\Controllers\admin\CuringController::class, 'CuringIndex'])->name('CuringIndex')->middleware('auth');
 Route::post('/admin/curing/actual-finish-curing', [App\Http\Controllers\admin\CuringController::class,'UpdateActualFinishCuring'])->name('UpdateActualFinishCuring')->middleware('auth');
 Route::post('/admin/curing/curing-size', [App\Http\Controllers\admin\CuringController::class,'UpdateCuringSize'])->name('UpdateCuringSize')->middleware('auth');
 
 
-Route::get('/admin/reinforce/', [App\Http\Controllers\admin\ReinforceController::class, 'ReinforceIndex'])->name('ReinforceIndex')->middleware('auth');
+Route::get('/reinforce/', [App\Http\Controllers\admin\ReinforceController::class, 'ReinforceIndex'])->name('ReinforceIndex')->middleware('auth');
 Route::post('/admin/reinforce/submit/', [App\Http\Controllers\admin\ReinforceController::class, 'ReinforceSubmit'])->name('ReinforceSubmit')->middleware('auth');
 Route::post('/admin/reinforce/update/', [App\Http\Controllers\admin\ReinforceController::class, 'ReinforceUpdate'])->name('ReinforceUpdate')->middleware('auth');
 Route::get('/admin/reinforce/delete/{id}', [App\Http\Controllers\admin\ReinforceController::class, 'ReinforceDelete'])->name('ReinforceDelete')->middleware('auth');

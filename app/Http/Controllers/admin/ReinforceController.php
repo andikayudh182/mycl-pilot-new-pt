@@ -38,7 +38,7 @@ class ReinforceController extends Controller
         
         // Buat pilihan batch
         $Data = Curing::join('post_treatment', 'curing.PT_ID', '=', 'post_treatment.id')
-                ->select('curing.id', 'curing.PT_ID', 'curing.Warna', 'curing.SizeSatu', 'curing.SizeDua', 'curing.SizeTiga', 'post_treatment.Batch')
+                ->select('curing.id', 'curing.PT_ID', 'curing.Warna', 'curing.SizeSatu', 'curing.SizeDua', 'curing.SizeTiga', 'curing.SizeEmpat', 'post_treatment.Batch')
                 ->get();
 
 
@@ -48,15 +48,19 @@ class ReinforceController extends Controller
             
             $usedSizeSatu = Curing::join('reinforce', 'curing.id', '=', 'reinforce.CuringID')
                             ->where('reinforce.CuringID', $item['id'])
-                            ->where('reinforce.Size', '15 x 15')
+                            ->where('reinforce.Size', 'Grade A (26x46)')
                             ->sum('reinforce.Jumlah');
             $usedSizeDua = Curing::join('reinforce', 'curing.id', '=', 'reinforce.CuringID')
                             ->where('reinforce.CuringID', $item['id'])
-                            ->where('reinforce.Size', '25 x 30')
+                            ->where('reinforce.Size', 'Grade B (20x40)')
                             ->sum('reinforce.Jumlah');
             $usedSizeTiga = Curing::join('reinforce', 'curing.id', '=', 'reinforce.CuringID')
                             ->where('reinforce.CuringID', $item['id'])
-                            ->where('reinforce.Size', '>30 x 30')
+                            ->where('reinforce.Size', '>Grade C (15x30)')
+                            ->sum('reinforce.Jumlah');
+            $usedSizeEmpat = Curing::join('reinforce', 'curing.id', '=', 'reinforce.CuringID')
+                            ->where('reinforce.CuringID', $item['id'])
+                            ->where('reinforce.Size', 'Grade D')
                             ->sum('reinforce.Jumlah');
         
             $transformedData[] = [
@@ -64,7 +68,7 @@ class ReinforceController extends Controller
                 'PT_ID' => $item->PT_ID,
                 'Warna' => $item->Warna,
                 'Batch' => $item->Batch,
-                'Size' => '15 x 15',
+                'Size' => 'Grade A (26x46)',
                 'Jumlah' => $item->SizeSatu - $usedSizeSatu,
             ];
             $transformedData[] = [
@@ -72,7 +76,7 @@ class ReinforceController extends Controller
                 'PT_ID' => $item->PT_ID,
                 'Warna' => $item->Warna,
                 'Batch' => $item->Batch,
-                'Size' => '25 x 30',
+                'Size' => 'Grade B (20x40)',
                 'Jumlah' => $item->SizeDua - $usedSizeDua,
             ];
             $transformedData[] = [
@@ -80,8 +84,16 @@ class ReinforceController extends Controller
                 'PT_ID' => $item->PT_ID,
                 'Warna' => $item->Warna,
                 'Batch' => $item->Batch,
-                'Size' => '>30 x 30',
+                'Size' => 'Grade C (15x30)',
                 'Jumlah' => $item->SizeTiga - $usedSizeTiga,
+            ];
+            $transformedData[] = [
+                'id' => $item->id,
+                'PT_ID' => $item->PT_ID,
+                'Warna' => $item->Warna,
+                'Batch' => $item->Batch,
+                'Size' => 'Grade D',
+                'Jumlah' => $item->SizeEmpat - $usedSizeEmpat,
             ];
         }
         

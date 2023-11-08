@@ -1,4 +1,4 @@
-    <h3>Form Post Treatment II</h3>
+    <h3>Form Wet Process</h3>
     <form id="FormInputData" action="{{ url('/operator/post-treatment/form-post-treatment-submit') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <input type="hidden" id="PT_ID" name="id">
