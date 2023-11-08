@@ -20,14 +20,14 @@
                 @foreach($data['Panen'] as $Panen)
                     @foreach($Panen['Baglog'] as $BaglogPanen)
                     <tr>
-                        <td>{{$Panen['TanggalPanen']}}</td>
+                        <td>{{$Panen['TanggalPanen']}} </td>
                         <td>{{$BaglogPanen['KPBaglog']}}</td>
                         <td>{{$BaglogPanen['Jumlah']}}</td>
                         <td>{{$BaglogPanen['NoBibit']}}</td>
                         <td>{{$BaglogPanen['KondisiBaglog']}}</td>
                         <td>{{$BaglogPanen['Keterangan']}}</td>
                         <td>
-                            <button type="button" class="btn btn-primary btn-edit" data-panen-id="{{ $Panen }}"
+                            <button type="button" class="btn btn-primary btn-edit" data-panen-id="{{ $BaglogPanen }}" data-panen2-id="{{ $Panen }}"
                             data-form-id="editPanenForm_{{ $data['id'] }}">
                                 Edit
                             </button>
@@ -43,6 +43,7 @@
          <form method="POST" action="{{url('/admin/mylea/report/panen-update')}}" class="m-5" id="editPanenForm_{{$data['id']}}" style="display:none;" >
                 @csrf
                 <input type="hidden" name="id" value="">
+                <input type="hidden" name="PanenDetailsID" value="">
                 <input type="hidden" name="KPMylea" value="{{$data['KodeProduksi']}}">
                 <div class="row mb-3">
                     <label for="TanggalPanen" class="col-sm-2 col-form-label col-form-label-sm">Tanggal Panen :</label>
@@ -105,14 +106,16 @@
         
         $('.btn-edit').click(function() {
             var panenId = $(this).data('panen-id');
+            var panenId2 = $(this).data('panen2-id');
             var formId = $(this).data('form-id');
             $('#' + formId).show();
 
             // Populate the edit form fields with the corresponding data
-            $('#' + formId + ' input[name="id"]').val(panenId.id);
-            $('#' + formId + ' input[name="TanggalPanen"]').val(panenId.TanggalPanen);
-            $('#' + formId + ' input[name="JamMulai"]').val(panenId.JamMulai);
-            $('#' + formId + ' input[name="JamSelesai"]').val(panenId.JamSelesai);
+            $('#' + formId + ' input[name="id"]').val(panenId2.id);
+            $('#' + formId + ' input[name="PanenDetailsID"]').val(panenId.id);
+            $('#' + formId + ' input[name="TanggalPanen"]').val(panenId2.TanggalPanen);
+            $('#' + formId + ' input[name="JamMulai"]').val(panenId2.JamMulai);
+            $('#' + formId + ' input[name="JamSelesai"]').val(panenId2.JamSelesai);
             $('#' + formId + ' input[name="JumlahBaglog"]').val(panenId.Jumlah);
             
             

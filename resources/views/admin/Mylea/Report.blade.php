@@ -343,7 +343,13 @@
                     <td>{{$data['Jumlah']}}</td>
                     <td>{{$data['Konta']}}</td>
                     <td>{{round($data['Konta']/$data['Jumlah']*100, 2)}}%</td>
-                    <td>{{$data['JumlahPanen']}}</td>
+                    <td>
+                        @if ($data['JumlahPanen'] < 1)
+                            0
+                        @else
+                            {{$data['JumlahPanen']}}
+                        @endif
+                    </td>
                     <td>{{$data['InStock']}}</td>
                     <td>
                         <table class="table-borderless table text-center baglog-table">

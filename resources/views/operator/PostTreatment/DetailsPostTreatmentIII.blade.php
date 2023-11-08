@@ -123,10 +123,8 @@
             <th>Jumlah</th>
             <th>Reject</th>
             <th>Notes</th>
+            <th colspan="2" class="text-center">Aksi</th>
         </tr>
-        <?php
-            $id = 0;
-        ?>
         @foreach($data['PTData'] as $PT)
         <tr>
             <td>{{$PT['Tanggal']}}</td>
@@ -135,30 +133,13 @@
             <td>{{$PT['Reject']}}</td>
             <td>{{$PT['Notes']}}</td>
             <td>                    
-                <a class="btn btn-warning" onclick="EditProses({{$id}}, {{$data['PTData']}})" data-bs-toggle="modal" data-bs-target="#exampleModal{{$data['id']}}">
+                <a class="btn btn-warning" data-toggle="modal" data-target="#updateModal{{ $PT['id'] }}">
                     <i class="bi-pencil-square"></i>
                 </a>
+                @include('operator.PostTreatment.FormUpdatePostTreatment')
             </td>
             <td><a href="{{url('/operator/post-treatment/delete', ['id'=>$PT['id'],])}}" onclick="return confirm('Are you sure?')" class="btn btn-danger float-auto"><i class="bi-trash"></i></a></td>
         </tr>
-        <script>
-            function EditProses(id, data) {
-                console.log(id);
-                console.log(data[id]);
-                document.getElementById("id").value = data[id]['id'];
-                document.getElementById("Tanggal").value = data[id]['Tanggal'];
-                document.getElementById("JamMulai").value = data[id]['JamMulai'];
-                document.getElementById("JamSelesai").value = data[id]['JamSelesai'];
-                document.getElementById("Jumlah").value = data[id]['Jumlah'];
-                document.getElementById("Reject").value = data[id]['Reject'];
-                document.getElementById("Notes").value = data[id]['Notes'];
-                document.getElementById("Proses").value = data[id]['Proses'];
-                // $("#Proses").append(new Option(data[id]['Proses'], data[id]['Proses'], false, true));
-            }
-        </script>
-            <?php
-                $id++;
-            ?>
         @endforeach
     </table>
 </div>

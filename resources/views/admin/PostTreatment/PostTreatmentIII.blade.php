@@ -131,7 +131,16 @@
                 document.getElementById("id").value = '0';
                 document.getElementById("FormPostTreatment").reset()
               });
+
+              
              </script>
+
+            {{-- <script>
+              function closeModal(modalToClose) {
+                  $('#' + modalToClose).modal('hide');
+              }
+            </script> --}}
+
             @endforeach
         </table>
     </div>

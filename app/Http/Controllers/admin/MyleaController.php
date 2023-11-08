@@ -16,6 +16,7 @@ use App\Http\Controllers\admin\busslogic\MyleaData;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 
 class MyleaController extends Controller
@@ -58,7 +59,15 @@ class MyleaController extends Controller
                 foreach($ProduksiMylea as $data){
                     $TanggalPengerjaan = $data['TanggalProduksi'];
                     $Panen = Panen::where('KPMylea', $data['KodeProduksi'])->get();
-                    $data['JumlahPanen'] = $Panen->sum('Jumlah');
+                    
+                    $selectTotalHarvest = DB::table('mylea_panen as m')
+                    ->join('mylea_panen_details as mpd', 'm.id', '=', 'mpd.PanenID')
+                    ->where('m.KPMylea', $data['KodeProduksi'])
+                    ->select(DB::raw('SUM(mpd.Jumlah) as TotalHarvest'))
+                    ->first();
+    
+                    $data['JumlahPanen'] = $selectTotalHarvest->TotalHarvest;
+
                     $Konta = Kontaminasi::where('KPMylea', $data['KodeProduksi'])->get();
                     $data['JumlahKonta'] = $Konta->sum('Jumlah');
                    
@@ -193,7 +202,14 @@ class MyleaController extends Controller
                 
             }
             $data['Konta'] = $data['DataKontaminasi']->sum('Jumlah');
-            $data['JumlahPanen'] = $data['Panen']->sum('Jumlah');
+            
+            $selectTotalHarvest = DB::table('mylea_panen as m')
+                ->join('mylea_panen_details as mpd', 'm.id', '=', 'mpd.PanenID')
+                ->where('m.KPMylea', $data['KodeProduksi'])
+                ->select(DB::raw('SUM(mpd.Jumlah) as TotalHarvest'))
+                ->first();
+
+            $data['JumlahPanen'] = $selectTotalHarvest->TotalHarvest;
             $data['InStock'] = $data['Jumlah'] - $data['Konta'] - $data['JumlahPanen'];
             $data['PersenKonta'] = $data['Konta']/$data['Jumlah']*100;
             $Baglog = BaglogMylea::where('KPMylea', $data['KodeProduksi'])
@@ -272,7 +288,14 @@ class MyleaController extends Controller
             $data['Panen']= Panen::select('Jumlah')->where('KPMylea', $data['KodeProduksi'])->get();
  
             $data['Konta'] = $data['DataKontaminasi']->sum('Jumlah');
-            $data['JumlahPanen'] = $data['Panen']->sum('Jumlah');
+            
+            $selectTotalHarvest = DB::table('mylea_panen as m')
+                                ->join('mylea_panen_details as mpd', 'm.id', '=', 'mpd.PanenID')
+                                ->where('m.KPMylea', $data['KodeProduksi'])
+                                ->select(DB::raw('SUM(mpd.Jumlah) as TotalHarvest'))
+                                ->first();
+
+            $data['JumlahPanen'] = $selectTotalHarvest->TotalHarvest;
             $data['InStock'] = $data['Jumlah'] - $data['Konta'] - $data['JumlahPanen'];
         }
         $TanggalPanen = Produksi::orderBy('TanggalProduksi', 'asc')->whereYear('TanggalProduksi', $date)->get();
@@ -394,15 +417,19 @@ class MyleaController extends Controller
 
     public function UpdatePanen(Request $request){
         $id = $request['id'];
-        PanenDetails::where('PanenID', '=', $id)->update([
+        $panenDetailsID = $request['PanenDetailsID'];
+        PanenDetails::where('id', '=', $panenDetailsID)->update([
             'Jumlah'=>$request['JumlahBaglog'],
         ]);
+
+        $totalBaglog = PanenDetails::where('PanenID', $id)->sum('Jumlah');
+
         Panen::find($id)->update([
             'KPMylea'=>$request['KPMylea'],
             'TanggalPanen'=>$request['TanggalPanen'],
             'JamMulai'=>$request['JamMulai'],
             'JamSelesai'=>$request['JamSelesai'],
-            'Jumlah'=>$request['JumlahBaglog'],
+            'Jumlah'=>$totalBaglog,
             'JenisPanen'=>$request['JenisPanen'],
         ]);
 
