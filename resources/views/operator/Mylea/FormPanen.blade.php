@@ -14,9 +14,14 @@
 
 <section class="m-5">
     @if(session()->has('message'))
-    <div class="alert alert-success">
-        {{ session()->get('message') }}
-    </div>
+        <div class="alert alert-success">
+            {{ session()->get('message') }}
+        </div>
+    @endif
+    @if(session()->has('Error'))
+        <div class="alert alert-danger">
+            {{ session()->get('Error') }}
+        </div>
     @endif
     <h3>Form Panen</h3>
     <form action="{{ url('/operator/mylea/form-panen-submit') }}" method="POST">

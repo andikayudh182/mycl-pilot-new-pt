@@ -21,6 +21,7 @@
     @if(session()->has('message2'))
         <div class="alert alert-danger">
             {{ session()->get('message2') }}
+
         </div>
     @endif
     {{-- End Alert Message --}}

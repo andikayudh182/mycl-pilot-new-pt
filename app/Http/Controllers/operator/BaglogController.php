@@ -234,9 +234,7 @@ class BaglogController extends Controller
             $Data['Terpakai'] = 0;
             $Pemakaian = PemakaianSterilisasi::where('SterilisasiID', $Data['id'])->get();
             if(isset($Pemakaian)){
-                foreach($Pemakaian as $Data1){
-                    $Data['Terpakai'] = $Data['Terpakai'] + $Data1['Jumlah'];
-                }
+                $Data['Terpakai'] = $Data['Terpakai'] + $Pemakaian->sum('Jumlah');
             }
             $Data['InStock'] = $Data['JumlahBaglog'] - $Data['Terpakai'];
         }
@@ -266,8 +264,8 @@ class BaglogController extends Controller
 
         foreach($request->data as $key => $value){
             $Tanggal= Sterilisasi::where('id', $value['sterilisasi_id'])->get();
-            $TanggalSterilisasi = $TanggalSterilisasi.",".$Tanggal[0];
-            $IDSterilisasi = $IDSterilisasi.",".$value['sterilisasi_id'];
+            $TanggalSterilisasi = $TanggalSterilisasi.$Tanggal[0]['TanggalPengerjaan'].",";
+            $IDSterilisasi = $IDSterilisasi.$value['sterilisasi_id'].",";
         }
 
         $PembibitanID = Pembibitan::create([
@@ -302,23 +300,91 @@ class BaglogController extends Controller
 
     public function InkubasiBaglog(){
         $pembibitan = Pembibitan::where('StatusArchive', '=', NULL)->orderBy('TanggalPengerjaan', 'desc')->paginate(80);
-        $kontaminasi = '';
-        foreach($pembibitan as $data){
-            $kontaminasi = Kontaminasi::where('KodeProduksi', $data['KodeProduksi'])->get();
-            $data['Konta'] = 0;
-            foreach($kontaminasi as $konta){
-                $data['Konta'] = $data['Konta'] + $konta['JumlahKonta'];
-            }
-            
-            $data['Pemakaian'] = 0;
-            $data['mylea'] = BaglogMylea::where('KPBaglog', $data['KodeProduksi'])->get();
-            foreach($data['mylea']as $pemakaian){
-                $data['Pemakaian'] = $data['Pemakaian'] + $pemakaian['JumlahBaglog'];
-            } 
-            $data['InStock'] = $data['JumlahBaglog'] - $data['Konta'] -$data['Pemakaian'];
-        }
+
+        return view ('operator.Baglog.InkubasiBaglog', ['Pembibitan'=>$pembibitan]);
+    }
+
+    public function DeleteBaglog($id){
+        Pembibitan::where('id', $id)->delete();
+        PemakaianSterilisasi::where('PembibitanID', $id)->delete();
+
+        return redirect()->back()->with('message', 'Data Telah Dihapus');
+    }
+
+    public function InkubasiBaglogEditForm($id){
+        $data = Pembibitan::where('id', $id)->get()->first();
+        $dataSterilisasi= PemakaianSterilisasi::where('PembibitanID', $id)
+        ->join('baglog_sterilisasi', 'baglog_pemakaian_sterilisasi.SterilisasiID', 'baglog_sterilisasi.id')
+        ->select('baglog_sterilisasi.*')->get();
+        $data['KodeBibit'] = substr($data['KodeProduksi'], 11);
+
+        $Sterilisasi = Sterilisasi::where('pembibitan_kp', null)->get();
         
-        return view ('operator.Baglog.InkubasiBaglog', ['Pembibitan'=>$pembibitan, 'Kontaminasi'=>$kontaminasi,]);
+        foreach($Sterilisasi as $item){
+            $item['Terpakai'] = 0;
+            $Pemakaian = PemakaianSterilisasi::where('SterilisasiID', $item['id'])->get();
+            if(isset($Pemakaian)){
+                $item['Terpakai'] = $item['Terpakai'] + $Pemakaian->sum('Jumlah');
+            }
+            $item['InStock'] = $item['JumlahBaglog'] - $item['Terpakai'];
+        }
+
+        return view('operator.Baglog.EditInkubasiBaglog', [
+            'data' => $data,
+            'DataSterilisasi' => $Sterilisasi,
+            'DataPemakaianSterilisasi' => $dataSterilisasi
+        ]);
+    }
+
+    public function InkubasiBaglogEdit($id, Request $request){
+        $TanggalCrushing = date('Y-m-d', strtotime($request['TanggalPengerjaan']. ' + 7 days'));
+        $TanggalHarvest = date('Y-m-d', strtotime($request['TanggalPengerjaan']. ' + 14 days'));
+        $TB = $newDate = date("y-m-d", strtotime($request['TanggalPengerjaan']));
+        $KodeProduksi =  "BL".$request['Batch'].$TB.$request['KodeBibit'];
+        $user_id = Auth::user()->id;
+        $TanggalSterilisasi = "";
+        $IDSterilisasi = "";
+
+        $cm = array_column($request['data'], 'sterilisasi_id');
+        if($cm != array_unique($cm)){
+            return redirect()->back()->with('Error', 'Message : ' . "Terdapat duplikat untuk data inkubasi");
+        }
+
+
+        foreach($request->data as $key => $value){
+            $Tanggal= Sterilisasi::where('id', $value['sterilisasi_id'])->get();
+            $TanggalSterilisasi = $TanggalSterilisasi.$Tanggal[0]['TanggalPengerjaan'].",";
+            $IDSterilisasi = $IDSterilisasi.$value['sterilisasi_id'].",";
+        }
+        Pembibitan::find($id)->update([
+            'TanggalPengerjaan'=>$request['TanggalPengerjaan'],
+            'Batch'=> $request['Batch'],
+            'TanggalSterilisasi'=>$TanggalSterilisasi,
+            'sterilisasi_id'=>$IDSterilisasi,
+            'JumlahBaglog'=>$request['JumlahBaglog'],
+            'Kondisi'=>$request['Kondisi'],
+            'BibitTerpakai'=>$request['BibitTerpakai'],
+            'BatchBibitTerpakai'=>$request['BatchBibitTerpakai'],
+            'BibitReject'=>$request['BibitReject'],
+            'BatchBibitDibuang'=>$request['BatchBibitDibuang'],
+            'KodeProduksi'=>$KodeProduksi,
+            'TanggalCrushing'=>$TanggalCrushing,
+            'TanggalPanen'=>$TanggalHarvest,
+            'StatusCrushing'=>'0',
+            'StatusPanen'=>'0',
+            'user_id'=>$user_id,
+        ]);
+
+        PemakaianSterilisasi::where('PembibitanID', $id)->delete();
+
+        foreach($request->data as $key => $value){
+            PemakaianSterilisasi::create([
+                'SterilisasiID'=>$value['sterilisasi_id'],
+                'PembibitanID'=>$id,
+                'Jumlah'=>$value['Jumlah'],
+            ]);
+        }
+        return redirect()->back()->with('message', 'Data telah di update');
     }
 
     public function InkubasiBaglogKonta($id){

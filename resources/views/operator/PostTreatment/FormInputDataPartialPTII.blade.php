@@ -32,13 +32,13 @@
             </tr>
             <tr>
                 <td>
-                    <select name="data[0][KodeMylea]" class="form-control select2-single" id="KodeMylea" style="width:100%; background-color: #f8fafc;">
+                    <select name="data[0][KodeMylea]" class="form-control select2-single" id="KodeMylea0" style="width:100%; background-color: #f8fafc;" onchange="SetMax(0)">
                         @foreach ($FormData as $item)
                             <option value="{{$item['id']}}">{{$item['KPMylea']}} : {{$item['TanggalPanen']}} (Available : {{$item['InStock']}}) @if($item['JenisPanen']=='Kontaminasi') ({{$item['JenisPanen']}}) @endif</option>
                         @endforeach
                     </select>
                 </td>
-                <td><input type="number" name="data[0][Jumlah]" class="form-control" /></td>
+                <td><input type="number" name="data[0][Jumlah]" id="Quantity0" class="form-control" /></td>
                 <td><button type="button" name="add" id="dynamic-ar" class="btn btn-outline-primary">Tambah</button></td>
             </tr>
         </table>
@@ -57,14 +57,15 @@
                 ++i;
             $("#dynamicAddRemove").append('<tr>'+
                 '<td>' +
-                    '<select name="data['+i+'][KodeMylea]" class="form-control select2-single" id="KodeMylea'+i+'" style="width:100%; background-color: #f8fafc;">' +
+                    '<select name="data['+i+'][KodeMylea]" class="form-control select2-single" id="KodeMylea'+i+'" style="width:100%; background-color: #f8fafc;" onchange="SetMax('+ i +')">' +
                         '@foreach ($FormData as $item)' +
                             ' <option value="{{$item['id']}}">{{$item['KPMylea']}} : {{$item['TanggalPanen']}} (Available : {{$item['InStock']}}) @if($item['JenisPanen']=='Kontaminasi') ({{$item['JenisPanen']}}) @endif</option>' +
                         '@endforeach'+
                     '</select>' +
                 '</td>'+
-                '<td><input type="number" name="data['+i+'][Jumlah]" class="form-control" /></td>' +
+                '<td><input type="number" name="data['+i+'][Jumlah]" id="Quantity'+ i +'" class="form-control" /></td>' +
             '<td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td></tr>');
+            SetMax(i);
             setTimeout(function(){
             $("#KodeMylea" + i).select2({
                 theme: "bootstrap4"
@@ -78,6 +79,27 @@
             $("#KodeMylea").select2({
                 theme: "bootstrap4"
             });
+
+            var dat = <?php echo json_encode($FormData)?>;
+
+            $( document ).ready(function() {
+                SetMax(0);
+            });
+
+            function SetMax(i) {
+                name = "KodeMylea" + i;
+                var e = document.getElementById("KodeMylea" + i);
+                var value = e.options[e.selectedIndex].value;
+
+                let obj = dat.find(o => o.id === parseInt(value));
+                var max = obj.InStock;
+                inputId = "#Quantity" + i;
+
+                $(inputId).attr({
+                    "max" : max,
+                    "min" : 1
+                });
+            }
         </script>
         <style>
         </style>

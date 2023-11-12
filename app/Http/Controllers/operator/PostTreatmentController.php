@@ -22,11 +22,18 @@ class PostTreatmentController extends Controller
     public function FormPostTreatmentSubmit(Request $request)
     {
         if(isset($request['id']) && $request['id'] != null){
+            //validasi double
+            $cm = array_column($request['data'], 'KodeMylea');
+            if($cm != array_unique($cm)){
+                return redirect()->back()->with('message2', 'Message : ' . "Terdapat data duplikat");
+            }
+
             PostTreatment::where('id', $request['id'])->update([
                 'Tanggal'=>$request['Tanggal'],
                 'Batch'=>$request['Batch'],
             ]);
             echo $request['id'];
+
             if(isset($request['data'])){
                 foreach($request->data as $key => $value){
                     PostTreatmentDetails::create([
@@ -48,6 +55,13 @@ class PostTreatmentController extends Controller
 
         $id = Auth::user()->id;
         $Total = 0;
+
+        //validasi double
+        $cm = array_column($request['data'], 'KodeMylea');
+        if($cm != array_unique($cm)){
+            return redirect()->back()->with('message2', 'Message : ' . "Terdapat data duplikat");
+        }
+
         $PT_ID = PostTreatment::create([
             'user_id'=>$id,
             'Tanggal'=>$request['Tanggal'],

@@ -12,9 +12,14 @@
 </div>
 <section class="m-5">
     @if(session()->has('message'))
-    <div class="alert alert-success">
-        {{ session()->get('message') }}
-    </div>
+        <div class="alert alert-success">
+            {{ session()->get('message') }}
+        </div>
+    @endif
+    @if(session()->has('Error'))
+        <div class="alert alert-danger">
+            {{ session()->get('Error') }}
+        </div>
     @endif
     <h2>Produksi Mylea</h2>
     <form action="{{ url('/operator/mylea/form-produksi-submit') }}" method="POST">
@@ -123,6 +128,20 @@
         $(document).on('click', '.remove-input-field', function () {
             $(this).parents('tr').remove();
         });
+        function SetMax(i) {
+            name = "BaglogCode" + i;
+            var e = document.getElementById("BaglogCode" + i);
+            var value = e.options[e.selectedIndex].value;
+
+            let obj = dat.find(o => o.id === parseInt(value));
+            var max = obj.InStock;
+            inputId = "#Quantity" + i;
+
+            $(inputId).attr({
+                "max" : max,
+                "min" : 1
+            });
+        }
     </script>
 </section>
 

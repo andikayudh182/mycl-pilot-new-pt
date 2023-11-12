@@ -112,6 +112,12 @@ class ReinforceController extends Controller
         try {
             $tanggalPengerjaan = $request['TanggalPengerjaan'];
 
+            //validasi double
+            $cm = array_column($request['data'], 'CuringID');
+            if($cm != array_unique($cm)){
+                return redirect()->back()->with('Error', 'Message : ' . "Terdapat data duplikat");
+            }
+
             if (isset($request['data'])) {
                 foreach($request->data as $key=> $value){
                     $selectedOption = $value['CuringID'];

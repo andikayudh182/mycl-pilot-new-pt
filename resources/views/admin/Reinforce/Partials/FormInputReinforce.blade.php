@@ -22,7 +22,7 @@
         </tr>
         <tr>
             <td>
-                <select name="data[0][CuringID]" class="form-control select2-single" id="CuringID" style="width:100%; background-color: #f8fafc;">
+                <select name="data[0][CuringID]" class="form-control select2-single" id="CuringID0" style="width:100%; background-color: #f8fafc;" onchange="SetMax(0)">
                     @foreach ($FormData as $item)
                         @if ($item['Jumlah'] > 0)
                             <option value="{{$item['id'].",".$item['Size']}}">{{$item['Batch']}} - {{ $item['Warna'] }} - {{ $item['Size'] }} (Available : {{ $item['Jumlah'] }})</option>                
@@ -37,7 +37,7 @@
                     <option value="Other">Other</option>
                 </select>
             </td>
-            <td><input type="number" name="data[0][Jumlah]" class="form-control" /></td>
+            <td><input type="number" name="data[0][Jumlah]" id="Quantity0" class="form-control" /></td>
             <td><button type="button" name="add" id="dynamic-ar" class="btn btn-outline-primary">Tambah</button></td>
         </tr>
     </table>
@@ -71,7 +71,7 @@
                     '<option value="Other">Other</option>'+ 
                 '</select>'+
             '</td>'+
-            '<td><input type="number" name="data['+i+'][Jumlah]" class="form-control" /></td>' +
+            '<td><input type="number" name="data['+i+'][Jumlah]" id="Quantity'+ i +'" class="form-control" /></td>' +
         '<td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td></tr>');
         setTimeout(function(){
         $("#CuringID" + i).select2({
@@ -83,9 +83,30 @@
         $(document).on('click', '.remove-input-field', function () {
             $(this).parents('tr').remove();
         });
-        $("#CuringID").select2({
+        $("#CuringID0").select2({
             theme: "bootstrap4"
         });
+
+        var dat = <?php echo json_encode($FormData)?>;
+
+        $( document ).ready(function() {
+            SetMax(0);
+        });
+
+        function SetMax(i) {
+            name = "CuringID" + i;
+            var e = document.getElementById("CuringID" + i);
+            var value = e.options[e.selectedIndex].value;
+
+            let obj = dat.find(o => o.id === parseInt(value));
+            var max = obj.Jumlah;
+            inputId = "#Quantity" + i;
+
+            $(inputId).attr({
+                "max" : max,
+                "min" : 1
+            });
+        }
     </script>
     <style>
     </style>

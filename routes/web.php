@@ -128,6 +128,9 @@ Route::post('/operator/baglog/sterilisasi-submit', [App\Http\Controllers\operato
 Route::get('/operator/baglog/pembibitan', [App\Http\Controllers\operator\BaglogController::class, 'Pembibitan'])->middleware('auth');
 Route::post('/operator/baglog/pembibitan-submit', [App\Http\Controllers\operator\BaglogController::class, 'PembibitanSubmit'])->middleware('auth');
 Route::get('/operator/baglog/inkubasi-baglog', [App\Http\Controllers\operator\BaglogController::class, 'InkubasiBaglog'])->middleware('auth');
+Route::delete('/operator/baglog/inkubasi-baglog/{id}', [App\Http\Controllers\operator\BaglogController::class, 'DeleteBaglog'])->middleware('auth')->name('DeleteBaglog');
+Route::get('/operator/baglog/inkubasi-baglog/{id}', [App\Http\Controllers\operator\BaglogController::class, 'InkubasiBaglogEditForm'])->middleware('auth')->name('FormEditBaglog');
+Route::post('/operator/baglog/inkubasi-baglog/{id}', [App\Http\Controllers\operator\BaglogController::class, 'InkubasiBaglogEdit'])->middleware('auth')->name('EditBaglogSubmit');
 Route::get('/operator/baglog/inkubasi-baglog/konta/{id}', [App\Http\Controllers\operator\BaglogController::class, 'InkubasiBaglogKonta'])->middleware('auth');
 Route::get('/operator/baglog/inkubasi-baglog/konta-data/{KodeProduksi}', [App\Http\Controllers\operator\BaglogController::class, 'InkubasiKontaData'])->middleware('auth');
 Route::post('/operator/baglog/inkubasi-baglog/konta-submit', [App\Http\Controllers\operator\BaglogController::class, 'InkubasiBaglogKontaSubmit'])->middleware('auth');

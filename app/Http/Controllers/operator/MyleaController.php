@@ -44,6 +44,11 @@ class MyleaController extends Controller
         }
         
         // $Jumlah = '0';
+        //validasi data duplikat
+        $cm = array_column($request['data'], 'KodeBaglog');
+        if($cm != array_unique($cm)){
+            return redirect()->back()->with('Error', 'Message : ' . "Terdapat data duplikat");
+        }
 
         foreach($request->data as $key => $value){
             BaglogMylea::create([
@@ -106,6 +111,12 @@ class MyleaController extends Controller
         ]);
 
         $id = Auth::user()->id;
+
+        //validasi double
+        $cm = array_column($request['data'], 'KodeBaglog');
+        if($cm != array_unique($cm)){
+            return redirect()->back()->with('Error', 'Message : ' . "Terdapat data duplikat");
+        }
 
         foreach($request->data as $key => $value){
             Kontaminasi::create([
@@ -207,6 +218,12 @@ class MyleaController extends Controller
         ]);
 
         $id = Auth::user()->id;
+
+        //validasi double
+        $cm = array_column($request['data'], 'KodeBaglog');
+        if($cm != array_unique($cm)){
+            return redirect()->back()->with('Error', 'Message : ' . "Terdapat data duplikat");
+        }
 
         $PanenID = Panen::create([
             'user_id'=>$id,
