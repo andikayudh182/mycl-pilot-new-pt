@@ -15,10 +15,15 @@
                 </div>
                 <div class="mb-3">
                     <label for="Batch" class="form-label">Batch/Warna/Size/Available</label>
-                    <select name="CuringID" class="form-control select2-single" id="CuringID" style="width:100%; background-color: #f8fafc;">
+                    <select name="CuringID" class="form-control select2-single" id="CuringID" style="width:100%; background-color: #f8fafc;" onchange="SetMaxUpdate()">
                         @foreach ($FormData as $item)
                         <option value="{{$item['id'].",".$item['Size']}}" {{ $item['id'].",".$item['Size'] == $data['CuringID'].",".$data['Size'] ? 'selected' : '' }}>
-                            {{ $item['Batch'] }} - {{ $item['Warna'] }} - {{ $item['Size'] }} (Available: {{ $item['Jumlah'] }})
+                            {{ $item['Batch'] }} - {{ $item['Warna'] }} - {{ $item['Size'] }} (Available: {{ $item['Jumlah'] }}) {{ $item['id'].",".$item['Size'] == $data['CuringID'].",".$data['Size'] ? '+'.$data['Jumlah'] : '' }}
+                            @php 
+                                if($item['id'].",".$item['Size'] == $data['CuringID'].",".$data['Size']){
+                                    $item['Jumlah'] = $item['Jumlah'] + $data['Jumlah'];
+                                }
+                            @endphp
                         </option>
                     @endforeach 
                     </select>
@@ -45,4 +50,35 @@
         </div>
     </div>
 </div>
+
+<script>
+    var dat = <?php echo json_encode($FormData)?>;
+
+    $( document ).ready(function() {
+        SetMaxUpdate();
+    });
+
+    function SetMaxUpdate() {
+        name = "CuringID";
+        var e = document.getElementById("CuringID");
+        var value = e.options[e.selectedIndex].value;
+        console.log(dat);
+        const array = value.split(',');
+
+        let obj = dat.find(o => o.id === parseInt(array[0]) && o.Size === array[1]);
+
+        var max = obj.Jumlah;
+        console.log(max);
+        if(value == '<?php echo $data['CuringID'].",".$data['Size']?>'){
+            max = max + <?php echo $data['Jumlah']?>
+        }
+        console.log(max);
+        inputId = "#Jumlah";
+
+        $(inputId).attr({
+            "max" : max,
+            "min" : 1
+        });
+    }
+</script>
 
