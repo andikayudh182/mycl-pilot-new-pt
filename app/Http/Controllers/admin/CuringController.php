@@ -117,21 +117,24 @@ class CuringController extends Controller
     {
         $PT_ID = $request['PT_ID'];
     
-        $curing = Curing::where('PT_ID', $PT_ID)->first();
+        // $curing = Curing::where('PT_ID', $PT_ID)->first();
     
-        if (!$curing) {
-            return redirect(route('CuringIndex'))->with('Error', 'Please input actual finish curing first !!' );
-        }
+        // if (!$curing) {
+        //     return redirect(route('CuringIndex'))->with('Error', 'Please input actual finish curing first !!' );
+        // }
     
         try {
-            $curing->update([
-                'TanggalPengerjaan' => $request['TanggalPengerjaan'],
-                'Warna' => $request['Warna'],
-                'SizeSatu' => $request['SizeSatu'],
-                'SizeDua' => $request['SizeDua'],
-                'SizeTiga' => $request['SizeTiga'],
-                'SizeEmpat' => $request['SizeEmpat'],
-            ]);
+            Curing::updateOrInsert(
+                ['PT_ID' => $PT_ID],
+                [
+                    'TanggalPengerjaan' => $request['TanggalPengerjaan'],
+                    'Warna' => $request['Warna'],
+                    'SizeSatu' => $request['SizeSatu'],
+                    'SizeDua' => $request['SizeDua'],
+                    'SizeTiga' => $request['SizeTiga'],
+                    'SizeEmpat' => $request['SizeEmpat'],
+                ]
+            );
     
             return redirect(route('CuringIndex'))->with('Success', 'Update Curing Size Success!');
         } catch (\Exception $e) {

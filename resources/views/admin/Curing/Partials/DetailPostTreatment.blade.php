@@ -87,9 +87,10 @@
             <td>{{$PT['Reject']}}</td>
             <td>{{$PT['Notes']}}</td>
             <td>                    
-                <a class="btn btn-warning" onclick="EditProses({{$id}}, {{$data['PTData']}})" data-bs-toggle="modal" data-bs-target="#exampleModal{{$data['id']}}">
+                <a class="btn btn-warning" data-toggle="modal" data-target="#updateModal{{ $PT['id'] }}">
                     <i class="bi-pencil-square"></i>
                 </a>
+                @include('operator.PostTreatment.FormUpdatePostTreatment')
             </td>
             <td><a href="{{url('/operator/post-treatment/delete', ['id'=>$PT['id'],])}}" onclick="return confirm('Are you sure?')" class="btn btn-danger float-auto"><i class="bi-trash"></i></a></td>
         </tr>

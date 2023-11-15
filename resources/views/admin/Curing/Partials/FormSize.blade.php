@@ -1,4 +1,4 @@
-<div class="modal fade" id="updateModal{{$data['id']}}" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+<div class="modal fade" id="updateSizeModal{{$data['id']}}" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">

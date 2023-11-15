@@ -13,9 +13,9 @@
 <section class="m-5">
     {{-- Alert Message --}}
     <div class="alertDiv">
-      @if(session()->has('Success'))
+      @if(session()->has('message'))
           <div class="alert alert-success" role="alert">
-              {{session('Success')}}
+              {{session('message')}}
           </div>
       @elseif(session()->has('Error'))
       <div class="alert alert-danger" role="alert">
@@ -100,8 +100,8 @@
                 </td>
                 <td>{{ $data['ScheduleFinishCuring'] }}</td>
                 <td>
-                  <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal{{$data['id']}}" style="text-decoration:none;">
-                    @if(isset($data['Curing'][0]))
+                  <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModalActual{{$data['id']}}" style="text-decoration:none;">
+                    @if(isset($data['Curing'][0]['ActualFinishCuring']))
                       {{ $data['Curing'][0]['ActualFinishCuring'] }}
                     @else
                         -
@@ -152,7 +152,7 @@
                   @endif
                 </td>
                 <td class="text-center">
-                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateModal{{ $data['id'] }}">
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateSizeModal{{ $data['id'] }}">
                     Form Size
                   </button>
                 
