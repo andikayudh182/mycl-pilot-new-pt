@@ -13,15 +13,19 @@
     </div>
     @endif
     <h3> Scouring Summary </h3>
-    <h5> Total Belum  Dikerik : {{ $TotalBelumKerik }}</h5>
-    <h5> Total Sudah Dikerik : {{ $TotalSudahKerik }}</h5>
-    <h5> Total Reject Kerik : {{ $TotalRejectKerik  }}</h5>
-    <h5> Total Reject Sebelum Kerik : {{$TotalRejectBeforeKerik  }} </h5>
-    <h5> Total Sudah Rebus : {{ $TotalRebus }}</h5>
+    <h5> Total Belum Kerik : {{ $TotalBelumKerik }}</h5>
     <h5> Total Belum Rebus : {{ $TotalBelumRebus }}</h5>
+    <h5> Total Rebus Original : {{ $TotalRebusOri }}</h5>
+    <h5> Total Rebus Black : {{ $TotalRebusBlack }}</h5>
+    <h5> Sisa Original : {{ $TotalSisaOri }}</h5>
+    <h5> Sisa Black : {{ $TotalSisaBlack }}</h5>
+    {{-- <h5> Total Sudah Dikerik : {{ $TotalSudahKerik }}</h5> --}}
+    {{-- <h5> Total Reject Kerik : {{ $TotalRejectKerik  }}</h5>
+    <h5> Total Reject Sebelum Kerik : {{$TotalRejectBeforeKerik  }} </h5>
+    <h5> Total Sudah Rebus : {{ $TotalRebus }}</h5> --}}
+    
 
-    
-    
+
     
     <form action="{{url('/post-treatment/I')}}" method="GET">
         <p>
@@ -62,9 +66,13 @@
             <th>Hasil Kerik</th>
             <th>Reject Kerik</th>
             <th style="border-right: 2px solid black">Reject Sebelum Kerik</th>
-            <th>Sudah Rebus</th>
-            <th style="border-right: 2px solid black">Belum Rebus</th>
-            <th>Batch Post </br> Treatment</th>
+            <th>Rebus Original</th>
+            <th>Rebus Black</th>
+            <th>Total Rebus</th>
+            <th style="border-right: 2px solid black" width="5%">Belum Rebus</th>
+            <th style="border-right: 2px solid black" width="7%">Batch Post </br> Treatment</th>
+            <th>Sisa Original</th>
+            <th style="border-right: 2px solid black">Sisa Black</th>
             <th colspan="2" class="text-center">Aksi</th>
         </tr>
 
@@ -81,12 +89,17 @@
                 <td>{{$data['Kerik']->sum('Jumlah')}}</td>
                 <td>{{$data['Kerik']->sum('RejectAfterKerik')}}</td>
                 <td style="border-right: 2px solid black">{{$data['Kerik']->sum('RejectBeforeKerik')}}</td>
-                <td>{{ $data['TotalRebus'] }}</td>
-                <td style="border-right: 2px solid black">{{$data['Kerik']->sum('Jumlah') - $data['TotalRebus']}}</td>
-                      @if($data['PostTreatment']->sum('Jumlah') == 0)
-                    <td>{{$data['PostTreatment']->sum('Jumlah')}}</td>
+                <td>{{ $data['TotalRebusOri'] }}</td>
+                <td>{{ $data['TotalRebusBlack'] }}</td>
+                @php
+                    $totalRebus = $data['TotalRebusOri'] + $data['TotalRebusBlack'];
+                @endphp
+                <td>{{ $totalRebus }}</td>
+                <td style="border-right: 2px solid black">{{$data['Kerik']->sum('Jumlah') - $totalRebus }}</td>
+                @if($data['PostTreatment']->sum('Jumlah') == 0)
+                    <td style="border-right: 2px solid black">{{$data['PostTreatment']->sum('Jumlah')}}</td>
                 @else
-                    <td>
+                    <td style="border-right: 2px solid black">
                         @foreach($data['PostTreatment'] as $item)
                             @if($item['Details'] && ($item['Details']['Status'] == null) )
                                 <a href="#" data-bs-toggle="modal" data-bs-target="#DetailsPTModal{{$item['PT_ID']}}">
@@ -240,7 +253,8 @@
                         
                     </td>
                 @endif
-            
+                <td>{{ $data['SisaOri'] }}</td>
+                <td style="border-right: 2px solid black">{{ $data['SisaBlack'] }}</td>
                 <td>
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#FormKerikModal{{$data['id']}}">
                         Form Kerik

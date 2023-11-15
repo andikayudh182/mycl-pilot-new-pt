@@ -275,6 +275,8 @@ class PostTreatmentController extends Controller
             //buat liat data yang masih on process tiap myleanya bisa pake array yang dibawah ini
             $data['OnGoingPT'] = 0;
             $TotalPTReject = 0;
+
+            
             
             foreach($data['PostTreatment'] as $item){
                 $item['Details'] = PostTreatment::where('id', $item['PT_ID'])->get()->first();
@@ -296,6 +298,43 @@ class PostTreatmentController extends Controller
 
             $data['Rebus'] = PTRebus::where('PanenID', $data['id'])->get();
             $data['TotalRebus']= $data['Rebus']->sum('JumlahRebus');
+            $data['TotalRebusOri']= $data['Rebus']->sum('JumlahOri');
+            $data['TotalRebusBlack']= $data['Rebus']->sum('JumlahBlack');
+
+            $data['isBlack'] =  DB::table('post_treatment_details')
+                                ->select('id', DB::raw('SUM(Jumlah) as usedBlack'))
+                                ->where('Panen_ID', '=', $data['id'])
+                                ->whereIn('PT_ID', function($query) {
+                                    $query->select('PT_ID')
+                                        ->from('post_treatment_proses')
+                                        ->where('proses', '=', 'Dyeing')
+                                        ->where('Jumlah', '>', 0);
+                                })
+                                ->groupBy('id')
+                                ->get();
+
+            $data['isOri']  = DB::table('post_treatment_details')
+                            ->select('id', DB::raw('SUM(Jumlah) as usedOri'))
+                            ->where('Panen_ID', '=', $data['id'])
+                            ->whereIn('PT_ID', function($query) {
+                                $query->select('PT_ID')
+                                    ->from('post_treatment_proses')
+                                    ->where('proses', '!=', 'Dyeing')
+                                    ->where('Jumlah', '>', 0);
+                            })
+                            ->groupBy('id')
+                            ->get();
+            if (!$data['isBlack']->isEmpty() && isset($data['isBlack'][0]->usedBlack)) {
+                $data['SisaBlack'] = $data['TotalRebusBlack'] - $data['isBlack'][0]->usedBlack;
+            } else {
+                $data['SisaBlack'] = $data['TotalRebusBlack'];
+            }
+
+            if (!$data['isOri']->isEmpty() && isset($data['isOri'][0]->usedOri)) {
+                $data['SisaOri'] = $data['TotalRebusOri'] - $data['isOri'][0]->usedOri;
+            } else {
+                $data['SisaOri'] = $data['TotalRebusOri'];
+            }
         }
 
         // added by dika
@@ -322,6 +361,10 @@ class PostTreatmentController extends Controller
         $totalRejectKerik = 0;
         $totalStokBelumDikerik = 0;
         $totalRebus = 0;
+        $totalRebusOri = 0;
+        $totalRebusBlack = 0;
+        $totalSisaOri = 0;
+        $totalSisaBlack = 0;
         $totalBelumRebus = 0;
  
 
@@ -330,9 +373,13 @@ class PostTreatmentController extends Controller
             $totalRejectBeforeKerik += $data['Kerik']->sum('RejectBeforeKerik');
             $totalHasilKerik += $data['Kerik']->sum('Jumlah');
             $totalRejectKerik += $data['Kerik']->sum('RejectAfterKerik');
-            $totalStokBelumDikerik += $data['Jumlah']-$data['kerik']->sum('Jumlah')-$data['kerik']->sum('RejectBeforeKerik')-$data['kerik']->sum('RejectAfterKerik');
+            $totalStokBelumDikerik += $data['Jumlah'] - $data['kerik']->sum('Jumlah') - $data['kerik']->sum('RejectBeforeKerik') - $data['kerik']->sum('RejectAfterKerik');
             $totalRebus += $data['TotalRebus'];
-            $totalBelumRebus += $data['Kerik']->sum('Jumlah') - $data['TotalRebus'];
+            $totalRebusOri += $data['TotalRebusOri'];
+            $totalRebusBlack += $data['TotalRebusBlack'];
+            $totalSisaOri += $data['SisaOri'];
+            $totalSisaBlack+= $data['SisaBlack'];
+            $totalBelumRebus += $data['Kerik']->sum('Jumlah') - ($data['TotalRebusOri'] + $data['TotalRebusBlack']);
         }
 
 
@@ -348,6 +395,10 @@ class PostTreatmentController extends Controller
             'TotalRejectKerik'=> $totalRejectKerik,
             'TotalBelumKerik'=> $totalStokBelumDikerik,
             'TotalRebus'=> $totalRebus,
+            'TotalRebusOri'=> $totalRebusOri,
+            'TotalRebusBlack'=> $totalRebusBlack,
+            'TotalSisaBlack'=> $totalSisaBlack,
+            'TotalSisaOri'=> $totalSisaOri,
             'TotalBelumRebus'=> $totalBelumRebus,
             // 'TotalSisaBelumTerpakai'=> $totalSisaBelumTerpakai,
         ]);
@@ -398,6 +449,46 @@ class PostTreatmentController extends Controller
 
             if(($data['Rebus']->sum('JumlahRebus') - $TotalPT) > 0){
                 $data['InStock'] = $data['Rebus']->sum('JumlahRebus') - $TotalPT;
+                // $data['InStockOri'] = $data['Rebus']->sum('JumlahOri');
+                // $data['InStockBlack'] = $data['Rebus']->sum('JumlahBlack');
+                // $data['InstockTotal'] = $data['Rebus']->sum('JumlahRebus');
+                // $data['PemakaianPT'] = $TotalPT;
+                // $data['isBlack'] =  DB::table('post_treatment_details')
+                //                     ->select('id', DB::raw('SUM(Jumlah) as usedBlack'))
+                //                     ->where('Panen_ID', '=', 318)
+                //                     ->whereIn('PT_ID', function($query) {
+                //                         $query->select('PT_ID')
+                //                             ->from('post_treatment_proses')
+                //                             ->where('proses', '=', 'Dyeing')
+                //                             ->where('Jumlah', '>', 0);
+                //                     })
+                //                     ->groupBy('id')
+                //                     ->get();
+            
+            
+                // $data['isOri']  = DB::table('post_treatment_details')
+                //                 ->select('id', DB::raw('SUM(Jumlah) as usedOri'))
+                //                 ->where('Panen_ID', '=', 318)
+                //                 ->whereIn('PT_ID', function($query) {
+                //                     $query->select('PT_ID')
+                //                         ->from('post_treatment_proses')
+                //                         ->where('proses', '!=', 'Dyeing')
+                //                         ->where('Jumlah', '>', 0);
+                //                 })
+                //                 ->groupBy('id')
+                //                 ->get();
+                            
+            
+                                        
+                // if (!$data['isBlack']->isEmpty() && isset($data['isBlack'][0]->usedBlack)) {
+                //     $data['SisaBlack'] = $data['InStockBlack'] - $data['isBlack'][0]->usedBlack;
+                // }
+                // if (!$data['isOri']->isEmpty() && isset($data['isOri'][0]->usedOri)) {
+                //     $data['SisaOri'] = $data['InStockOri'] - $data['isOri'][0]->usedOri;
+                // }
+
+            
+                
                 $filteredData[] = $data;
             }
         }
@@ -606,9 +697,21 @@ class PostTreatmentController extends Controller
         PTRebus::create([
             'PanenID'=> $request['PanenID'],
             'Tanggal'=> $request['Tanggal'],
-            'JumlahRebus'=> $request['Jumlah'],
+            'JumlahOri'=> $request['JumlahOri'],
+            'JumlahBlack'=> $request['JumlahBlack'],
+            'JumlahRebus'=> $request['JumlahTotal'],
         ]);
         return redirect()->back()->with('message', 'Data Rebus Added');
+    }
+    public function RebusUpdate(Request $request)
+    {
+        PTRebus::where('id', $request['updateId'])->update([
+            'Tanggal'=> $request['updateTanggal'],
+            'JumlahOri'=> $request['updateJumlahOri'],
+            'JumlahBlack'=> $request['updateJumlahBlack'],
+            'JumlahRebus'=> $request['updateJumlahTotal'],
+        ]);
+        return redirect()->back()->with('message', 'Data Rebus Updated');
     }
 
     public function RebusDelete($ID)

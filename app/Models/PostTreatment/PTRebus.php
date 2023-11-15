@@ -17,6 +17,8 @@ class PTRebus extends Model
     protected $fillable = [
         'PanenID',
         'Tanggal',
+        'JumlahOri',
+        'JumlahBlack',
         'JumlahRebus',
         
     ];
@@ -24,6 +26,8 @@ class PTRebus extends Model
     public $sortable = [
         'PanenID',
         'Tanggal',
+        'JumlahOri',
+        'JumlahBlack',
         'JumlahRebus',
     ];
 

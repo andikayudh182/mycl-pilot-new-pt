@@ -86,6 +86,7 @@ Route::get('/admin/post-treatment/report', [App\Http\Controllers\admin\PostTreat
 Route::get('/admin/post-treatment/delete-all/{PanenID}', [App\Http\Controllers\admin\PostTreatmentController::class, 'DeleteAll'])->middleware('auth');
 Route::get('/admin/post-treatment/delete/{ID}', [App\Http\Controllers\admin\PostTreatmentController::class, 'DeleteAll'])->middleware('auth');
 Route::post('/admin/post-treatment/data-panen/submit-rebus', [App\Http\Controllers\admin\PostTreatmentController::class, 'RebusSubmit'])->middleware('auth');
+Route::post('/admin/post-treatment/data-panen/update-rebus', [App\Http\Controllers\admin\PostTreatmentController::class, 'RebusUpdate'])->middleware('auth');
 Route::get('/admin/post-treatment/data-panen/delete-rebus/{ID}', [App\Http\Controllers\admin\PostTreatmentController::class, 'RebusDelete'])->middleware('auth');
 
 // Recreate Post Treatment

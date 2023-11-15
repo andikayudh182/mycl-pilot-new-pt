@@ -17,12 +17,14 @@ class PostTreatmentDetails extends Model
     protected $table = 'post_treatment_details';
 
     protected $fillable = [
+        'id',
         'PT_ID',
         'Panen_ID',
         'Jumlah',
     ];
 
     public $sortable = [
+        'id',
         'PT_ID',
         'Panen_ID',
         'Jumlah',

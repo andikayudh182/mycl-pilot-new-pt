@@ -1,5 +1,5 @@
 <div class="modal fade" id="exampleModal{{$data['id']}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="max-width:800px;">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">{{$data['KPMylea']}}</h5>
@@ -42,13 +42,24 @@
             <table class="table">
                 <tr>
                     <th>Tanggal Rebus</th>
-                    <th>Jumlah</th>
+                    <th>Jumlah Ori</th>
+                    <th>Jumlah Black</th>
+                    <th>Jumlah Total</th>
                 </tr>
                 @if(isset($data['Rebus']))
                   @foreach($data['Rebus'] as $item)
                   <tr>
                       <td>{{$item['Tanggal']}}</td>
+                      <td>{{$item['JumlahOri']}}</td>
+                      <td>{{$item['JumlahBlack']}}</td>
                       <td>{{$item['JumlahRebus']}}</td>
+                      <td>
+                        <!-- Button trigger modal -->
+                        <a class="btn btn-warning" data-toggle="modal" data-target="#updateRebus{{ $item['id'] }}">
+                            <i class="bi-pencil-square"></i>
+                        </a>
+                            @include('admin.PostTreatment.Partials.UpdateRebusDetails')
+                      </td>
                       <td><a href="{{url('/admin/post-treatment/data-panen/delete-rebus', ['id'=>$item['id'],])}}" onclick="return confirm('Are you sure?')" class="btn btn-danger float-auto"><i class="bi-trash"></i></a></td>
                   </tr>
                   @endforeach
