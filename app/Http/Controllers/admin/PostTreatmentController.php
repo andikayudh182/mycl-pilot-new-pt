@@ -729,4 +729,13 @@ class PostTreatmentController extends Controller
         PTRebus::find($ID)->delete();
         return redirect()->back()->with('message2', 'Data Kerik Deleted');
     }
+
+    public function UpdateJumlahMyleaDetails(Request $request) {
+        PostTreatmentDetails::where('id', $request['id'])->update([
+            'Jumlah' => $request['Jumlah']
+        ]);
+
+        return redirect()->back()->with('message', 'Jumlah Mylea Details Updated');
+    
+    }
 }

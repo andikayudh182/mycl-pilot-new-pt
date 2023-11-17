@@ -44,7 +44,17 @@
         <tr>
             <td>{{$Mylea['KPMylea']}}</td>
             <td>{{$Mylea['Jumlah']}}</td>
-            <td><a href="{{url('/operator/post-treatment/delete-mylea', ['id'=>$Mylea['id'],])}}" onclick="return confirm('Are you sure?')" class="btn btn-danger float-auto"><i class="bi-trash"></i></a></td>
+            <td>
+                <a class="btn btn-warning" data-toggle="modal" data-target="#updateJumlahMylea{{ $Mylea['id'] }}">
+                    <i class="bi-pencil-square"></i>
+                </a>
+         
+                    @include('admin.PostTreatment.Partials.UpdateJumlahMyleaDetails')
+
+                <a href="{{url('/operator/post-treatment/delete-mylea', ['id'=>$Mylea['id'],])}}" onclick="return confirm('Are you sure?')" class="btn btn-danger float-auto">
+                    <i class="bi-trash"></i>
+                </a>
+            </td>
         </tr>
         @endforeach
     </table>

@@ -5,7 +5,7 @@
         <div class="row mb-3 ">
             <label for="Tanggal" class="col-sm-2 col-form-label col-form-label-sm">Tanggal  :</label>
             <div class="col-sm-5">
-                <input type="date" id="Tanggal" name="Tanggal" class="form-control form-control-sm  @error('Tanggal') is-invalid @enderror" id="colFormLabelSm" value="{{ old('TanggalPengerjaaan') }}">
+                <input type="date" id="Tanggal" name="Tanggal" class="form-control form-control-sm  @error('Tanggal') is-invalid @enderror" id="colFormLabelSm" value="{{ old('TanggalPengerjaaan') }}" required>
                 @error('Tanggal')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -16,7 +16,7 @@
         <div class="row mb-3 ">
             <label for="Batch" class="col-sm-2 col-form-label col-form-label-sm">Batch  :</label>
             <div class="col-sm-5">
-                <input type="text" id="Batch" name="Batch" class="form-control form-control-sm  @error('Batch') is-invalid @enderror" id="colFormLabelSm" value="{{ old('Batch') }}">
+                <input type="text" id="Batch" name="Batch" class="form-control form-control-sm  @error('Batch') is-invalid @enderror" id="colFormLabelSm" value="{{ old('Batch') }}" required>
                 @error('Batch')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>

@@ -39,7 +39,9 @@
                         <a class="btn btn-warning" data-toggle="modal" data-target="#updateKerik{{ $item['id'] }}">
                             <i class="bi-pencil-square"></i>
                         </a>
+
                         @include('admin.PostTreatment.Partials.UpdateKerikDetails')
+
                         <a href="{{url('/admin/post-treatment/data-panen/delete-kerik', ['id'=>$item['id'],])}}" onclick="return confirm('Are you sure?')" class="btn btn-danger float-auto">
                             <i class="bi-trash"></i>
                         </a>

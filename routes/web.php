@@ -89,6 +89,7 @@ Route::get('/admin/post-treatment/delete/{ID}', [App\Http\Controllers\admin\Post
 Route::post('/admin/post-treatment/data-panen/submit-rebus', [App\Http\Controllers\admin\PostTreatmentController::class, 'RebusSubmit'])->middleware('auth');
 Route::post('/admin/post-treatment/data-panen/update-rebus', [App\Http\Controllers\admin\PostTreatmentController::class, 'RebusUpdate'])->middleware('auth');
 Route::get('/admin/post-treatment/data-panen/delete-rebus/{ID}', [App\Http\Controllers\admin\PostTreatmentController::class, 'RebusDelete'])->middleware('auth');
+Route::post('/admin/post-treatment-details/update-jumlah-mylea', [App\Http\Controllers\admin\PostTreatmentController::class, 'UpdateJumlahMyleaDetails'])->middleware('auth');
 
 // Recreate Post Treatment
 Route::get('/post-treatment/mylea-harvest', [App\Http\Controllers\admin\PostTreatmentController::class, 'MyleaHarvest'])->middleware('auth');
@@ -105,6 +106,8 @@ Route::get('/reinforce/', [App\Http\Controllers\admin\ReinforceController::class
 Route::post('/admin/reinforce/submit/', [App\Http\Controllers\admin\ReinforceController::class, 'ReinforceSubmit'])->name('ReinforceSubmit')->middleware('auth');
 Route::post('/admin/reinforce/update/', [App\Http\Controllers\admin\ReinforceController::class, 'ReinforceUpdate'])->name('ReinforceUpdate')->middleware('auth');
 Route::get('/admin/reinforce/delete/{id}', [App\Http\Controllers\admin\ReinforceController::class, 'ReinforceDelete'])->name('ReinforceDelete')->middleware('auth');
+
+
 
 //Operator
 Route::get('/operator_dashboard', [App\Http\Controllers\operator\OperatorDashboard::class, 'index'])->middleware('auth');
