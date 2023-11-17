@@ -77,13 +77,13 @@ class PostTreatmentController extends Controller
                 $TotalPTReject += $item['PTReject'];
             }
 
-            if(($data['Jumlah'] - ($TotalPT + $TotalRejectKerik)) != 0){
+        
                 $Total += $data['Jumlah'];
                 $TotalPTProses = $TotalPTProses + ($data['OnGoingPT']);
                 //Total mylea yang masih available (belum kerik + sudah dikerik)
                 $TotalSudahKerik += $data['Kerik']->sum('Jumlah') + $TotalRejectKerik;
                 $filteredData[] = $data;
-            }
+            
         }
 
         // added by dika
@@ -180,13 +180,13 @@ class PostTreatmentController extends Controller
                 $TotalPTReject += $item['PTReject'];
             }
 
-            if(($data['Jumlah'] - ($TotalPT + $TotalRejectKerik)) != 0){
+           
                 $Total += $data['Jumlah'];
                 $TotalPTProses = $TotalPTProses + ($data['OnGoingPT']);
                 //Total mylea yang masih available (belum kerik + sudah dikerik)
                 $TotalSudahKerik += $data['Kerik']->sum('Jumlah') + $TotalRejectKerik;
                 $filteredData[] = $data;
-            }
+            
         }
 
         // added by dika
@@ -288,13 +288,13 @@ class PostTreatmentController extends Controller
                 $TotalPTReject += $item['PTReject'];
             }
 
-            if(($data['Jumlah'] - ($TotalPT + $TotalRejectKerik)) != 0){
+            
                 $Total += $data['Jumlah'];
                 $TotalPTProses = $TotalPTProses + ($data['OnGoingPT']);
                 //Total mylea yang masih available (belum kerik + sudah dikerik)
                 $TotalSudahKerik += $data['Kerik']->sum('Jumlah') + $TotalRejectKerik;
                 $filteredData[] = $data;
-            }
+            
 
             $data['Rebus'] = PTRebus::where('PanenID', $data['id'])->get();
             $data['TotalRebus']= $data['Rebus']->sum('JumlahRebus');
@@ -324,6 +324,7 @@ class PostTreatmentController extends Controller
                             })
                             ->groupBy('id')
                             ->get();
+                            
             if (!$data['isBlack']->isEmpty() && isset($data['isBlack'][0]->usedBlack)) {
                 $data['SisaBlack'] = $data['TotalRebusBlack'] - $data['isBlack'][0]->usedBlack;
             } else {
@@ -616,7 +617,7 @@ class PostTreatmentController extends Controller
 
     public function KerikDelete($ID)
     {
-        PTKerik::find($ID)->delete();
+        PTKerik::where('id', $ID)->delete();
         return redirect()->back()->with('message2', 'Data Kerik Deleted');
     }
 
