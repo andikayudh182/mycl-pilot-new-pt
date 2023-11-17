@@ -12,6 +12,7 @@ class PTKerik extends Model
 
     protected $table = 'post_treatment_kerik';
     protected $fillable = [
+        'id',
         'PanenID',
         'Tanggal',
         'Jumlah',

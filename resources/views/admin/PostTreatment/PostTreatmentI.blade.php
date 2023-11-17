@@ -283,6 +283,9 @@
         @endforeach
         
     </table>
+    <div class="d-flex justify-content-center">
+        {!! $Data->links() !!}
+    </div>
 
 </section>
 <style>

@@ -137,16 +137,15 @@ class PostTreatmentController extends Controller
     public function MyleaHarvest(Request $request)
     {
         $Dat = Panen::with('PostTreatment', 'Kerik')
-        //->whereRaw('Jumlah - (SELECT SUM(Jumlah) FROM post_treatment_details WHERE Panen_ID = mylea_panen.id) != 0')
         ->orderby('TanggalPanen', 'desc')
-        ->get();
+        ->paginate(20);
 
         if(isset($request->Submit)) {
             $search = $request->SearchQuery;
             $Dat = Panen::with('PostTreatment', 'Kerik')
             ->where('KPMylea', 'like', "%" . $search . "%")
             ->orderBy('TanggalPanen', 'desc')
-            ->get();
+            ->paginate(20);
         }
         if(isset($request->Filter)){
             $Date1 = date('Y-m-d', strtotime($request['TanggalAwal']));
@@ -154,7 +153,7 @@ class PostTreatmentController extends Controller
             $Dat = Panen::with('PostTreatment', 'Kerik')
             ->whereBetween('TanggalPanen', [$Date1, $Date2])
             ->orderBy('TanggalPanen','desc')
-            ->get();
+            ->paginate(20);
         }
 
         $filteredData = [];
@@ -243,7 +242,7 @@ class PostTreatmentController extends Controller
         // ->leftJoin('post_treatment_rebus', 'mylea_panen.id', '=', 'post_treatment_rebus.PanenID')
         //->whereRaw('Jumlah - (SELECT SUM(Jumlah) FROM post_treatment_details WHERE Panen_ID = mylea_panen.id) != 0')
         ->orderby('TanggalPanen', 'desc')
-        ->get();
+        ->paginate(20);
 
         if(isset($request->Filter)){
             $Date1 = date('Y-m-d', strtotime($request['TanggalAwal']));
@@ -251,7 +250,7 @@ class PostTreatmentController extends Controller
             $Dat = Panen::with('PostTreatment', 'Kerik')
             ->whereBetween('TanggalPanen', [$Date1, $Date2])
             ->orderBy('TanggalPanen','desc')
-            ->get();
+            ->paginate(20);
         }
         
         if(isset($request->Submit)) {
@@ -259,7 +258,7 @@ class PostTreatmentController extends Controller
             $Dat = Panen::with('PostTreatment', 'Kerik')
             ->where('KPMylea', 'like', "%" . $search . "%")
             ->orderBy('TanggalPanen', 'desc')
-            ->get();
+            ->paginate(20);
         }
 
 
@@ -407,7 +406,7 @@ class PostTreatmentController extends Controller
 
     public function PostTreatmentII(Request $request) {
 
-        $Data = PostTreatment::orderBy('Tanggal', 'desc')->where('Status', null)->paginate(80);
+        $Data = PostTreatment::orderBy('Tanggal', 'desc')->where('Status', null)->paginate(20);
         if(isset($request->Filter)){
             $Date1 = date('Y-m-d', strtotime($request['TanggalAwal']));
             $Date2 = date('Y-m-d', strtotime($request['TanggalAkhir']));
@@ -501,7 +500,7 @@ class PostTreatmentController extends Controller
     }
     public function PostTreatmentIII(Request $request) {
 
-        $Data = PostTreatment::orderBy('Tanggal', 'desc')->where('Status', null)->paginate(80);
+        $Data = PostTreatment::orderBy('Tanggal', 'desc')->where('Status', null)->paginate(20);
         if(isset($request->Filter)){
             $Date1 = date('Y-m-d', strtotime($request['TanggalAwal']));
             $Date2 = date('Y-m-d', strtotime($request['TanggalAkhir']));
@@ -613,6 +612,16 @@ class PostTreatmentController extends Controller
             'RejectAfterKerik'=> $request['RejectAfterKerik'],
         ]);
         return redirect()->back()->with('message', 'Data Kerik Added');
+    }
+    public function KerikUpdate(Request $request)
+    {
+        PTKerik::where('id', $request['id'])->update([
+            'Tanggal'=> $request['Tanggal'],
+            'Jumlah'=> $request['Jumlah'],
+            'RejectBeforeKerik'=> $request['RejectBeforeKerik'],
+            'RejectAfterKerik'=> $request['RejectAfterKerik'],
+        ]);
+        return redirect()->back()->with('message', 'Data Kerik Updated');
     }
 
     public function KerikDelete($ID)

@@ -81,6 +81,7 @@ Route::get('/admin/post-treatment-index', [App\Http\Controllers\admin\PostTreatm
 Route::get('/admin/post-treatment', [App\Http\Controllers\admin\PostTreatmentController::class, 'Monitoring'])->middleware('auth');
 Route::get('/admin/post-treatment/data-panen', [App\Http\Controllers\admin\PostTreatmentController::class, 'MyleaPanen'])->middleware('auth');
 Route::post('/admin/post-treatment/data-panen/submit-kerik', [App\Http\Controllers\admin\PostTreatmentController::class, 'KerikSubmit'])->middleware('auth');
+Route::post('/admin/post-treatment/data-panen/update-kerik', [App\Http\Controllers\admin\PostTreatmentController::class, 'KerikUpdate'])->middleware('auth');
 Route::get('/admin/post-treatment/data-panen/delete-kerik/{ID}', [App\Http\Controllers\admin\PostTreatmentController::class, 'KerikDelete'])->middleware('auth');
 Route::get('/admin/post-treatment/report', [App\Http\Controllers\admin\PostTreatmentController::class, 'Report'])->middleware('auth');
 Route::get('/admin/post-treatment/delete-all/{PanenID}', [App\Http\Controllers\admin\PostTreatmentController::class, 'DeleteAll'])->middleware('auth');
