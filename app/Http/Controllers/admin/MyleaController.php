@@ -161,7 +161,7 @@ class MyleaController extends Controller
     }
 
     public function Report(Request $request){
-        $Mylea = Produksi::sortable()->orderBy('TanggalProduksi','desc')->paginate(80);
+        $Mylea = Produksi::sortable()->orderBy('TanggalProduksi','desc')->get();
         $resume = array();
         
         if (isset($request['TanggalAwal'])) {
@@ -182,7 +182,7 @@ class MyleaController extends Controller
                 $query->where('KodeProduksi', 'like', "%" . $search . "%");
             }
         
-            $Mylea = $query->orderBy('TanggalProduksi', 'desc')->paginate(80);
+            $Mylea = $query->orderBy('TanggalProduksi', 'desc')->get();
         }
         
         

@@ -150,9 +150,9 @@
             @endforeach
         </table>
     </div>
-    <div class="d-flex justify-content-center">
+    {{-- <div class="d-flex justify-content-center">
         {!! $Data->links() !!}
-     </div>
+     </div> --}}
 
 </section>
 

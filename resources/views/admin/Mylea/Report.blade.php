@@ -494,11 +494,11 @@
                 </tr>
             @endforeach
         </table>
-    <div class="d-flex justify-content-center">
+    {{-- <div class="d-flex justify-content-center">
         @if(method_exists($Data, 'links'))
             {{ $Data->links() }}
         @endif
-    </div>
+    </div> --}}
 
     <!--Export Kontam-->
     <div style="display:none;">

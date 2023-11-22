@@ -87,7 +87,7 @@ class PostTreatmentController extends Controller
         }
 
         // added by dika
-        $PTData = PostTreatment::orderBy('Batch', 'desc')->where('Status', null)->paginate(80);
+        $PTData = PostTreatment::orderBy('Batch', 'desc')->where('Status', null)->get();
         foreach ($PTData as $data) {
             $Panen = PostTreatmentDetails::select([
                 'post_treatment_details.*',
@@ -138,14 +138,14 @@ class PostTreatmentController extends Controller
     {
         $Dat = Panen::with('PostTreatment', 'Kerik')
         ->orderby('TanggalPanen', 'desc')
-        ->paginate(20);
+        ->get();
 
         if(isset($request->Submit)) {
             $search = $request->SearchQuery;
             $Dat = Panen::with('PostTreatment', 'Kerik')
             ->where('KPMylea', 'like', "%" . $search . "%")
             ->orderBy('TanggalPanen', 'desc')
-            ->paginate(20);
+            ->get();
         }
         if(isset($request->Filter)){
             $Date1 = date('Y-m-d', strtotime($request['TanggalAwal']));
@@ -153,7 +153,7 @@ class PostTreatmentController extends Controller
             $Dat = Panen::with('PostTreatment', 'Kerik')
             ->whereBetween('TanggalPanen', [$Date1, $Date2])
             ->orderBy('TanggalPanen','desc')
-            ->paginate(20);
+            ->get();
         }
 
         $filteredData = [];
@@ -189,7 +189,7 @@ class PostTreatmentController extends Controller
         }
 
         // added by dika
-        $PTData = PostTreatment::orderBy('Batch', 'desc')->where('Status', null)->paginate(80);
+        $PTData = PostTreatment::orderBy('Batch', 'desc')->where('Status', null)->get();
         foreach ($PTData as $data) {
             $Panen = PostTreatmentDetails::select([
                 'post_treatment_details.*',
@@ -242,7 +242,7 @@ class PostTreatmentController extends Controller
         // ->leftJoin('post_treatment_rebus', 'mylea_panen.id', '=', 'post_treatment_rebus.PanenID')
         //->whereRaw('Jumlah - (SELECT SUM(Jumlah) FROM post_treatment_details WHERE Panen_ID = mylea_panen.id) != 0')
         ->orderby('TanggalPanen', 'desc')
-        ->paginate(20);
+        ->get();
 
         if(isset($request->Filter)){
             $Date1 = date('Y-m-d', strtotime($request['TanggalAwal']));
@@ -250,7 +250,7 @@ class PostTreatmentController extends Controller
             $Dat = Panen::with('PostTreatment', 'Kerik')
             ->whereBetween('TanggalPanen', [$Date1, $Date2])
             ->orderBy('TanggalPanen','desc')
-            ->paginate(20);
+            ->get();
         }
         
         if(isset($request->Submit)) {
@@ -258,7 +258,7 @@ class PostTreatmentController extends Controller
             $Dat = Panen::with('PostTreatment', 'Kerik')
             ->where('KPMylea', 'like', "%" . $search . "%")
             ->orderBy('TanggalPanen', 'desc')
-            ->paginate(20);
+            ->get();
         }
 
 
@@ -338,7 +338,7 @@ class PostTreatmentController extends Controller
         }
 
         // added by dika
-        $PTData = PostTreatment::orderBy('Batch', 'desc')->where('Status', null)->paginate(80);
+        $PTData = PostTreatment::orderBy('Batch', 'desc')->where('Status', null)->get();
         foreach ($PTData as $data) {
             $Panen = PostTreatmentDetails::select([
                 'post_treatment_details.*',
@@ -406,14 +406,14 @@ class PostTreatmentController extends Controller
 
     public function PostTreatmentII(Request $request) {
 
-        $Data = PostTreatment::orderBy('Tanggal', 'desc')->where('Status', null)->paginate(20);
+        $Data = PostTreatment::orderBy('Tanggal', 'desc')->where('Status', null)->get();
         if(isset($request->Filter)){
             $Date1 = date('Y-m-d', strtotime($request['TanggalAwal']));
             $Date2 = date('Y-m-d', strtotime($request['TanggalAkhir']));
             if($request['Status'] == ''){
                 $request['Status'] = NULL;
             }
-            $Data = PostTreatment::orderBy('Tanggal', 'desc')->whereBetween('Tanggal', [$Date1, $Date2])->where('Status', $request['Status'])->paginate(80);
+            $Data = PostTreatment::orderBy('Tanggal', 'desc')->whereBetween('Tanggal', [$Date1, $Date2])->where('Status', $request['Status'])->get();
         }
         //Get Post Treatment Details (Penggunaan Mylea)
         foreach ($Data as $data){
@@ -500,14 +500,14 @@ class PostTreatmentController extends Controller
     }
     public function PostTreatmentIII(Request $request) {
 
-        $Data = PostTreatment::orderBy('Tanggal', 'desc')->where('Status', null)->paginate(20);
+        $Data = PostTreatment::orderBy('Tanggal', 'desc')->where('Status', null)->get();
         if(isset($request->Filter)){
             $Date1 = date('Y-m-d', strtotime($request['TanggalAwal']));
             $Date2 = date('Y-m-d', strtotime($request['TanggalAkhir']));
             if($request['Status'] == ''){
                 $request['Status'] = NULL;
             }
-            $Data = PostTreatment::orderBy('Tanggal', 'desc')->whereBetween('Tanggal', [$Date1, $Date2])->where('Status', $request['Status'])->paginate(80);
+            $Data = PostTreatment::orderBy('Tanggal', 'desc')->whereBetween('Tanggal', [$Date1, $Date2])->where('Status', $request['Status'])->get();
         }
         //Get Post Treatment Details (Penggunaan Mylea)
         foreach ($Data as $data){
@@ -642,7 +642,7 @@ class PostTreatmentController extends Controller
         ])
         ->leftjoin('post_treatment_details', 'post_treatment_details.PT_ID', '=', 'post_treatment.id')
         ->leftjoin('mylea_panen', 'mylea_panen.id', '=', 'post_treatment_details.Panen_ID')
-        ->paginate(80);
+        ->get();
 
         $resume = array();
         if(isset($request->Submit)){
@@ -659,7 +659,7 @@ class PostTreatmentController extends Controller
             ->leftjoin('post_treatment_details', 'post_treatment_details.PT_ID', '=', 'post_treatment.id')
             ->leftjoin('mylea_panen', 'mylea_panen.id', '=', 'post_treatment_details.Panen_ID')
             ->where('Batch','like',"%".$search."%")
-            ->paginate(80);
+            ->get();
         }
         if(isset($request->Filter)){
             $Date1 = date('Y-m-d', strtotime($request['TanggalAwal']));
@@ -677,7 +677,7 @@ class PostTreatmentController extends Controller
             ->leftjoin('post_treatment_details', 'post_treatment_details.PT_ID', '=', 'post_treatment.id')
             ->leftjoin('mylea_panen', 'mylea_panen.id', '=', 'post_treatment_details.Panen_ID')
             ->whereBetween('TanggalPanen', [$Date1, $Date2])
-            ->paginate(80);
+            ->get();
             $resume['TanggalAwal'] = $Date1;
             $resume['TanggalAkhir'] = $Date2;
         }
