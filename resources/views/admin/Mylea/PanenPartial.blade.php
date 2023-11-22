@@ -90,6 +90,8 @@
                         @enderror
                     </div>
                 </div>
+
+
                 <input type="submit" value="Submit" name="submit" class="btn btn-primary float-auto">
                 <a href="{{ url('/admin/mylea/report/panen-delete', ['id' => 'REPLACE_ME']) }}" class="btn btn-primary float-auto delete-panen-link">Delete</a>
             </form>
@@ -120,7 +122,7 @@
             
             
             // Modify the "Delete" link's href attribute with the actual panenId.id
-            $('#' + formId + ' .delete-panen-link').attr('href', 'report/panen-delete/' + panenId.id);
+            $('#' + formId + ' .delete-panen-link').attr('href', 'report/panen-delete/' + panenId2.id);
             // $('#' + formId + ' .delete-panen-link').attr('href', url('/admin/mylea/report/panen-delete/' + panenId.id));
 
 
