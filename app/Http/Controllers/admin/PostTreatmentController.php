@@ -137,7 +137,8 @@ class PostTreatmentController extends Controller
     public function MyleaHarvest(Request $request)
     {
         $Dat = Panen::with('PostTreatment', 'Kerik')
-        ->orderby('TanggalPanen', 'desc')
+        ->orderBy('TanggalPanen', 'desc')
+        ->orderBy('KPMylea', 'desc')
         ->get();
 
         if(isset($request->Submit)) {
@@ -145,6 +146,7 @@ class PostTreatmentController extends Controller
             $Dat = Panen::with('PostTreatment', 'Kerik')
             ->where('KPMylea', 'like', "%" . $search . "%")
             ->orderBy('TanggalPanen', 'desc')
+            ->orderBy('KPMylea', 'desc')
             ->get();
         }
         if(isset($request->Filter)){
@@ -153,6 +155,7 @@ class PostTreatmentController extends Controller
             $Dat = Panen::with('PostTreatment', 'Kerik')
             ->whereBetween('TanggalPanen', [$Date1, $Date2])
             ->orderBy('TanggalPanen','desc')
+            ->orderBy('KPMylea', 'desc')
             ->get();
         }
 
@@ -241,7 +244,8 @@ class PostTreatmentController extends Controller
         $Dat = Panen::with('PostTreatment', 'Kerik')
         // ->leftJoin('post_treatment_rebus', 'mylea_panen.id', '=', 'post_treatment_rebus.PanenID')
         //->whereRaw('Jumlah - (SELECT SUM(Jumlah) FROM post_treatment_details WHERE Panen_ID = mylea_panen.id) != 0')
-        ->orderby('TanggalPanen', 'desc')
+        ->orderBy('TanggalPanen', 'desc')
+        ->orderBy('KPMylea', 'desc')
         ->get();
 
         if(isset($request->Filter)){
@@ -250,6 +254,7 @@ class PostTreatmentController extends Controller
             $Dat = Panen::with('PostTreatment', 'Kerik')
             ->whereBetween('TanggalPanen', [$Date1, $Date2])
             ->orderBy('TanggalPanen','desc')
+            ->orderBy('KPMylea', 'desc')
             ->get();
         }
         
@@ -258,6 +263,7 @@ class PostTreatmentController extends Controller
             $Dat = Panen::with('PostTreatment', 'Kerik')
             ->where('KPMylea', 'like', "%" . $search . "%")
             ->orderBy('TanggalPanen', 'desc')
+            ->orderBy('KPMylea', 'desc')
             ->get();
         }
 
