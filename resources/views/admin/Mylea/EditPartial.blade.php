@@ -80,6 +80,7 @@
                     <label for="Method" class="col-sm-2 col-form-label col-form-label-sm">Method :</label>
                     <div class="col-sm-5">
                         <select name="Method" class="form-control form-control-sm @error('Method') is-invalid @enderror" id="colFormLabelSm">
+                            <option value="" {{ is_null($data['Method']) ? 'selected' : '' }} {{ is_null($data['Method']) ? 'disabled' : '' }}>Pilih Method</option>
                             <option value="Direct" {{ $data['Method'] === 'Direct' ? 'selected' : '' }}>Direct</option>
                             <option value="2 phase" {{ $data['Method'] === '2 phase' ? 'selected' : '' }}>2 phase</option>
                         </select>
@@ -94,6 +95,7 @@
                     <label for="Tray" class="col-sm-2 col-form-label col-form-label-sm">Tray :</label>
                     <div class="col-sm-5">
                         <select name="Tray" class="form-control form-control-sm @error('Tray') is-invalid @enderror" id="colFormLabelSm" >
+                            <option value="" {{ is_null($data['Tray']) ? 'selected' : '' }} {{ is_null($data['Tray']) ? 'disabled' : '' }}>Pilih Tray</option>
                             <option value="T0" {{ $data['Tray'] === 'T0' ? 'selected' : '' }}>T0</option>
                             <option value="T1" {{ $data['Tray'] === 'T1' ? 'selected' : '' }}>T1</option>
                         </select>
@@ -104,10 +106,11 @@
                         @enderror
                     </div>
                 </div>
-                <div class="row mb-3 ">
+                <div class="row mb-3">
                     <label for="SubstrateQty" class="col-sm-2 col-form-label col-form-label-sm">Substrate Qty(kg) :</label>
                     <div class="col-sm-5">
-                        <select name="SubstrateQty" class="form-control form-control-sm @error('SubstrateQty') is-invalid @enderror" id="colFormLabelSm" value="{{ old('SubstrateQty') }}" >
+                        <select name="SubstrateQty" class="form-control form-control-sm @error('SubstrateQty') is-invalid @enderror" id="colFormLabelSm">
+                            <option value="" {{ is_null($data['SubstrateQty']) ? 'selected' : '' }} {{ is_null($data['SubstrateQty']) ? 'disabled' : '' }}>Pilih Substrate Qty</option>
                             <option value="2" {{ $data['SubstrateQty'] === 2 ? 'selected' : '' }}>2 kg</option>
                             <option value="3" {{ $data['SubstrateQty'] === 3 ? 'selected' : '' }}>3 kg</option>
                             <option value="4" {{ $data['SubstrateQty'] === 4 ? 'selected' : '' }}>4 kg</option>
@@ -118,7 +121,8 @@
                         </span>
                         @enderror
                     </div>
-                </div>   
+                </div>
+                
         </div>
         <div class="modal-footer">
             <input type="submit" value="Submit" name="submit" class="btn btn-primary float-auto">
