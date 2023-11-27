@@ -329,6 +329,7 @@
                         </tr>
                         <tr class="sticky-header">
                             <td>Substrate Bag Code</td>
+                            <td>Type</td>
                             <td>Substrate Bag Qty</td>
                             <td>Spawn Batch</td>
                             <td>Spawn Code</td>
@@ -409,6 +410,9 @@
                     <td>
                         <table class="table-borderless table text-center baglog-table">
                             @foreach($data['DataBaglog'] as $DataBaglog)
+
+                          
+                          
                             <tr>
                                 @if(substr($DataBaglog['KPBaglog'], 0, 2) != 'BL')
                                     <td colspan="6" style="width: 49%" >{{$DataBaglog['KPBaglog']}}</td>
@@ -416,6 +420,7 @@
                                 <td>
                                     <a href="{{url('/admin/baglog/report?TanggalAwal=&TanggalAkhir=&SearchQuery='.$DataBaglog['KPBaglog'].'&Submit=Search')}}">{{$DataBaglog['KPBaglog']}}</a>
                                 </td>
+                                <td>{{ $DataBaglog['Type'] }}</td>
                                 <td style= "width:7%">{{$DataBaglog['JumlahBaglog']}}</td>
                                 <td style= "width:7%">{{$DataBaglog['BatchBibitTerpakai']}}</td>
                                 <td style="width:7%">{{substr($DataBaglog['KPBaglog'], 11)}}</td>
