@@ -80,6 +80,50 @@
                 @enderror
             </div>
         </div>
+        <div class="row mb-3 ">
+            <label for="Method" class="col-sm-2 col-form-label col-form-label-sm">Method :</label>
+            <div class="col-sm-5">
+                <select name="Method" class="form-control form-control-sm @error('Method') is-invalid @enderror" id="colFormLabelSm" value="{{ old('Method') }}" >
+                            <option value="Direct">Direct</option>
+                            <option value="2 phase">2 phase</option>
+                </select>
+                @error('Method')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+                @enderror
+            </div>
+        </div>
+        <div class="row mb-3 ">
+            <label for="Tray" class="col-sm-2 col-form-label col-form-label-sm">Tray :</label>
+            <div class="col-sm-5">
+                <select name="Tray" class="form-control form-control-sm @error('Tray') is-invalid @enderror" id="colFormLabelSm" value="{{ old('Tray') }}" >
+                            <option value="T0">T0</option>
+                            <option value="T1">T1</option>
+                </select>
+                @error('Tray')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+                @enderror
+            </div>
+        </div>
+        <div class="row mb-3 ">
+            <label for="SubstrateQty" class="col-sm-2 col-form-label col-form-label-sm">Substrate Qty(kg) :</label>
+            <div class="col-sm-5">
+                <select name="SubstrateQty" class="form-control form-control-sm @error('SubstrateQty') is-invalid @enderror" id="colFormLabelSm" value="{{ old('SubstrateQty') }}" >
+                        <option value="2">2 kg</option>
+                        <option value="3">3 kg</option>
+                        <option value="4">4 kg</option>
+                </select>
+                @error('SubstrateQty')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+                @enderror
+            </div>
+        </div>
+
         <table class="table table-bordered" id="dynamicAddRemove">
             <tr>
                 <th>Kode Produksi Baglog</th>

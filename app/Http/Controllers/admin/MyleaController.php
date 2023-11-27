@@ -313,12 +313,12 @@ class MyleaController extends Controller
 
     public function ProduksiEdit(Request $request){
 
-        $Keterangan = $request['Keterangan'];
+        $Method = $request['Method'];
         $KodeProduksi = $request['KodeProduksi']; 
         $KodeProduksi2 = $request['KodeProduksi']; 
 
         $lastChar = substr($KodeProduksi, -1);
-        if (stristr($Keterangan, 'Direct') !== false) {
+        if (stristr($Method, 'Direct') !== false) {
             if ($lastChar !== 'D'&& $lastChar !== 'N' ) {
                 $KodeProduksi .= 'D';
             } else if ($lastChar === 'N') {
@@ -331,7 +331,7 @@ class MyleaController extends Controller
             Panen::where('KPMylea', $KodeProduksi2)->update(['KPMylea' => $KodeProduksi]);
        }
 
-        if (empty($Keterangan) || stristr($Keterangan, 'Direct') === false) {
+        if (empty($Method) || stristr($Method, 'Direct') === false) {
             if ($lastChar === 'D') {
                 $KodeProduksi = substr($KodeProduksi, 0, -1);
                 $KodeProduksi .= 'N';
@@ -350,6 +350,9 @@ class MyleaController extends Controller
             'JamSelesai'=>$request['JamSelesai'],
             'Jumlah'=>$request['Jumlah'],
             'Keterangan'=>$request['Keterangan'],
+            'Method'=>$Method,
+            'Tray'=>$request['Tray'],
+            'SubstrateQty'=>$request['SubstrateQty'],
         ]);
 
         return redirect(url('/admin/mylea/report'))->with('message', 'Data Produksi Updated!');

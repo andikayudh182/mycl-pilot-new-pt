@@ -314,13 +314,17 @@
                         <i class="bi bi-sort-up"></i>
                     </form>
                 </th>
+                <th>Harvest Schedule</th>
+                <th>Method</th>
+                <th>Tray</th>
+                <th>Substrate Qty (kg)</th>
                 <th>
                     <table class="table table-borderless baglog-table text-center">
                         <tr class="sticky-header">
                             <td colspan="6">Substrate Bag</td>
                             <td>Total Conta</td>
                             <td>% Conta</td>
-                            <td>Harvest Schedule</td>
+                            {{-- <td>Harvest Schedule</td> --}}
                             <td>Total Harvest</td>
                         </tr>
                         <tr class="sticky-header">
@@ -341,16 +345,67 @@
                     <td>{{$data['TanggalProduksi']}}</td>
                     <td>{{$data['Keterangan']}}</td>
                     <td>{{$data['Jumlah']}}</td>
-                    <td>{{$data['Konta']}}</td>
+                    @if ($data['Konta'] > 0)
+                        <td>
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#KontaminasiModal{{$data['id']}}" data-bs-dismiss="modal">  {{ $data['Konta'] }}</a>
+                            @include('admin.Mylea.KontaminasiPartial') 
+                        </td>
+                    @else
+                        <td>
+                            {{ $data['Konta'] }}
+                        </td>
+                    @endif
                     <td>{{round($data['Konta']/$data['Jumlah']*100, 2)}}%</td>
-                    <td>
-                        @if ($data['JumlahPanen'] < 1)
-                            0
-                        @else
-                            {{$data['JumlahPanen']}}
-                        @endif
-                    </td>
+                    @if ($data['JumlahPanen'] > 0)
+                        <td>
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#PanenModal{{$data['id']}}">{{ $data['JumlahPanen'] }}</a>
+                            @include('admin.Mylea.PanenPartial') 
+                        </td>
+                    @else
+                        <td>0</td>
+                    @endif
                     <td>{{$data['InStock']}}</td>
+
+                    @php
+                    $LastKodeProduksi = substr($data['KodeProduksi'], -1);
+
+                    $I3 = substr($data['KodeProduksi'], 11);
+                    $A3 = $data['TanggalProduksi'];
+                    if ($I3 === "MYCL2") {
+                        if ((date("D", strtotime($A3)) === "Tue") || (date("D", strtotime($A3)) === "Fri")) {
+                           if ($LastKodeProduksi === "D") {
+                            $result = date("Y-m-d", strtotime($A3 . "+41 days"));
+                           } else {
+                            $result = date("Y-m-d", strtotime($A3 . "+34 days"));
+                           }
+                        } else {
+                            if ($LastKodeProduksi === "D") {
+                                $result = date("Y-m-d", strtotime($A3 . "+42 days"));
+                            } else {
+                                $result = date("Y-m-d", strtotime($A3 . "+35 days"));
+                            }
+                        } 
+                    } else {
+                        if ((date("D", strtotime($A3)) === "Tue") || (date("D", strtotime($A3)) === "Fri")) {
+                           if ($LastKodeProduksi === "D") {
+                            $result = date("Y-m-d", strtotime($A3 . "+41 days"));
+                           } else {
+                            $result = date("Y-m-d", strtotime($A3 . "+34 days"));
+                           }
+                        } else {
+                            if ($LastKodeProduksi === "D") {
+                                $result = date("Y-m-d", strtotime($A3 . "+42 days"));
+                            } else {
+                                $result = date("Y-m-d", strtotime($A3 . "+35 days"));
+                            }
+                        } 
+                    }
+                @endphp
+                    <td>{{ $result }}</td>
+                    
+                    <td>{{ $data['Method'] }}</td>
+                    <td>{{ $data['Tray'] }}</td>
+                    <td>{{ $data['SubstrateQty'] }}</td>
                     <td>
                         <table class="table-borderless table text-center baglog-table">
                             @foreach($data['DataBaglog'] as $DataBaglog)
@@ -419,36 +474,10 @@
                                         } 
                                     }
                                 @endphp
-                                @if($DataBaglog['Konta']->sum('Jumlah') > 0)
-                                <td style="width:7%">
-                                    <a href="#" data-bs-toggle="modal" data-bs-target="#KontaminasiModal{{$data['id']}}" data-bs-dismiss="modal"> {{$DataBaglog['Konta']->sum('Jumlah')}}</a>
-                                    @include('admin.Mylea.KontaminasiPartial') 
-                                </td>
-                                @else
-                                <td style="width:7%">
-                                    {{$DataBaglog['Konta']->sum('Jumlah')}}
-                                </td>
-                                @endif
+                                <td>{{ $DataBaglog['Konta']->sum('Jumlah') }}</td>
                                 <td style="width:7%">{{round($DataBaglog['Konta']->sum('Jumlah')/$data['Jumlah']*100, 2)}}%</td>
-                                <td>{{ $result }}</td>
-                                {{-- @if($DataBaglog['TanggalPanen']!='0000-00-00') --}}
-                                {{-- <td>
-                                    <a href="#" data-bs-toggle="modal" data-bs-target="#PanenModal{{$data['id']}}">{{$DataBaglog['TanggalPanen']}}</a>
-                                     @include('admin.Mylea.PanenPartial') 
-                                </td> --}}
-                                {{-- @else --}}
-                                {{-- <td>{{$DataBaglog['TanggalPanen']}}</td> --}}
-                                {{-- @endif --}}
-                                @if($DataBaglog['Panen']->sum('Jumlah') > 0)
-                                <td>
-                                    <a href="#" data-bs-toggle="modal" data-bs-target="#PanenModal{{$data['id']}}">{{$DataBaglog['Panen']->sum('Jumlah')}}</a>
-                                    @include('admin.Mylea.PanenPartial') 
-                                </td>
-                                @else
+                                {{-- <td>{{ $result }}</td> --}}
                                 <td>{{$DataBaglog['Panen']->sum('Jumlah')}}</td>
-                                @endif
-                               
-                                
                             </tr>
                             @endforeach
                         </table>
@@ -523,6 +552,7 @@
                 <th colspan="2">Elus 11</th>
                 <th colspan="2">Elus 12</th>
             </tr>
+            
             @foreach ($Data as $data)
                 @php
                     

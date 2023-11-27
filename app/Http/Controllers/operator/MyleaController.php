@@ -31,15 +31,18 @@ class MyleaController extends Controller
             'JamMulai' => 'Required',
             'JamSelesai' =>'Required',
             'JumlahTray' =>'Required',
+            'Method' =>'Required',
+            'Tray' =>'Required',
         ]);
 
         $id = Auth::user()->id;
         $TanggalProduksi = $request['TanggalProduksi'];
         $Keterangan = $request['Keterangan'];
+        $Method= $request['Method'];
         $KodeProduksi = '';
         $KodeProduksi =  "MYTP".$TanggalProduksi;
 
-        if (stristr($Keterangan, 'Direct') !== false) {
+        if (stristr($Method, 'Direct') !== false) {
             $KodeProduksi .= 'D';
         }
         
@@ -64,6 +67,9 @@ class MyleaController extends Controller
             'JamSelesai'=>$request['JamSelesai'],
             'Keterangan'=>$Keterangan,
             'Jumlah'=>$request['JumlahTray'],
+            'Method'=>$Method,
+            'Tray'=>$request['Tray'],
+            'SubstrateQty'=>$request['SubstrateQty'],
             'StatusPanen'=>0,
         ]);
         

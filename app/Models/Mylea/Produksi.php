@@ -23,6 +23,9 @@ class Produksi extends Model
         'Jumlah',
         'StatusPanen',
         'Keterangan',
+        'Method',
+        'Tray',
+        'SubstrateQty',
     ];
 
     public $sortable = [
@@ -36,5 +39,8 @@ class Produksi extends Model
         'StatusPanen',
         'Konta',
         'Keterangan',
+        'Method',
+        'Tray',
+        'SubstrateQty'
     ];
 }
