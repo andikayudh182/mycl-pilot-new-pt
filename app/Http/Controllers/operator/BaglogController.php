@@ -124,6 +124,7 @@ class BaglogController extends Controller
         Resep::find($id)->update([
             'BeratBaglog'=>$request['WeightperBag'],
             'TotalBags'=>$request['TotalBags'],
+            'Type'=>$request['Type'],
             'SKayu'=>$request['SKayu'],
             'MCSKayu'=>$request['MCSKayu'],
             'NoKarungSKayu'=>$request['NoKarungSKayu'],

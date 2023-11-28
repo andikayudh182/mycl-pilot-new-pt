@@ -9,6 +9,23 @@
             <form method="POST" action="{{url('/operator/baglog/edit-resep')}}" class="m-5">
                 @csrf
                 <input type="hidden" name="id" value="{{$data['id']}}"/>
+                <div class="row mb-3">
+                    <label for="Type" class="col-sm-2 col-form-label col-form-label-sm">Jenis Resep :</label>
+                    <div class="col-sm-5">
+                        <select name="Type" class="form-control form-control-sm @error('Type') is-invalid @enderror" id="colFormLabelSm" required>
+                            <option value="" disabled {{ !$data['Type'] ? 'selected' : '' }}>Pilih Jenis Resep</option>
+                            <option value="STP20" {{ $data['Type'] == 'STP20' ? 'selected' : '' }}>STP20</option>
+                            <option value="FTP15" {{ $data['Type'] == 'FTP15' ? 'selected' : '' }}>FTP15</option>
+                            <option value="TTP15" {{ $data['Type'] == 'TTP15' ? 'selected' : '' }}>TTP15</option>
+                        </select>
+                        @error('Type')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+                </div>
+                
                 <div class="row mb-3 ">
                     <label for="TotalBags" class="col-sm-2 col-form-label col-form-label-sm">Total Baglog :</label>
                     <div class="col-sm-5">
