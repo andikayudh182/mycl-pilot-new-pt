@@ -50,50 +50,68 @@ class BaglogController extends Controller
     }
 
     public function CalcRecipeSubmit(Request $request, $id){
-        $Resep = $request->validate([
-            'TotalBags'=>'Required',
-            'WeightperBag'=>'Required',
-            'MCSKayu'=>'Required',
-            'NoKarungSKayu'=>'Required',
-            'MCPollard'=>'Required',
-            'MCCaCO3'=>'Required',
-        ]);
-
-        $W = $request->input('WeightperBag');
-        $T = $request->input('TotalBags');
-        $x = 0.35 * $W;
-        $MCSKayu = $request->input('MCSKayu');
-        $MCCaCO3 = $request->input('MCCaCO3');
-        $MCPollard = $request->input('MCPollard');
-        $MCTapioka = $request->input('MCTapioka');
-        $SKayu = $x * 0.67 * 0.1 / (100 - $MCSKayu);
-        $CaCO3 = $x * 0.03 * 0.1 / (100 - $MCCaCO3);
-        $Pollard = $x * 0.20 * 0.1 / (100 - $MCPollard);
-        $Tapioka = $x * 0.10 * 0.1 / (100 - $MCTapioka);
-        $TotalW = $CaCO3 + $SKayu + $Pollard + $Tapioka;
-        $Air = ((0.65 * $W)/1000) - ($TotalW - ($x/1000)) ;
-
-        Resep::create([
-            'user_id'=>$id,
-            'BeratBaglog'=>$request['WeightperBag'],
-            'TotalBags'=>$request['TotalBags'],
-            'SKayu'=>$SKayu*$T,
-            'MCSKayu'=>$MCSKayu,
-            'NoKarungSKayu'=>$request['NoKarungSKayu'],
-            'Pollard'=>$Pollard*$T,
-            'MCPollard'=>$MCPollard,
-            'Tapioka'=>$Tapioka*$T,
-            'MCTapioka'=>$MCTapioka,
-            'Kapur'=>$CaCO3*$T,
-            'MCKapur'=>$MCCaCO3,
-            'Air'=>$Air*$T,
-            'Hickory'=>'0',
-            'MCHickory'=>'0',
-            'Status'=>'0',
-            'Approval'=>'0',
-        ]);
-        return redirect(url('/operator/baglog/calcrecipe'))->with('message', 'Data Telah Ditambahkan');
+        try {         
+            $Resep = $request->validate([
+                'TotalBags' => 'required',
+                'WeightperBag' => 'required',
+                'MCSKayu' => 'required',
+                'NoKarungSKayu' => 'required',
+                'MCPollard' => 'required',
+                'MCCaCO3' => 'required',
+                'Type' => 'required',
+            ]);
+    
+            $W = $request->input('WeightperBag');
+            $T = $request->input('TotalBags');
+            $x = 0.35 * $W;
+            $MCSKayu = $request->input('MCSKayu');
+            $MCCaCO3 = $request->input('MCCaCO3');
+            $MCPollard = $request->input('MCPollard');
+            $MCTapioka = $request->input('MCTapioka');
+            $Type = $request->input('Type');
+    
+            if ($Type === 'FTP15' || $Type === 'TTP15') {
+                $percentageSKayu = 0.72;
+                $percentagePollard = 0.15;
+            } else {
+                $percentageSKayu = 0.67;
+                $percentagePollard = 0.20;
+            }
+    
+            $SKayu = $x * $percentageSKayu * 0.1 / (100 - $MCSKayu);
+            $CaCO3 = $x * 0.03 * 0.1 / (100 - $MCCaCO3);
+            $Pollard = $x * $percentagePollard * 0.1 / (100 - $MCPollard);
+            $Tapioka = $x * 0.10 * 0.1 / (100 - $MCTapioka);
+            $TotalW = $CaCO3 + $SKayu + $Pollard + $Tapioka;
+            $Air = ((0.65 * $W) / 1000) - ($TotalW - ($x / 1000));
+    
+            Resep::create([
+                'user_id' => $id,
+                'Type' => $Type,
+                'BeratBaglog' => $request->input('WeightperBag'),
+                'TotalBags' => $request->input('TotalBags'),
+                'SKayu' => $SKayu * $T,
+                'MCSKayu' => $MCSKayu,
+                'NoKarungSKayu' => $request->input('NoKarungSKayu'),
+                'Pollard' => $Pollard * $T,
+                'MCPollard' => $MCPollard,
+                'Tapioka' => $Tapioka * $T,
+                'MCTapioka' => $MCTapioka,
+                'Kapur' => $CaCO3 * $T,
+                'MCKapur' => $MCCaCO3,
+                'Air' => $Air * $T,
+                'Hickory' => '0',
+                'MCHickory' => '0',
+                'Status' => '0',
+                'Approval' => '0',
+            ]);
+    
+            return redirect(url('/operator/baglog/calcrecipe'))->with('success', 'Data Telah Ditambahkan');
+        } catch (\Exception $e) {
+            return redirect(url('/operator/baglog/calcrecipe'))->with('error', 'Message : ' . $e->getMessage());
+        }
     }
+    
 
     public function Mixing(){
         $resep = Resep::all()->where('Status', '=', '0');

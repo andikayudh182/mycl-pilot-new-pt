@@ -12,95 +12,38 @@
     </div>
 
     <div class="m-5">
-        @if(session()->has('message'))
-        <div class="alert alert-success">
-            {{ session()->get('message') }}
-        </div>
+        @if(session()->has('success'))
+            <div class="alert alert-success">
+                {{ session()->get('success') }}
+            </div>
+        @elseif(session()->has('error'))
+            <div class="alert alert-danger">
+                {{ session()->get('error') }}
+            </div>
         @endif
         <div class="d-flex justify-content-center">
             <h3>Baglog Recipe Calculator</h3>
         </div>
-        <!---
-        <div class="m-3">
-            <h5>Kalkulator Pencampuran Bahan</h5>
-            <form method="POST">
-                @csrf
-                <div class="row mb-3 ">
-                    <label for="MCTarget" class="col-sm-2 col-form-label col-form-label-sm">MC Target :</label>
-                    <div class="col-sm-3">
-                        <input type="number" step="any" name="MCTarget" class="form-control form-control-sm @error('MCTarget') is-invalid @enderror" id="colFormLabelSm" value="{{ old('MCTarget') }}">
-                        @error('MCTarget')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                    </div>
-                    <div class="col-sm-1">
-                        <p>%</p>
-                    </div>
-                    <label for="BeratTarget" class="col-sm-2 col-form-label col-form-label-sm">Berat Target :</label>
-                    <div class="col-sm-4">
-                        <input type="number" step="any" name="BeratTarget" class="form-control form-control-sm" id="colFormLabelSm">
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="MCSisa" class="col-sm-2 col-form-label col-form-label-sm">MC Bahan Sisa :</label>
-                    <div class="col-sm-3">
-                        <input type="number" step="any" name="MCSisa" class="form-control form-control-sm @error('MCSisa') is-invalid @enderror" id="colFormLabelSm" value="{{ old('MCSisa') }}">
-                        @error('MCSisa')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror            
-                    </div>
-                    <div class="col-sm-1">
-                        <p>%</p>
-                    </div>
-                    <label for="BeratSisa" class="col-sm-2 col-form-label col-form-label-sm">Berat Bahan Sisa :</label>
-                    <div class="col-sm-4">
-                        <input type="number" step="any" name="BeratSisa" class="form-control form-control-sm " id="colFormLabelSm">
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="MCBaru" class="col-sm-2 col-form-label col-form-label-sm">MC Bahan Baru :</label>
-                    <div class="col-sm-3">
-                        <input type="number" step="any" name="MCBaru" class="form-control form-control-sm @error('MCBaru') is-invalid @enderror" id="colFormLabelSm" value="{{ old('MCBaru') }}">
-                        @error('MCBaru')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror            
-                    </div>
-                    <div class="col-sm-1">
-                        <p>%</p>
-                    </div>
-                    <label for="BeratBaru" class="col-sm-2 col-form-label col-form-label-sm">Berat Bahan Baru :</label>
-                    <div class="col-sm-4">
-                        <input type="number" step="any" name="BeratBaru" id="BeratBaru" class="form-control form-control-sm"  disabled>
-                    </div>
-                </div>
-                <input type="button" id="CalculateBahan" name="CalculateBahan" value="Calculate" class="btn btn-primary float-auto">
-            </form>
-            <hr style="border-top: 2px solid #999;">
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
-            <script language="javascript" type="text/javascript">
-                MCTarget= document.querySelector('input[name="MCTarget"]');
-                BeratTarget = document.querySelector('input[name="BeratTarget"]');
-                MCSisa = document.querySelector('input[name="MCSisa"]');
-                MCBaru = document.querySelector('input[name="MCBaru"]');
-                BeratSisa = document.querySelector('input[name="BeratSisa"]');
-                CalculateBahan = document.getElementById("CalculateBahan");
-        
-                CalculateBahan.addEventListener('click', function1(){
-
-                    document.querySelector('input[name="BeratBaru"]').value = ((BeratTarget-BeratSisa)*(100-MCSisa))/(100-MCBaru);
-                });
-        
-            </script>    
-            --->
         </div>
         <form method="POST" action="{{url('/operator/baglog/recipe-submit', ['id' => $id,])}}" class="m-5">
             @csrf
+            <div class="row mb-3">
+                <label for="Type" class="col-sm-2 col-form-label col-form-label-sm">Jenis Resep :</label>
+                <div class="col-sm-5">
+                    <select name="Type" class="form-control form-control-sm @error('Type') is-invalid @enderror" id="colFormLabelSm" value="{{ old('Type') }}" required>
+                        <option value="" disabled selected>Pilih Jenis Resep</option>
+                        <option value="STP20">STP20</option>
+                        <option value="FTP15">FTP15</option>
+                        <option value="TTP15">TTP15</option>
+                    </select>
+                    @error('Type')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                </div>
+            </div>        
+            
             <div class="row mb-3 ">
                 <label for="TotalBags" class="col-sm-2 col-form-label col-form-label-sm">Total Baglog :</label>
                 <div class="col-sm-5">
@@ -138,29 +81,16 @@
                 </div>
                 <label for="NoKarungSKayu" class="col-sm-2 col-form-label col-form-label-sm">No Karung Serbuk Kayu :</label>
                 <div class="col-sm-2">
-                    <input type="text" name="NoKarungSKayu" class="form-control form-control-sm" id="colFormLabelSm">
-                </div>
-                <label for="SKayu" class="col-sm-2 col-form-label col-form-label-sm">Serbuk Kayu (kg):</label>
-                <div class="col-sm-2">
-                    <input type="number" step="any" name="SKayu" class="form-control form-control-sm" id="colFormLabelSm" disabled>
-                </div>
-            </div>
-            <div class="row mb-3 ">
-                <label for="MCHickory" class="col-sm-2 col-form-label col-form-label-sm">MC Hickory :</label>
-                <div class="col-sm-1">
-                    <input type="number" step="any" name="MCHickory" class="form-control form-control-sm @error('MCHickory') is-invalid @enderror" id="colFormLabelSm" value="" disabled>
-                    @error('MCHickory')
+                    <input type="text" name="NoKarungSKayu" class="form-control form-control-sm @error('NoKarungSKayu') is-invalid @enderror" id="colFormLabelSm">
+                    @error('NoKarungSKayu')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
                     @enderror
                 </div>
-                <div class="col-sm-1">
-                    <p>%</p>
-                </div>
-                <label for="Hickory" class="col-sm-2 col-form-label col-form-label-sm">Hickory (kg):</label>
+                <label for="SKayu" class="col-sm-2 col-form-label col-form-label-sm">Serbuk Kayu (kg):</label>
                 <div class="col-sm-2">
-                    <input type="number" step="any" name="Hickory" class="form-control form-control-sm" id="colFormLabelSm" disabled>
+                    <input type="number" step="any" name="SKayu" class="form-control form-control-sm" id="colFormLabelSm" disabled>
                 </div>
             </div>
             <h4>Bahan</h4>
@@ -238,17 +168,27 @@
         WeightperBag = document.querySelector('input[name="WeightperBag"]');
         TotalBags = document.querySelector('input[name="TotalBags"]');
         Calculate = document.getElementById("Calculate");
+        TypeSelect = document.querySelector('select[name="Type"]');
 
         Calculate.addEventListener('click', function(){
+            var percentageSkayu, percentagePollard;
+            if (TypeSelect.value === 'FTP15' || TypeSelect.value === 'TTP15') {
+                percentageSKayu = 0.72;
+                percentagePollard = 0.15;
+            }
+            else {
+                percentageSKayu = 0.67;
+                percentagePollard = 0.20;
+            }
             W = WeightperBag.value;
             T = TotalBags.value;
             x = 0.35 * W;
             WCaCO3 = x * 0.03 / (100 - CaCO3.value) / 10;
-            WSKayu = x * 0.67 / (100 - SKayu.value) / 10;
-            WPollard = x * 0.20 / (100 - Pollard.value) / 10;
+            WSKayu = x * percentageSKayu/ (100 - SKayu.value) / 10;
+            WPollard = x * percentagePollard/ (100 - Pollard.value) / 10;
             WTapioka = x * 0.10 / (100 - Tapioka.value) / 10;
             TotalW =  WCaCO3 + WSKayu + WPollard + WTapioka;
-            TotalD = (x * 0.03 + x * 0.67 + x * 0.20 + x * 0.10)/1000;
+            TotalD = (x * 0.03 + x * percentageSKayu + x * percentagePollard+ x * 0.10)/1000;
             WAir = (0.65 * W)/1000 - (TotalW - (x/1000));
             document.querySelector('input[name="Tapioka"]').value = (WTapioka * T).toFixed(3);
             document.querySelector('input[name="Pollard"]').value = (WPollard * T).toFixed(3);

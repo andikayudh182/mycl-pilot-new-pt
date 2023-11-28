@@ -12,6 +12,7 @@ class Resep extends Model
     protected $table = 'baglog_resep';
 
     protected $fillable = [
+        'Type',
         'TanggalResep',
         'BeratBaglog',
         'TotalBags',
