@@ -196,6 +196,9 @@ class BaglogController extends Controller
                     $JumlahTerpakai = $JumlahTerpakai + $SD['JumlahBaglog'];
                 }
                     $MD['InStock'] = $MD['JumlahBaglog'] - $JumlahTerpakai;
+                    $MD['JenisResep'] = Resep::where('id', $MD['id'])
+                                        ->pluck('Type');
+                                        
                     if($MD['InStock'] <= 0){
                         
                     } else{

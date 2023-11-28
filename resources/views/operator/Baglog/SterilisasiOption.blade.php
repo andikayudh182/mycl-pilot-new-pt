@@ -10,6 +10,7 @@
             </ol>
         </nav>
     </div>
+ 
     <section class="m-5">
         @if(session()->has('message'))
         <div class="alert alert-success">
@@ -22,6 +23,7 @@
                 <th>Batch</th>
                 <th>Jam Mulai</th>
                 <th>Jam Selesai</th>
+                <th>Jenis Resep</th>
                 <th>Jumlah Baglog</th>
                 <th>In Stock</th>
             </tr>
@@ -31,6 +33,7 @@
                     <td>{{$data1['Batch']}}</td>
                     <td>{{$data1['JamMulai']}}</td>
                     <td>{{$data1['JamSelesai']}}</td>
+                    <td>{{$data1['JenisResep'][0]}}</td>
                     <td>{{$data1['JumlahBaglog']}}</td>
                     <td>{{$data1['InStock']}}</td>
                     <td><a href="{{ route('FormSterilisasi', ['data'=>$data1['id'],])}}">Form Sterilisasi</a></td>

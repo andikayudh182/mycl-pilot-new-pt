@@ -23,6 +23,7 @@
             <th>No</th>
             <th>Tanggal</th>
             <th>Approval</th>
+            <th>Jenis Resep</th>
             <th>Berat Baglog</th>
             <th>Total Baglog</th>
             <th>No Karung Serbuk Kayu</th>
@@ -41,6 +42,7 @@
                 @else
                 <td> Sudah disetujui </td>
                 @endif
+                <td>{{$data['Type']}}</td>
                 <td>{{$data['BeratBaglog']}}</td>
                 <td>{{$data['TotalBags']}}</td>
                 <td>{{$data['NoKarungSKayu']}}</td>
