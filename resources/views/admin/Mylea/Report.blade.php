@@ -321,7 +321,7 @@
                 <th>
                     <table class="table table-borderless baglog-table text-center">
                         <tr class="sticky-header">
-                            <td colspan="6">Substrate Bag</td>
+                            <td colspan="7">Substrate Bag</td>
                             <td>Total Conta</td>
                             <td>% Conta</td>
                             {{-- <td>Harvest Schedule</td> --}}
@@ -422,8 +422,8 @@
                                 </td>
                                 <td>{{ $DataBaglog['Type'] }}</td>
                                 <td style= "width:7%">{{$DataBaglog['JumlahBaglog']}}</td>
-                                <td style= "width:7%">{{$DataBaglog['BatchBibitTerpakai']}}</td>
-                                <td style="width:7%">{{substr($DataBaglog['KPBaglog'], 11)}}</td>
+                                <td style= "width:7%">{{$DataBaglog['BatchBibitTerpakai']}} </td>
+                                <td style="width:7%">{{substr($DataBaglog['KPBaglog'], 11)}} </td>
                                 <td style="width:7%">{{$DataBaglog['UmurBibit']}}</td>
                                 <td>{{$DataBaglog['UmurBaglog']}}</td>
                                 @endif
