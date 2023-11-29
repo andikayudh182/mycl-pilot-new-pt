@@ -284,7 +284,7 @@ class BaglogController extends Controller
             'Kondisi'=>'Required',
             'BibitTerpakai'=>'Required',
             'BatchBibitTerpakai'=>'Required',
-            'BibitReject'=>'Required',
+            // 'BibitReject'=>'Required',
         ]);
 
         $TanggalCrushing = date('Y-m-d', strtotime($request['TanggalPengerjaan']. ' + 7 days'));
@@ -310,8 +310,8 @@ class BaglogController extends Controller
             'Kondisi'=>$pembibitan['Kondisi'],
             'BibitTerpakai'=>$pembibitan['BibitTerpakai'],
             'BatchBibitTerpakai'=>$pembibitan['BatchBibitTerpakai'],
-            'BibitReject'=>$pembibitan['BibitReject'],
-            'BatchBibitDibuang'=>$request['BatchBibitDibuang'],
+            // 'BibitReject'=>$pembibitan['BibitReject'],
+            // 'BatchBibitDibuang'=>$request['BatchBibitDibuang'],
             'KodeProduksi'=>$KodeProduksi,
             'TanggalCrushing'=>$TanggalCrushing,
             'TanggalPanen'=>$TanggalHarvest,

@@ -82,7 +82,7 @@
                     @enderror
                 </div>
             </div>
-            <div class="row mb-3 ">
+            {{-- <div class="row mb-3 ">
                 <label for="BibitReject" class="col-sm-2 col-form-label col-form-label-sm">Bibit Reject (sobek/tua) :</label>
                 <div class="col-sm-5">
                     <input type="number"  name="BibitReject" class="form-control form-control-sm  @error('BibitReject') is-invalid @enderror" id="colFormLabelSm" value="{{ old('BibitReject') }}">
@@ -103,7 +103,7 @@
                     </span>
                     @enderror
                 </div>
-            </div>
+            </div> --}}
             <div class="row mb-3 ">
                 <label for="KodeBibit" class="col-sm-2 col-form-label col-form-label-sm">Kode Bibit:</label>
                 <div class="col-sm-5">
