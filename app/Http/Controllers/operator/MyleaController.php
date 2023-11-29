@@ -82,28 +82,31 @@ class MyleaController extends Controller
     {
         $Mylea = Produksi::orderBy('TanggalProduksi', 'desc')->paginate(80);
         $Kontaminasi = Kontaminasi::all();
-        foreach($Mylea as $data){
+    
+        foreach ($Mylea as $data) {
             $Kontaminasi = Kontaminasi::where('KPMylea', $data['KodeProduksi'])->get();
             $Panen = Panen::where('KPMylea', $data['KodeProduksi'])->get();
             $data['Konta'] = 0;
-            $data['Panen'] = 0;
-            foreach($Kontaminasi as $konta){
-                $data['Konta'] = $data['Konta'] + $konta['Jumlah'];
+            // $data['Panen'] = 0;
+    
+            foreach ($Kontaminasi as $konta) {
+                $data['Konta'] += $konta['Jumlah'];
             }
-            // foreach($Panen as $panen){
-            //     $data['Panen'] = $data['Panen'] + $panen['Jumlah'];
-            // }
+    
             $selectTotalHarvest = DB::table('mylea_panen as m')
-            ->join('mylea_panen_details as mpd', 'm.id', '=', 'mpd.PanenID')
-            ->where('m.KPMylea', $data['KodeProduksi'])
-            ->select(DB::raw('SUM(mpd.Jumlah) as TotalHarvest'))
-            ->first();
+                ->join('mylea_panen_details as mpd', 'm.id', '=', 'mpd.PanenID')
+                ->where('m.KPMylea', $data['KodeProduksi'])
+                ->select(DB::raw('SUM(mpd.Jumlah) as TotalHarvest'))
+                ->first();
 
-        $data['JumlahPanen'] = $selectTotalHarvest->TotalHarvest;
-        $data['InStock'] = $data['Jumlah'] - $data['Konta'] - $data['JumlahPanen'];
+            $data['JumlahPanen'] = $selectTotalHarvest->TotalHarvest;
+    
+            $data['InStock'] = $data['Jumlah'] - $data['Konta'] - $data['JumlahPanen'];
         }
-        return view('operator.Mylea.Monitoring', ['Data'=>$Mylea,]);
+    
+        return view('operator.Mylea.Monitoring', ['Data' => $Mylea]);
     }
+    
 
     public function FormKontaminasi($KodeProduksi){
         $Baglog = BaglogMylea::where('KPMylea', $KodeProduksi)->get();

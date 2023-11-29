@@ -47,11 +47,11 @@
                     <td>{{$data['Jumlah']}}</td>
                     <td>{{$data['Konta']}}</td>
                     @if ($data['JumlahPanen'] > 0)
-                        <td>{{$data['JumlahPanen']}}</td>
+                        <td>{{ $data['JumlahPanen'] }}</td>  
                     @else
-                        <td> 0 </td>
+                        <td> 0</td>
                     @endif
-                  
+                    
                     <td>{{$data['InStock']}}</td>
                     <td><a href="{{url('/operator/mylea/monitoring/form-kontaminasi', ['KodeProduksi'=>$data['KodeProduksi'],])}}">Kontaminasi</a></td>
                     <td><a href="{{url('/operator/mylea/monitoring/data-kontaminasi', ['KodeProduksi'=>$data['KodeProduksi'],])}}">Data Kontaminasi</a></td>
