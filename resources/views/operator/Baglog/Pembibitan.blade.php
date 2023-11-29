@@ -125,7 +125,7 @@
                         <select name="data[0][sterilisasi_id]" class="form-select" id="sterilisasi_id">
                             @foreach ($DataSterilisasi as $data)
                                 @if($data['InStock']!= 0)
-                                <option value="{{$data['id']}}">{{$data['TanggalPengerjaan'].' : '.$data['Batch']." In Stock : ". $data['InStock']}}</option>
+                                    <option value="{{$data['id']}}">{{$data['TanggalPengerjaan'].' : '.$data['Batch']." (".$data['Type'].") "." [".$data['InStock']."]"}}</option>
                                 @endif
                             @endforeach
                         </select>
@@ -143,7 +143,7 @@
         var i = 0;
         $("#dynamic-ar").click(function () {
             ++i;
-        $("#dynamicAddRemove").append('<tr><td><select name="data['+ i +'][sterilisasi_id]" class="form-select" id="sterilisasi_id">@foreach ($DataSterilisasi as $data) @if($data['InStock']!=0)<option value="{{$data['id']}}">{{$data['TanggalPengerjaan'].' : '.$data['Batch'] ." In Stock : ". $data['InStock']}}</option>@endif @endforeach</select></td><td><input type="number" name="data['+ i +'][Jumlah]" class="form-control" /></td><td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td></tr>');
+        $("#dynamicAddRemove").append('<tr><td><select name="data['+ i +'][sterilisasi_id]" class="form-select" id="sterilisasi_id">@foreach ($DataSterilisasi as $data) @if($data['InStock']!=0)<option value="{{$data['id']}}">{{$data['TanggalPengerjaan'].' : '.$data['Batch']." (".$data['Type'].") "." [".$data['InStock']."]"}}</option>@endif @endforeach</select></td><td><input type="number" name="data['+ i +'][Jumlah]" class="form-control" /></td><td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td></tr>');
         });
         $(document).on('click', '.remove-input-field', function () {
             $(this).parents('tr').remove();

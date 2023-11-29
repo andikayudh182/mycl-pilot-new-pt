@@ -250,7 +250,16 @@ class BaglogController extends Controller
     }
 
     public function Pembibitan(){
-        $Sterilisasi = Sterilisasi::where('pembibitan_kp', null)->get();
+        $Sterilisasi = Sterilisasi::select([
+                            'baglog_sterilisasi.*',
+                            'baglog_mixing.id as MixingID',
+                            'baglog_mixing.resep_id as ResepID',
+                            'baglog_resep.Type'
+                        ])
+                      ->where('pembibitan_kp', null)
+                      ->join('baglog_mixing', 'baglog_mixing.id', '=', 'baglog_sterilisasi.mixing_id')
+                      ->join('baglog_resep', 'baglog_resep.id', '=', 'baglog_mixing.resep_id')
+                      ->get();
         
         foreach($Sterilisasi as $Data){
             $Data['Terpakai'] = 0;
