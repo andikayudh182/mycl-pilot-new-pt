@@ -13,6 +13,7 @@ use App\Models\Mylea\Panen;
 use App\Models\Mylea\PanenDetails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class MyleaController extends Controller
 {
@@ -89,10 +90,17 @@ class MyleaController extends Controller
             foreach($Kontaminasi as $konta){
                 $data['Konta'] = $data['Konta'] + $konta['Jumlah'];
             }
-            foreach($Panen as $panen){
-                $data['Panen'] = $data['Panen'] + $panen['Jumlah'];
-            }
-            $data['InStock'] = $data['Jumlah'] - $data['Konta'] - $data['Panen'];
+            // foreach($Panen as $panen){
+            //     $data['Panen'] = $data['Panen'] + $panen['Jumlah'];
+            // }
+            $selectTotalHarvest = DB::table('mylea_panen as m')
+            ->join('mylea_panen_details as mpd', 'm.id', '=', 'mpd.PanenID')
+            ->where('m.KPMylea', $data['KodeProduksi'])
+            ->select(DB::raw('SUM(mpd.Jumlah) as TotalHarvest'))
+            ->first();
+
+        $data['JumlahPanen'] = $selectTotalHarvest->TotalHarvest;
+        $data['InStock'] = $data['Jumlah'] - $data['Konta'] - $data['JumlahPanen'];
         }
         return view('operator.Mylea.Monitoring', ['Data'=>$Mylea,]);
     }
