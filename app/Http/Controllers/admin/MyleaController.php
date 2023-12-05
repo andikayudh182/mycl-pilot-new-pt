@@ -262,6 +262,8 @@ class MyleaController extends Controller
                 
             }
             $data['DataBaglog'] = $Baglog;
+
+            
             $data['DataElus'] = Elus::where('KPMylea', $data['KodeProduksi'])->get();
 
         }

@@ -90,7 +90,7 @@
                                     <input type="text" name="Keterangan" value="@if(isset($_GET['Keterangan'])){{$_GET['Keterangan']}}@endif" class="form-control">
                                 </div>
                             </div>
-                            <div class="row mb-2">
+                            {{-- <div class="row mb-2">
                                 <label for="JumlahTray" class="col-sm-4 col-form-label col-form-label-sm">Amount of Production </label>
                                 <label class="col-sm-1 col-form-label col-form-label-sm">:</label>
                                 <div class="col-sm-2">
@@ -106,60 +106,7 @@
                                 <div class="col-sm-4">
                                     <input type="text" name="JumlahTrayNumber" placeholder="Number" class="form-control" value="@if(isset($_GET['JumlahTrayNumber'])){{$_GET['JumlahTrayNumber']}}@endif">
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="row mb-2">
-                                <label for="Kontaminasi" class="col-sm-4 col-form-label col-form-label-sm">Contamination</label>
-                                <label class="col-sm-1 col-form-label col-form-label-sm">:</label>
-                                <div class="col-sm-2">
-                                    <select name="KontaminasiOperator" class="form-control">
-                                        <option value=">">></option>
-                                        <option value="<"><</option>
-                                        <option value="=">=</option>
-                                        @if(isset($_GET['KontaminasiOperator']))
-                                        <option value="{{$_GET['KontaminasiOperator']}}" selected>{{$_GET['KontaminasiOperator']}}</option>
-                                        @endif
-                                    </select>
-                                </div>
-                                <div class="col-sm-4">
-                                    <input type="text" name="KontaminasiNumber" placeholder="Number" class="form-control" value="@if(isset($_GET['KontaminasiNumber'])){{$_GET['KontaminasiNumber']}}@endif">
-                                </div>
-                            </div>
-                            <div class="row mb-2">
-                                <label for="PersenKonta" class="col-sm-4 col-form-label col-form-label-sm">Contamination Rate</label>
-                                <label class="col-sm-1 col-form-label col-form-label-sm">:</label>
-                                <div class="col-sm-2">
-                                    <select name="PersenKontaOperator" class="form-control">
-                                        <option value=">">></option>
-                                        <option value="<"><</option>
-                                        <option value="=">=</option>
-                                        @if(isset($_GET['PersenKontaOperator']))
-                                        <option value="{{$_GET['PersenKontaOperator']}}" selected>{{$_GET['PersenKontaOperator']}}</option>
-                                        @endif
-                                    </select>
-                                </div>
-                                <div class="col-sm-4">
-                                    <input type="text" name="PersenKontaNumber" placeholder="Number" class="form-control" value="@if(isset($_GET['PersenKontaNumber'])){{$_GET['PersenKontaNumber']}}@endif">
-                                </div>
-                            </div>
-                            <div class="row mb-2">
-                                <label for="Panen" class="col-sm-4 col-form-label col-form-label-sm">Harvest</label>
-                                <label class="col-sm-1 col-form-label col-form-label-sm">:</label>
-                                <div class="col-sm-2">
-                                    <select name="PanenOperator" class="form-control">
-                                        <option value=">">></option>
-                                        <option value="<"><</option>
-                                        <option value="=">=</option>
-                                        @if(isset($_GET['PanenOperator']))
-                                        <option value="{{$_GET['PanenOperator']}}" selected>{{$_GET['PanenOperator']}}</option>
-                                        @endif
-                                    </select>
-                                </div>
-                                <div class="col-sm-4">
-                                    <input type="text" name="PanenNumber" placeholder="Number" class="form-control" value="@if(isset($_GET['PanenNumber'])){{$_GET['PanenNumber']}}@endif">
-                                </div>
-                            </div>
+                            </div> --}}
                             <div class="row mb-2">
                                 <label for="InStock" class="col-sm-4 col-form-label col-form-label-sm">Under Incubation </label>
                                 <label class="col-sm-1 col-form-label col-form-label-sm">:</label>
@@ -177,6 +124,105 @@
                                     <input type="text" name="InStockNumber" placeholder="Number" class="form-control" value="@if(isset($_GET['InStockNumber'])){{$_GET['InStockNumber']}}@endif">
                                 </div>
                             </div>
+                        </div>
+                        <div class="col">
+                            {{-- <div class="row mb-2">
+                                <label for="Kontaminasi" class="col-sm-4 col-form-label col-form-label-sm">Contamination</label>
+                                <label class="col-sm-1 col-form-label col-form-label-sm">:</label>
+                                <div class="col-sm-2">
+                                    <select name="KontaminasiOperator" class="form-control">
+                                        <option value=">">></option>
+                                        <option value="<"><</option>
+                                        <option value="=">=</option>
+                                        @if(isset($_GET['KontaminasiOperator']))
+                                        <option value="{{$_GET['KontaminasiOperator']}}" selected>{{$_GET['KontaminasiOperator']}}</option>
+                                        @endif
+                                    </select>
+                                </div>
+                                <div class="col-sm-4">
+                                    <input type="text" name="KontaminasiNumber" placeholder="Number" class="form-control" value="@if(isset($_GET['KontaminasiNumber'])){{$_GET['KontaminasiNumber']}}@endif">
+                                </div>
+                            </div> --}}
+                            <div class="row mb-2">
+                                <label for="Method" class="col-sm-4 col-form-label col-form-label-sm">Method</label>
+                                <label class="col-sm-1 col-form-label col-form-label-sm">:</label>
+                                <div class="col-sm-6">
+                                    <select name="MethodSelected" class="form-control">
+                                        <option value="" >Choose Method</option>
+                                        <option value="Direct" {{ isset($_GET['MethodSelected']) && $_GET['MethodSelected'] == 'Direct' ? 'selected' : '' }}>Direct</option>
+                                        <option value="2 phase" {{ isset($_GET['MethodSelected']) && $_GET['MethodSelected'] == '2 phase' ? 'selected' : '' }}>2 phase</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <label for="Tray" class="col-sm-4 col-form-label col-form-label-sm">Tray</label>
+                                <label class="col-sm-1 col-form-label col-form-label-sm">:</label>
+                                <div class="col-sm-6">
+                                    <select name="TraySelected" class="form-control">
+                                        <option value="">Choose Tray</option>
+                                        <option value="T0" {{ isset($_GET['TraySelected']) && $_GET['TraySelected'] == 'T0' ? 'selected' : '' }}>T0</option>
+                                        <option value="T1" {{ isset($_GET['TraySelected']) && $_GET['TraySelected'] == 'T1' ? 'selected' : '' }}>T1</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <label for="SubstrateQty" class="col-sm-4 col-form-label col-form-label-sm">SubstrateQty</label>
+                                <label class="col-sm-1 col-form-label col-form-label-sm">:</label>
+                                <div class="col-sm-6">
+                                    <select name="SubstrateQtySelected" class="form-control">
+                                        <option value="">Choose SubstrateQty (kg)</option>
+                                        <option value="2" {{ isset($_GET['SubstrateQtySelected']) && $_GET['SubstrateQtySelected'] == '2' ? 'selected' : '' }}>2</option>
+                                        <option value="3" {{ isset($_GET['SubstrateQtySelected']) && $_GET['SubstrateQtySelected'] == '3' ? 'selected' : '' }}>3</option>
+                                        <option value="4" {{ isset($_GET['SubstrateQtySelected']) && $_GET['SubstrateQtySelected'] == '4' ? 'selected' : '' }}>4</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <label for="Recipe" class="col-sm-4 col-form-label col-form-label-sm">Recipe</label>
+                                <label class="col-sm-1 col-form-label col-form-label-sm">:</label>
+                                <div class="col-sm-6">
+                                    <select name="RecipeSelected" class="form-control">
+                                        <option value="">Choose Recipe </option>
+                                        <option value="STP20" {{ isset($_GET['RecipeSelected']) && $_GET['RecipeSelected'] == 'STP20' ? 'selected' : '' }}>STP20</option>
+                                        <option value="FTP15" {{ isset($_GET['RecipeSelected']) && $_GET['RecipeSelected'] == 'FTP15' ? 'selected' : '' }}>FTP15</option>
+                                        <option value="TTP15" {{ isset($_GET['RecipeSelected']) && $_GET['RecipeSelected'] == 'TTP15' ? 'selected' : '' }}>TTP15</option>
+                                    </select>
+                                </div>
+                            </div>
+                            {{-- <div class="row mb-2">
+                                <label for="PersenKonta" class="col-sm-4 col-form-label col-form-label-sm">Contamination Rate</label>
+                                <label class="col-sm-1 col-form-label col-form-label-sm">:</label>
+                                <div class="col-sm-2">
+                                    <select name="PersenKontaOperator" class="form-control">
+                                        <option value=">">></option>
+                                        <option value="<"><</option>
+                                        <option value="=">=</option>
+                                        @if(isset($_GET['PersenKontaOperator']))
+                                        <option value="{{$_GET['PersenKontaOperator']}}" selected>{{$_GET['PersenKontaOperator']}}</option>
+                                        @endif
+                                    </select>
+                                </div>
+                                <div class="col-sm-4">
+                                    <input type="text" name="PersenKontaNumber" placeholder="Number" class="form-control" value="@if(isset($_GET['PersenKontaNumber'])){{$_GET['PersenKontaNumber']}}@endif">
+                                </div>
+                            </div> --}}
+                            {{-- <div class="row mb-2">
+                                <label for="Panen" class="col-sm-4 col-form-label col-form-label-sm">Harvest</label>
+                                <label class="col-sm-1 col-form-label col-form-label-sm">:</label>
+                                <div class="col-sm-2">
+                                    <select name="PanenOperator" class="form-control">
+                                        <option value=">">></option>
+                                        <option value="<"><</option>
+                                        <option value="=">=</option>
+                                        @if(isset($_GET['PanenOperator']))
+                                        <option value="{{$_GET['PanenOperator']}}" selected>{{$_GET['PanenOperator']}}</option>
+                                        @endif
+                                    </select>
+                                </div>
+                                <div class="col-sm-4">
+                                    <input type="text" name="PanenNumber" placeholder="Number" class="form-control" value="@if(isset($_GET['PanenNumber'])){{$_GET['PanenNumber']}}@endif">
+                                </div>
+                            </div> --}}
                             <div class="row mb-2">
                                 <div class="col-sm-11">
                                     <button type="Submit" name="Filter" class="btn btn-primary float-end" value="1" style="width:26vh">Submit</button>
@@ -409,81 +455,82 @@
                     <td>{{ $data['SubstrateQty'] }}</td>
                     <td>
                         <table class="table-borderless table text-center baglog-table">
+ 
                             @foreach($data['DataBaglog'] as $DataBaglog)
 
-                          
-                          
-                            <tr>
-                                @if(substr($DataBaglog['KPBaglog'], 0, 2) != 'BL')
-                                    <td colspan="6" style="width: 49%" >{{$DataBaglog['KPBaglog']}}</td>
-                                @else
-                                <td>
-                                    <a href="{{url('/admin/baglog/report?TanggalAwal=&TanggalAkhir=&SearchQuery='.$DataBaglog['KPBaglog'].'&Submit=Search')}}">{{$DataBaglog['KPBaglog']}}</a>
-                                </td>
-                                <td>{{ $DataBaglog['Type'] }}</td>
-                                <td style= "width:7%">{{$DataBaglog['JumlahBaglog']}}</td>
-                                <td style= "width:7%">{{$DataBaglog['BatchBibitTerpakai']}} </td>
-                                <td style="width:7%">{{substr($DataBaglog['KPBaglog'], 11)}} </td>
-                                <td style="width:7%">{{$DataBaglog['UmurBibit']}}</td>
-                                <td>{{$DataBaglog['UmurBaglog']}}</td>
+                            @if( (!isset($_GET['RecipeSelected'])) || ($_GET['RecipeSelected'] == "") || $DataBaglog['Type'] === $_GET['RecipeSelected'])
+                                <tr>
+                                    @if(substr($DataBaglog['KPBaglog'], 0, 2) != 'BL')
+                                        <td colspan="6" style="width: 49%" >{{$DataBaglog['KPBaglog']}}</td>
+                                    @else
+                                    <td>
+                                        <a href="{{url('/admin/baglog/report?TanggalAwal=&TanggalAkhir=&SearchQuery='.$DataBaglog['KPBaglog'].'&Submit=Search')}}">{{$DataBaglog['KPBaglog']}}</a>
+                                    </td>
+                                    <td>{{ $DataBaglog['Type'] }}</td>
+                                    <td style= "width:7%">{{$DataBaglog['JumlahBaglog']}}</td>
+                                    <td style= "width:7%">{{$DataBaglog['BatchBibitTerpakai']}} </td>
+                                    <td style="width:7%">{{substr($DataBaglog['KPBaglog'], 11)}} </td>
+                                    <td style="width:7%">{{$DataBaglog['UmurBibit']}}</td>
+                                    <td>{{$DataBaglog['UmurBaglog']}}</td>
+                                    @endif
+                                    @php
+                                        $LastKodeProduksi = substr($data['KodeProduksi'], -1);
+                                        $DataBaglog['Konta'] = $data['DataKontaminasi']->where('KPBaglog', $DataBaglog['KPBaglog']);
+                                        $DataBaglog['Panen'] = $data['PanenBaglog']->where('KPBaglog', $DataBaglog['KPBaglog']);
+                                        foreach($DataBaglog['Konta'] as $konta){
+                                            $DataBaglog['TanggalKonta'] = $DataBaglog['TanggalKonta'].$konta['TanggalKontaminasi'].',';
+                                        }
+
+                                        foreach($DataBaglog['Panen'] as $Panen){
+                                            $DataBaglog['TanggalPanen'] = $DataBaglog['TanggalPanen'].$Panen['TanggalPanen'].',';
+                                        }
+
+
+                                        if($DataBaglog['TanggalKonta'] == null){
+                                            $DataBaglog['TanggalKonta'] = '0000-00-00';
+                                        }
+                                        if($DataBaglog['TanggalPanen'] == null){
+                                            $DataBaglog['TanggalPanen'] = '0000-00-00';
+                                        }
+
+                                        $I3 = substr($DataBaglog['KodeProduksi'], 11);
+                                        $A3 = $data['TanggalProduksi'];
+                                        if ($I3 === "MYCL2") {
+                                            if ((date("D", strtotime($A3)) === "Tue") || (date("D", strtotime($A3)) === "Fri")) {
+                                            if ($LastKodeProduksi === "D") {
+                                                $result = date("Y-m-d", strtotime($A3 . "+41 days"));
+                                            } else {
+                                                $result = date("Y-m-d", strtotime($A3 . "+34 days"));
+                                            }
+                                            } else {
+                                                if ($LastKodeProduksi === "D") {
+                                                    $result = date("Y-m-d", strtotime($A3 . "+42 days"));
+                                                } else {
+                                                    $result = date("Y-m-d", strtotime($A3 . "+35 days"));
+                                                }
+                                            } 
+                                        } else {
+                                            if ((date("D", strtotime($A3)) === "Tue") || (date("D", strtotime($A3)) === "Fri")) {
+                                            if ($LastKodeProduksi === "D") {
+                                                $result = date("Y-m-d", strtotime($A3 . "+41 days"));
+                                            } else {
+                                                $result = date("Y-m-d", strtotime($A3 . "+34 days"));
+                                            }
+                                            } else {
+                                                if ($LastKodeProduksi === "D") {
+                                                    $result = date("Y-m-d", strtotime($A3 . "+42 days"));
+                                                } else {
+                                                    $result = date("Y-m-d", strtotime($A3 . "+35 days"));
+                                                }
+                                            } 
+                                        }
+                                    @endphp
+                                    <td>{{ $DataBaglog['Konta']->sum('Jumlah') }}</td>
+                                    <td style="width:7%">{{round($DataBaglog['Konta']->sum('Jumlah')/$data['Jumlah']*100, 2)}}%</td>
+                                    {{-- <td>{{ $result }}</td> --}}
+                                    <td>{{$DataBaglog['Panen']->sum('Jumlah')}}</td>
+                                </tr>
                                 @endif
-                                @php
-                                    $LastKodeProduksi = substr($data['KodeProduksi'], -1);
-                                    $DataBaglog['Konta'] = $data['DataKontaminasi']->where('KPBaglog', $DataBaglog['KPBaglog']);
-                                    $DataBaglog['Panen'] = $data['PanenBaglog']->where('KPBaglog', $DataBaglog['KPBaglog']);
-                                    foreach($DataBaglog['Konta'] as $konta){
-                                        $DataBaglog['TanggalKonta'] = $DataBaglog['TanggalKonta'].$konta['TanggalKontaminasi'].',';
-                                    }
-
-                                    foreach($DataBaglog['Panen'] as $Panen){
-                                        $DataBaglog['TanggalPanen'] = $DataBaglog['TanggalPanen'].$Panen['TanggalPanen'].',';
-                                    }
-
-
-                                    if($DataBaglog['TanggalKonta'] == null){
-                                        $DataBaglog['TanggalKonta'] = '0000-00-00';
-                                    }
-                                    if($DataBaglog['TanggalPanen'] == null){
-                                        $DataBaglog['TanggalPanen'] = '0000-00-00';
-                                    }
-
-                                    $I3 = substr($DataBaglog['KodeProduksi'], 11);
-                                    $A3 = $data['TanggalProduksi'];
-                                    if ($I3 === "MYCL2") {
-                                        if ((date("D", strtotime($A3)) === "Tue") || (date("D", strtotime($A3)) === "Fri")) {
-                                           if ($LastKodeProduksi === "D") {
-                                            $result = date("Y-m-d", strtotime($A3 . "+41 days"));
-                                           } else {
-                                            $result = date("Y-m-d", strtotime($A3 . "+34 days"));
-                                           }
-                                        } else {
-                                            if ($LastKodeProduksi === "D") {
-                                                $result = date("Y-m-d", strtotime($A3 . "+42 days"));
-                                            } else {
-                                                $result = date("Y-m-d", strtotime($A3 . "+35 days"));
-                                            }
-                                        } 
-                                    } else {
-                                        if ((date("D", strtotime($A3)) === "Tue") || (date("D", strtotime($A3)) === "Fri")) {
-                                           if ($LastKodeProduksi === "D") {
-                                            $result = date("Y-m-d", strtotime($A3 . "+41 days"));
-                                           } else {
-                                            $result = date("Y-m-d", strtotime($A3 . "+34 days"));
-                                           }
-                                        } else {
-                                            if ($LastKodeProduksi === "D") {
-                                                $result = date("Y-m-d", strtotime($A3 . "+42 days"));
-                                            } else {
-                                                $result = date("Y-m-d", strtotime($A3 . "+35 days"));
-                                            }
-                                        } 
-                                    }
-                                @endphp
-                                <td>{{ $DataBaglog['Konta']->sum('Jumlah') }}</td>
-                                <td style="width:7%">{{round($DataBaglog['Konta']->sum('Jumlah')/$data['Jumlah']*100, 2)}}%</td>
-                                {{-- <td>{{ $result }}</td> --}}
-                                <td>{{$DataBaglog['Panen']->sum('Jumlah')}}</td>
-                            </tr>
                             @endforeach
                         </table>
                     </td>
