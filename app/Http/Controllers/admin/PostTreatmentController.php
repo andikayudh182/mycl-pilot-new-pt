@@ -136,27 +136,59 @@ class PostTreatmentController extends Controller
 
     public function MyleaHarvest(Request $request)
     {
+
+        
         $Dat = Panen::with('PostTreatment', 'Kerik')
-        ->orderBy('TanggalPanen', 'desc')
-        ->orderBy('KPMylea', 'desc')
-        ->get();
+            ->orderBy('TanggalPanen', 'desc')
+            ->orderBy('KPMylea', 'desc')
+            ->paginate(50);
+
+        $totalJumlah = 0;
+        $totalRejectPanen = 0;
+
+        $DatAll = Panen::with('PostTreatment', 'Kerik')
+                ->orderBy('TanggalPanen', 'desc')
+                ->orderBy('KPMylea', 'desc')
+                ->get();
+  
 
         if(isset($request->Submit)) {
             $search = $request->SearchQuery;
             $Dat = Panen::with('PostTreatment', 'Kerik')
-            ->where('KPMylea', 'like', "%" . $search . "%")
-            ->orderBy('TanggalPanen', 'desc')
-            ->orderBy('KPMylea', 'desc')
-            ->get();
+                    ->where('KPMylea', 'like', "%" . $search . "%")
+                    ->orderBy('TanggalPanen', 'desc')
+                    ->orderBy('KPMylea', 'desc')
+                    ->paginate(200);
+
+            $DatAll = Panen::with('PostTreatment', 'Kerik')
+                    ->where('KPMylea', 'like', "%" . $search . "%")
+                    ->orderBy('TanggalPanen', 'desc')
+                    ->orderBy('KPMylea', 'desc')
+                    ->get();
+    
+    
         }
         if(isset($request->Filter)){
             $Date1 = date('Y-m-d', strtotime($request['TanggalAwal']));
             $Date2 = date('Y-m-d', strtotime($request['TanggalAkhir']));
             $Dat = Panen::with('PostTreatment', 'Kerik')
-            ->whereBetween('TanggalPanen', [$Date1, $Date2])
-            ->orderBy('TanggalPanen','desc')
-            ->orderBy('KPMylea', 'desc')
-            ->get();
+                    ->whereBetween('TanggalPanen', [$Date1, $Date2])
+                    ->orderBy('TanggalPanen','desc')
+                    ->orderBy('KPMylea', 'desc')
+                    ->paginate(200);
+                    
+            $DatAll = Panen::with('PostTreatment', 'Kerik')
+                    ->whereBetween('TanggalPanen', [$Date1, $Date2])
+                    ->orderBy('TanggalPanen','desc')
+                    ->orderBy('KPMylea', 'desc')
+                    ->get();
+
+            
+        }
+
+        foreach ($DatAll as $datafull) {
+            $totalJumlah += $datafull['Jumlah'];
+            $totalRejectPanen += $datafull['Kerik']->sum('RejectBeforeKerik');
         }
 
         $filteredData = [];
@@ -209,28 +241,36 @@ class PostTreatmentController extends Controller
     
         }
 
-        $totalJumlah = 0;
-        $totalRejectPanen = 0;
+        // if(isset($request->Submit) || isset($request->Filter)){
+        //     $DatAll = $Dat;
+        // }
+
+     
+
         // $totalHasilKerik = 0;
         // $totalRejectKerik = 0;
         // $totalStokBelumDikerik = 0;
         // $totalSisaBelumTerpakai = 0;
 
-        foreach ($filteredData as $data) {
-            $totalJumlah += $data['Jumlah'];
-            $totalRejectPanen += $data['Kerik']->sum('RejectBeforeKerik');
-            // $totalHasilKerik += $data['Kerik']->sum('Jumlah');
-            // $totalRejectKerik += $data['Kerik']->sum('RejectAfterKerik');
-            // $totalStokBelumDikerik += $data['Jumlah']-$data['kerik']->sum('Jumlah')-$data['kerik']->sum('RejectBeforeKerik')-$data['kerik']->sum('RejectAfterKerik');
-            // $totalSisaBelumTerpakai += $data['kerik']->sum('Jumlah')-$data['PostTreatment']->sum('Jumlah');
-        }
+        // foreach ($filteredData as $data) {
+        //     // $totalJumlah += $data['Jumlah'];
+        //     // $totalRejectPanen += $data['Kerik']->sum('RejectBeforeKerik');
+        //     // $totalHasilKerik += $data['Kerik']->sum('Jumlah');
+        //     // $totalRejectKerik += $data['Kerik']->sum('RejectAfterKerik');
+        //     // $totalStokBelumDikerik += $data['Jumlah']-$data['kerik']->sum('Jumlah')-$data['kerik']->sum('RejectBeforeKerik')-$data['kerik']->sum('RejectAfterKerik');
+        //     // $totalSisaBelumTerpakai += $data['kerik']->sum('Jumlah')-$data['PostTreatment']->sum('Jumlah');
+        // }
+
+        
+
+        
 
 
         return view('admin.PostTreatment.MyleaHarvest', [
             'Data' => $Dat,
             'Trial'=>$filteredData,
             'PTData' => $PTData,
-            'Total'=>$Total,
+            'Total'=>$totalJumlah,
             'TotalSudahKerik'=>$TotalSudahKerik,
             'TotalPTProses'=>$TotalPTProses,
             'TotalRejectPanen'=> $totalRejectPanen,
@@ -242,29 +282,44 @@ class PostTreatmentController extends Controller
     public function PostTreatmentI(Request $request)
     {
         $Dat = Panen::with('PostTreatment', 'Kerik')
-        // ->leftJoin('post_treatment_rebus', 'mylea_panen.id', '=', 'post_treatment_rebus.PanenID')
-        //->whereRaw('Jumlah - (SELECT SUM(Jumlah) FROM post_treatment_details WHERE Panen_ID = mylea_panen.id) != 0')
-        ->orderBy('TanggalPanen', 'desc')
-        ->orderBy('KPMylea', 'desc')
-        ->get();
+                // ->leftJoin('post_treatment_rebus', 'mylea_panen.id', '=', 'post_treatment_rebus.PanenID')
+                //->whereRaw('Jumlah - (SELECT SUM(Jumlah) FROM post_treatment_details WHERE Panen_ID = mylea_panen.id) != 0')
+                ->orderBy('TanggalPanen', 'desc')
+                ->orderBy('KPMylea', 'desc')
+                ->paginate(50);
+
+        $DatAll = Panen::with('PostTreatment', 'Kerik')
+                 ->orderBy('TanggalPanen', 'desc')
+                 ->orderBy('KPMylea', 'desc')
+                 ->get();
 
         if(isset($request->Filter)){
             $Date1 = date('Y-m-d', strtotime($request['TanggalAwal']));
             $Date2 = date('Y-m-d', strtotime($request['TanggalAkhir']));
             $Dat = Panen::with('PostTreatment', 'Kerik')
-            ->whereBetween('TanggalPanen', [$Date1, $Date2])
-            ->orderBy('TanggalPanen','desc')
-            ->orderBy('KPMylea', 'desc')
-            ->get();
+                  ->whereBetween('TanggalPanen', [$Date1, $Date2])
+                  ->orderBy('TanggalPanen','desc')
+                  ->orderBy('KPMylea', 'desc')
+                  ->paginate(200);
+
+            $DatAll = Panen::with('PostTreatment', 'Kerik')
+                      ->whereBetween('TanggalPanen', [$Date1, $Date2])
+                      ->orderBy('TanggalPanen','desc')
+                      ->orderBy('KPMylea', 'desc')
+                      ->get(); 
         }
         
         if(isset($request->Submit)) {
             $search = $request->SearchQuery;
             $Dat = Panen::with('PostTreatment', 'Kerik')
-            ->where('KPMylea', 'like', "%" . $search . "%")
-            ->orderBy('TanggalPanen', 'desc')
-            ->orderBy('KPMylea', 'desc')
-            ->get();
+                ->where('KPMylea', 'like', "%" . $search . "%")
+                ->orderBy('TanggalPanen', 'desc')
+                ->orderBy('KPMylea', 'desc')
+                ->paginate(200);
+            $DatAll = Panen::with('PostTreatment', 'Kerik')
+                ->orderBy('TanggalPanen', 'desc')
+                ->orderBy('KPMylea', 'desc')
+                ->get();
         }
 
 
@@ -362,9 +417,9 @@ class PostTreatmentController extends Controller
         }
 
         // $totalJumlah = 0;
-        $totalRejectBeforeKerik = 0;
-        $totalHasilKerik = 0;
-        $totalRejectKerik = 0;
+        // $totalRejectBeforeKerik = 0;
+        // $totalHasilKerik = 0;
+        // $totalRejectKerik = 0;
         $totalStokBelumDikerik = 0;
         $totalRebus = 0;
         $totalRebusOri = 0;
@@ -374,18 +429,71 @@ class PostTreatmentController extends Controller
         $totalBelumRebus = 0;
  
 
-        foreach ($filteredData as $data) {
-            // $totalJumlah += $data['Jumlah'];
-            $totalRejectBeforeKerik += $data['Kerik']->sum('RejectBeforeKerik');
-            $totalHasilKerik += $data['Kerik']->sum('Jumlah');
-            $totalRejectKerik += $data['Kerik']->sum('RejectAfterKerik');
-            $totalStokBelumDikerik += $data['Jumlah'] - $data['kerik']->sum('Jumlah') - $data['kerik']->sum('RejectBeforeKerik') - $data['kerik']->sum('RejectAfterKerik');
-            $totalRebus += $data['TotalRebus'];
-            $totalRebusOri += $data['TotalRebusOri'];
-            $totalRebusBlack += $data['TotalRebusBlack'];
-            $totalSisaOri += $data['SisaOri'];
-            $totalSisaBlack+= $data['SisaBlack'];
-            $totalBelumRebus += $data['Kerik']->sum('Jumlah') - ($data['TotalRebusOri'] + $data['TotalRebusBlack']);
+        // foreach ($filteredData as $data) {
+        //     // $totalJumlah += $data['Jumlah'];
+        //     // $totalRejectBeforeKerik += $data['Kerik']->sum('RejectBeforeKerik');
+        //     // $totalHasilKerik += $data['Kerik']->sum('Jumlah');
+        //     // $totalRejectKerik += $data['Kerik']->sum('RejectAfterKerik');
+        //     // $totalStokBelumDikerik += $data['Jumlah'] - $data['kerik']->sum('Jumlah') - $data['kerik']->sum('RejectBeforeKerik') - $data['kerik']->sum('RejectAfterKerik');
+        //     // $totalRebus += $data['TotalRebus'];
+        //     // $totalRebusOri += $data['TotalRebusOri'];
+        //     // $totalRebusBlack += $data['TotalRebusBlack'];
+        //     // $totalSisaOri += $data['SisaOri'];
+        //     // $totalSisaBlack+= $data['SisaBlack'];
+        //     // $totalBelumRebus += $data['Kerik']->sum('Jumlah') - ($data['TotalRebusOri'] + $data['TotalRebusBlack']);
+        // }
+
+
+        foreach ($DatAll as $datafull) {
+            
+            $datafull['Rebus'] = PTRebus::where('PanenID', $datafull['id'])->get();
+            $datafull['TotalRebus']= $datafull['Rebus']->sum('JumlahRebus');
+            $datafull['TotalRebusOri']= $datafull['Rebus']->sum('JumlahOri');
+            $datafull['TotalRebusBlack']= $datafull['Rebus']->sum('JumlahBlack');
+
+            $datafull['isBlack'] =  DB::table('post_treatment_details')
+                                ->select('id', DB::raw('SUM(Jumlah) as usedBlack'))
+                                ->where('Panen_ID', '=', $datafull['id'])
+                                ->whereIn('PT_ID', function($query) {
+                                    $query->select('PT_ID')
+                                        ->from('post_treatment_proses')
+                                        ->where('proses', '=', 'Dyeing')
+                                        ->where('Jumlah', '>', 0);
+                                })
+                                ->groupBy('id')
+                                ->get();
+
+            $datafull['isOri']  = DB::table('post_treatment_details')
+                            ->select('id', DB::raw('SUM(Jumlah) as usedOri'))
+                            ->where('Panen_ID', '=', $datafull['id'])
+                            ->whereIn('PT_ID', function($query) {
+                                $query->select('PT_ID')
+                                    ->from('post_treatment_proses')
+                                    ->where('proses', '!=', 'Dyeing')
+                                    ->where('Jumlah', '>', 0);
+                            })
+                            ->groupBy('id')
+                            ->get();
+                            
+            if (!$datafull['isBlack']->isEmpty() && isset($datafull['isBlack'][0]->usedBlack)) {
+                $datafull['SisaBlack'] = $datafull['TotalRebusBlack'] - $datafull['isBlack'][0]->usedBlack;
+            } else {
+                $datafull['SisaBlack'] = $datafull['TotalRebusBlack'];
+            }
+
+            if (!$datafull['isOri']->isEmpty() && isset($datafull['isOri'][0]->usedOri)) {
+                $datafull['SisaOri'] = $datafull['TotalRebusOri'] - $datafull['isOri'][0]->usedOri;
+            } else {
+                $datafull['SisaOri'] = $datafull['TotalRebusOri'];
+            }
+
+            $totalStokBelumDikerik += $datafull['Jumlah'] - $datafull['kerik']->sum('Jumlah') - $datafull['kerik']->sum('RejectBeforeKerik') - $datafull['kerik']->sum('RejectAfterKerik');
+            $totalRebus += $datafull['TotalRebus'];
+            $totalRebusOri += $datafull['TotalRebusOri'];
+            $totalRebusBlack += $datafull['TotalRebusBlack'];
+            $totalSisaOri += $datafull['SisaOri'];
+            $totalSisaBlack+= $datafull['SisaBlack'];
+            $totalBelumRebus += $datafull['Kerik']->sum('Jumlah') - ($datafull['TotalRebusOri'] + $datafull['TotalRebusBlack']);
         }
 
 
@@ -393,12 +501,12 @@ class PostTreatmentController extends Controller
             'Data' => $Dat,
             'Trial'=>$filteredData,
             'PTData' => $PTData,
-            'Total'=>$Total,
-            'TotalSudahKerik'=>$TotalSudahKerik,
-            'TotalHasilKerik'=>$totalHasilKerik,
-            'TotalPTProses'=>$TotalPTProses,
-            'TotalRejectBeforeKerik'=> $totalRejectBeforeKerik,
-            'TotalRejectKerik'=> $totalRejectKerik,
+            // 'Total'=>$Total,
+            // 'TotalSudahKerik'=>$TotalSudahKerik,
+            // 'TotalHasilKerik'=>$totalHasilKerik,
+            // 'TotalPTProses'=>$TotalPTProses,
+            // 'TotalRejectBeforeKerik'=> $totalRejectBeforeKerik,
+            // 'TotalRejectKerik'=> $totalRejectKerik,
             'TotalBelumKerik'=> $totalStokBelumDikerik,
             'TotalRebus'=> $totalRebus,
             'TotalRebusOri'=> $totalRebusOri,
