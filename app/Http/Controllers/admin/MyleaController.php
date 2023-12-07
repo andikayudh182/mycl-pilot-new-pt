@@ -161,7 +161,7 @@ class MyleaController extends Controller
     }
 
     public function Report(Request $request){
-        $Mylea = Produksi::sortable()->orderBy('TanggalProduksi','desc')->paginate(50);
+        $Mylea = Produksi::sortable()->orderBy('TanggalProduksi','desc')->get();
         $MyleaAll = Produksi::sortable()->orderBy('TanggalProduksi','desc')->get();
         $resume = array();
         
@@ -183,7 +183,7 @@ class MyleaController extends Controller
                 $query->where('KodeProduksi', 'like', "%" . $search . "%");
             }
         
-            $Mylea = $query->orderBy('TanggalProduksi', 'desc')->paginate(200);
+            $Mylea = $query->orderBy('TanggalProduksi', 'desc')->get();
             $MyleaAll = $query->orderBy('TanggalProduksi', 'desc')->get();
         }
         
@@ -271,7 +271,7 @@ class MyleaController extends Controller
         }
 
         foreach ($MyleaAll as $datafull){
-            $datafull['datafullKontaminasi'] = Kontaminasi::where('KPMylea', $datafull['KodeProduksi'])->get();
+            $datafull['DataKontaminasi'] = Kontaminasi::where('KPMylea', $datafull['KodeProduksi'])->get();
             $datafull['Panen']= Panen::where('KPMylea', $datafull['KodeProduksi'])->get();
             $datafull['PanenBaglog'] = PanenDetails::select([
                 'mylea_panen_details.*',
@@ -285,7 +285,7 @@ class MyleaController extends Controller
                 $Panen['Baglog'] = PanenDetails::where('PanenID', $Panen['id'])->get();
                 
             }
-            $datafull['Konta'] = $datafull['datafullKontaminasi']->sum('Jumlah');
+            $datafull['Konta'] = $datafull['DataKontaminasi']->sum('Jumlah');
             
             $selectTotalHarvest = DB::table('mylea_panen as m')
                 ->join('mylea_panen_details as mpd', 'm.id', '=', 'mpd.PanenID')
@@ -307,6 +307,7 @@ class MyleaController extends Controller
         $Mylea = $SortFilter->SortPanen($Mylea, $request['PanenDir']);
         $Mylea = $SortFilter->SortPersenKonta($Mylea, $request['PersenKontaDir']);
         $Mylea = $SortFilter->SortInStock($Mylea, $request['InStockDir']);
+        // $Mylea = $Mylea->paginate(200);
 
         
 

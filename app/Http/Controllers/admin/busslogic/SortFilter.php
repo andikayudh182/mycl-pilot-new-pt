@@ -85,6 +85,16 @@ class SortFilter {
             $Mylea = $Mylea->where('InStock', $request['InStockOperator'], $request['InStockNumber']);
         }
         
+        if ($request['RecipeSelected'] != '') {
+            $typeSelected = $request['RecipeSelected'];
+            $Mylea = $Mylea->filter(function ($item) use ($typeSelected) {
+                return $item['DataBaglog']->contains('Type', $typeSelected);
+            });
+        }
+        
+        
+    
+    
         return $Mylea;
     }
 }

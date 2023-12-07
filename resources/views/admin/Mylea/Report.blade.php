@@ -386,6 +386,10 @@
                 </th>
 
             </tr>
+            {{-- {{ $Data[0] }} <br><br>
+            {{ $Data[1] }} <br><br>
+            {{ $Data[2] }} <br><br> --}}
+
             @foreach ($Data as $data)
                 <tr>
                     <td>{{$data['KodeProduksi']}}</td>
@@ -575,9 +579,9 @@
                 </tr>
             @endforeach
         </table>
-        <div class="d-flex justify-content-center">
+        {{-- <div class="d-flex justify-content-center">
             {!! $Data->links() !!}
-         </div>
+         </div> --}}
 
     <!--Export Kontam-->
     <div style="display:none;">
