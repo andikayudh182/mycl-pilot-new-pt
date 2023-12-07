@@ -24,6 +24,17 @@
                 @enderror
             </div>
         </div>
+        <div id="total-container"  class="row mb-3 ">
+            <label for="TotalPenggunaanMylea" class="col-sm-2 col-form-label col-form-label-sm">Total Penggunaan Mylea  :</label>
+            <div class="col-sm-5">
+                <input type="text" id="TotalPenggunaanMylea" name="TotalPenggunaanMylea" class="form-control form-control-sm  @error('TotalPenggunaanMylea') is-invalid @enderror" value="0" id="colFormLabelSm" readonly>
+                @error('TotalPenggunaanMylea')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+                @enderror
+            </div>
+        </div>
         {{-- {{ $FormData }}  --}}
         <table class="table table-bordered" id="dynamicAddRemove">
             <tr>
@@ -53,32 +64,63 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css">
         <script>
             var i = 0;
+        
+            // Fungsi untuk menghitung total dan memperbarui input TotalPenggunaanMylea
+            function updateTotal() {
+                var total = 0;
+        
+                // Iterasi melalui semua input jumlah dan menambahkannya ke total
+                $("input[name^='data['][name$='[Jumlah]']").each(function () {
+                    var value = parseFloat($(this).val()) || 0;
+                    total += value;
+                });
+        
+                // Memperbarui nilai input TotalPenggunaanMylea
+                $("#TotalPenggunaanMylea").val(total);
+            }
+        
+            // Menambahkan event listener untuk input jumlah
+            $(document).on('input', "input[name^='data['][name$='[Jumlah]']", function () {
+                updateTotal();
+            });
+        
+            // Menambahkan event listener untuk tombol Tambah
             $("#dynamic-ar").click(function () {
                 ++i;
-            $("#dynamicAddRemove").append('<tr>'+
-                '<td>' +
-                    '<select name="data['+i+'][KodeMylea]" class="form-control select2-single" id="KodeMylea'+i+'" style="width:100%; background-color: #f8fafc;">' +
-                        '@foreach ($FormData as $item)' +
-                            ' <option value="{{$item['id']}}">{{$item['KPMylea']}} : {{$item['TanggalPanen']}} (Available : {{$item['InStock']}}) @if($item['JenisPanen']=='Kontaminasi') ({{$item['JenisPanen']}}) @endif</option>' +
-                        '@endforeach'+
-                    '</select>' +
-                '</td>'+
-                '<td><input type="number" name="data['+i+'][Jumlah]" class="form-control" /></td>' +
-            '<td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td></tr>');
-            setTimeout(function(){
-            $("#KodeMylea" + i).select2({
-                theme: "bootstrap4"
+                $("#dynamicAddRemove").append('<tr>' +
+                    '<td>' +
+                        '<select name="data[' + i + '][KodeMylea]" class="form-control select2-single" id="KodeMylea' + i + '" style="width:100%; background-color: #f8fafc;">' +
+                            '@foreach ($FormData as $item)' +
+                                ' <option value="{{$item['id']}}">{{$item['KPMylea']}} : {{$item['TanggalPanen']}} (Available : {{$item['InStock']}}) @if($item['JenisPanen']=='Kontaminasi') ({{$item['JenisPanen']}}) @endif</option>' +
+                            '@endforeach' +
+                        '</select>' +
+                    '</td>' +
+                    '<td><input type="number" name="data[' + i + '][Jumlah]" class="form-control" /></td>' +
+                    '<td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td></tr>');
+        
+                // Menambahkan event listener untuk select2 pada elemen baru
+                setTimeout(function () {
+                    $("#KodeMylea" + i).select2({
+                        theme: "bootstrap4"
+                    });
+                }, 100);
+        
+                updateTotal(); // Panggil fungsi updateTotal setelah menambahkan baris baru
             });
-            }, 100);
-            });
-
+        
+            // Menambahkan event listener untuk tombol delete
             $(document).on('click', '.remove-input-field', function () {
                 $(this).parents('tr').remove();
+                updateTotal(); // Panggil fungsi updateTotal setelah menghapus baris
             });
+        
+            // Menambahkan event listener untuk select2 pada elemen pertama
             $("#KodeMylea").select2({
                 theme: "bootstrap4"
             });
         </script>
+        
+        
         <style>
         </style>
     </div>
