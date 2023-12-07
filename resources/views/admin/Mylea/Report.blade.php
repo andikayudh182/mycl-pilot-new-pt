@@ -24,31 +24,31 @@
                         <tr>
                             <td>Total Production</td>
                             <td>:</td>
-                            <td>{{$Data->sum('Jumlah')}}</td>
+                            <td>{{$DataAll->sum('Jumlah')}}</td>
                             <td>pcs</td>
                         </tr>
                         <tr>
                             <td width="50%">Total Under Incubation</td>
                             <td width="5%">:</td>
-                            <td width="17%">{{$Data->sum('InStock')}}</td>
+                            <td width="17%">{{$DataAll->sum('InStock')}}</td>
                             <td>pcs</td>
                         </tr>
                         <tr>
                             <td>Total Contamination</td>
                             <td>:</td>
-                            <td>{{$Data->sum('Konta')}}</td>
+                            <td>{{$DataAll->sum('Konta')}}</td>
                             <td>pcs</td>
                         </tr>
                         <tr>
                             <td>Total Contamination Rate</td>
                             <td>:</td>
-                            <td>@if($Data->sum('Jumlah')){{round($Data->sum('Konta')/$Data->sum('Jumlah')*100, 2)}}@endif</td>
+                            <td>@if($DataAll->sum('Jumlah')){{round($DataAll->sum('Konta')/$DataAll->sum('Jumlah')*100, 2)}}@endif</td>
                             <td>%</td>
                         </tr>
                         <tr>
                             <td>Total Harvest</td>
                             <td>:</td>
-                            <td>{{$Data->sum('JumlahPanen')}}</td>
+                            <td>{{$DataAll->sum('JumlahPanen')}}</td>
                             <td>pcs</td>
                         </tr>
                     </table>
@@ -575,11 +575,9 @@
                 </tr>
             @endforeach
         </table>
-    {{-- <div class="d-flex justify-content-center">
-        @if(method_exists($Data, 'links'))
-            {{ $Data->links() }}
-        @endif
-    </div> --}}
+        <div class="d-flex justify-content-center">
+            {!! $Data->links() !!}
+         </div>
 
     <!--Export Kontam-->
     <div style="display:none;">

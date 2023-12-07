@@ -25,7 +25,7 @@ class CuringController extends Controller
         ->selectRaw('post_treatment.Tanggal AS TanggalPostTreatment')
         ->selectRaw('post_treatment_proses.*')
         ->selectRaw('post_treatment_proses.Tanggal AS TanggalDrying')
-        ->paginate(80);
+        ->paginate(20);
     
         if(isset($request->Filter)){
             $Date1 = date('Y-m-d', strtotime($request['TanggalAwal']));
@@ -45,7 +45,7 @@ class CuringController extends Controller
                     ->selectRaw('post_treatment.Tanggal AS TanggalPostTreatment')
                     ->selectRaw('post_treatment_proses.*')
                     ->selectRaw('post_treatment_proses.Tanggal AS TanggalDrying')
-                    ->paginate(80);
+                    ->paginate(200);
         }
         //Get Post Treatment Details (Penggunaan Mylea)
         foreach ($Data as $data) {

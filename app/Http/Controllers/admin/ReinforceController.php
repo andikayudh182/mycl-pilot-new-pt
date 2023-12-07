@@ -16,7 +16,7 @@ class ReinforceController extends Controller
                         ->select('reinforce.*', 'post_treatment.Batch', 'curing.Warna')
                         ->orderBy('reinforce.TanggalPengerjaan','desc')
                         ->orderBy('post_treatment.Batch')
-                        ->get();
+                        ->paginate(20);
 
                             
         if(isset($request->Filter)){
@@ -29,7 +29,7 @@ class ReinforceController extends Controller
                             ->whereBetween('reinforce.TanggalPengerjaan', [$Date1, $Date2])
                             ->orderBy('reinforce.TanggalPengerjaan','desc')
                             ->orderBy('post_treatment.Batch')
-                            ->get();
+                            ->paginate(100);
 
         }
                         

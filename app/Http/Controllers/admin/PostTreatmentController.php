@@ -520,14 +520,14 @@ class PostTreatmentController extends Controller
 
     public function PostTreatmentII(Request $request) {
 
-        $Data = PostTreatment::orderBy('Tanggal', 'desc')->where('Status', null)->get();
+        $Data = PostTreatment::orderBy('Tanggal', 'desc')->where('Status', null)->paginate(20);
         if(isset($request->Filter)){
             $Date1 = date('Y-m-d', strtotime($request['TanggalAwal']));
             $Date2 = date('Y-m-d', strtotime($request['TanggalAkhir']));
             if($request['Status'] == ''){
                 $request['Status'] = NULL;
             }
-            $Data = PostTreatment::orderBy('Tanggal', 'desc')->whereBetween('Tanggal', [$Date1, $Date2])->where('Status', $request['Status'])->get();
+            $Data = PostTreatment::orderBy('Tanggal', 'desc')->whereBetween('Tanggal', [$Date1, $Date2])->where('Status', $request['Status'])->paginate(100);
         }
         //Get Post Treatment Details (Penggunaan Mylea)
         foreach ($Data as $data){
@@ -614,14 +614,14 @@ class PostTreatmentController extends Controller
     }
     public function PostTreatmentIII(Request $request) {
 
-        $Data = PostTreatment::orderBy('Tanggal', 'desc')->where('Status', null)->get();
+        $Data = PostTreatment::orderBy('Tanggal', 'desc')->where('Status', null)->paginate(20);
         if(isset($request->Filter)){
             $Date1 = date('Y-m-d', strtotime($request['TanggalAwal']));
             $Date2 = date('Y-m-d', strtotime($request['TanggalAkhir']));
             if($request['Status'] == ''){
                 $request['Status'] = NULL;
             }
-            $Data = PostTreatment::orderBy('Tanggal', 'desc')->whereBetween('Tanggal', [$Date1, $Date2])->where('Status', $request['Status'])->get();
+            $Data = PostTreatment::orderBy('Tanggal', 'desc')->whereBetween('Tanggal', [$Date1, $Date2])->where('Status', $request['Status'])->paginate(100);
         }
         //Get Post Treatment Details (Penggunaan Mylea)
         foreach ($Data as $data){
