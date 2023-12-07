@@ -542,6 +542,55 @@ class PostTreatmentController extends Controller
             if(isset($Panen)){
                 $data['Mylea'] = $Panen;
             }
+              // List Reinforce
+              $Reinforce = Reinforce::select('reinforce.*', 'curing.Warna')
+              ->join('curing', 'reinforce.CuringID', '=', 'curing.id')
+              ->where('curing.PT_ID', '=', $data['id'])
+              ->orderBy('reinforce.TanggalPengerjaan','desc')
+              ->get();
+
+ 
+
+            if (isset($Reinforce)) {
+                $data['Reinforce'] = $Reinforce;
+            }
+
+            // List Non Reinforce
+            $Curing = Curing::select('curing.*')
+                    ->where('PT_ID', $data['id'])
+                    ->get();
+
+            foreach ($Curing as $item){
+
+                $item['UsedSizeSatu'] = Curing::join('reinforce', 'curing.id', '=', 'reinforce.CuringID')
+                                        ->where('reinforce.CuringID', $item['id'])
+                                        ->where('reinforce.Size', 'Grade A (26x46)')
+                                        ->sum('reinforce.Jumlah');
+                $item['UsedSizeDua'] = Curing::join('reinforce', 'curing.id', '=', 'reinforce.CuringID')
+                                        ->where('reinforce.CuringID', $item['id'])
+                                        ->where('reinforce.Size', 'Grade B (20x40)')
+                                        ->sum('reinforce.Jumlah');
+                $item['UsedSizeTiga'] = Curing::join('reinforce', 'curing.id', '=', 'reinforce.CuringID')
+                                        ->where('reinforce.CuringID', $item['id'])
+                                        ->where('reinforce.Size', 'Grade C (15x30)')
+                                        ->sum('reinforce.Jumlah');
+                $item['UsedSizeEmpat'] = Curing::join('reinforce', 'curing.id', '=', 'reinforce.CuringID')
+                                        ->where('reinforce.CuringID', $item['id'])
+                                        ->where('reinforce.Size', 'Grade D')
+                                        ->sum('reinforce.Jumlah');
+
+                $item['SizeSatu'] = $item['SizeSatu'] - $item['UsedSizeSatu'];
+                $item['SizeDua'] = $item['SizeDua'] - $item['UsedSizeDua'];
+                $item['SizeTiga'] = $item['SizeTiga'] - $item['UsedSizeTiga'];
+                $item['SizeEmpat'] = $item['SizeEmpat'] - $item['UsedSizeEmpat'];
+            }
+                    
+
+            if (isset($Curing)) {
+                $data['Curing'] = $Curing;
+            }
+
+            
         }
         // $PostTreatment = PTProses::all();
 

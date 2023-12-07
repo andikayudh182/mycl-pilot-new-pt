@@ -31,7 +31,54 @@
         @endif
     </form>
 
-</div>  
+</div> 
+<div class="m-2">
+    <h3>List Reinforce</h3>
+    <table class='table'>
+        <tr>
+            <th>Tanggal Pengerjaan</th>
+            <th>Warna</th>
+            <th>Size</th>
+            <th>Jenis</th>
+            <th>Jumlah</th>
+        </tr>
+        @foreach ($data['Reinforce'] as $Reinforce )
+        <tr>
+            <td>{{ $Reinforce['TanggalPengerjaan'] }}</td>  
+            <td>{{ $Reinforce['Warna'] }}</td>  
+            <td>{{ $Reinforce['Size'] }}</td>  
+            <td>{{ $Reinforce['Jenis'] }}</td>  
+            <td>{{ $Reinforce['Jumlah'] }}</td>  
+        </tr>
+        @endforeach
+    </table>
+</div>
+
+<div class="m-2">
+    <h3>List Non Reinforce</h3>
+    <table class='table'>
+        <tr>
+            <th>Actual Finish Curing</th>
+            <th>Tanggal Pengerjaan</th>
+            <th>Warna</th>
+            <th>Grade A (26x46) </th>
+            <th>Grade B (20x40)</th>
+            <th>Grade C (15x30)</th>
+            <th>Grade D</th>
+        </tr>
+        @foreach ($data['Curing'] as $Curing )
+        <tr> 
+            <td>{{ $Curing['ActualFinishCuring'] }}</td>  
+            <td>{{ $Curing['TanggalPengerjaan'] }}</td>  
+            <td>{{ $Curing['Warna'] }}</td>  
+            <td>{{ $Curing['SizeSatu'] }}</td>  
+            <td>{{ $Curing['SizeDua'] }}</td> 
+            <td>{{ $Curing['SizeTiga'] }}</td> 
+            <td>{{ $Curing['SizeEmpat'] }}</td> 
+        </tr> 
+        @endforeach
+    </table>
+</div>
 
 <div class="m-2">
     <h3>List Mylea</h3>
