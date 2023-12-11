@@ -309,6 +309,8 @@ class MyleaController extends Controller
         $Mylea = $SortFilter->SortInStock($Mylea, $request['InStockDir']);
         // $Mylea = $Mylea->paginate(200);
 
+        $MyleaAll = $Mylea;
+
         
 
         return view('admin.Mylea.Report', [
