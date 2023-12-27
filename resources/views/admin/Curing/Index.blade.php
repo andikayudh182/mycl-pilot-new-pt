@@ -23,6 +23,13 @@
       </div>
       @endif
   </div>
+
+  <h3>Curing Summary </h3>
+  <h5> Grade A : {{ $totalGradeA }}</h5>
+  <h5> Grade B : {{ $totalGradeB }}</h5>
+  <h5> Grade C : {{ $totalGradeC }}</h5>
+  <h5> Grade D : {{ $totalGradeD }}</h5>
+
     {{-- End Alert Message --}}
 
     <form action="{{url('/curing/')}}" method="GET">
@@ -36,13 +43,13 @@
             <div class="row mb-3 ">
               <label for="TanggalAwal" class="col-sm-2 col-form-label col-form-label-sm">Tanggal Awal :</label>
               <div class="col-sm-5">
-                  <input type="date" name="TanggalAwal" class="form-control form-control-sm " id="colFormLabelSm" value="{{ old('TanggalAwal') }}">
+                  <input type="date" name="TanggalAwal" class="form-control form-control-sm " id="colFormLabelSm" value="@if(isset($_GET['TanggalAwal'])){{$_GET['TanggalAwal']}}@endif">
               </div>
           </div>
           <div class="row mb-3 ">
               <label for="TanggalAkhir" class="col-sm-2 col-form-label col-form-label-sm">Tanggal Akhir :</label>
               <div class="col-sm-5">
-                  <input type="date" name="TanggalAkhir" class="form-control form-control-sm " id="colFormLabelSm" value="{{ old('TanggalAkhir') }}">
+                  <input type="date" name="TanggalAkhir" class="form-control form-control-sm " id="colFormLabelSm" value="@if(isset($_GET['TanggalAkhir'])){{$_GET['TanggalAkhir']}}@endif">
               </div>
           </div>
           <div class="row mb-3 ">
@@ -59,7 +66,7 @@
         </div>
   
     </form>
-
+ 
     <div>
         <table class="table">
             <tr class="sticky-header">
@@ -125,9 +132,9 @@
                 </td>
                 <td>
                   @if(isset($data['Curing'][0]['SizeSatu']))
-                    {{ $data['Curing'][0]['SizeSatu'] }}
+                    {{ $data['Curing'][0]['SizeSatu'] }} 
                   @else
-                      0
+                      0 
                   @endif
                 </td>
                 <td>

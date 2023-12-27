@@ -47,6 +47,11 @@ class CuringController extends Controller
                     ->selectRaw('post_treatment_proses.Tanggal AS TanggalDrying')
                     ->paginate(200);
         }
+        $totalGradeA = 0;
+        $totalGradeB = 0;
+        $totalGradeC = 0;
+        $totalGradeD = 0;
+
         //Get Post Treatment Details (Penggunaan Mylea)
         foreach ($Data as $data) {
             $Panen = PostTreatmentDetails::select([
@@ -59,6 +64,14 @@ class CuringController extends Controller
         
             $data['PTData'] = PTProses::where('PT_ID', $data['PT_ID'])->get();
             $data['Curing'] = Curing::where('PT_ID', $data['PT_ID'])->get();
+             foreach ($data['Curing'] as $curing){
+                
+                    $totalGradeA +=$curing['SizeSatu'] ;
+                    $totalGradeB +=$curing['SizeDua'] ;
+                    $totalGradeC +=$curing['SizeTiga'] ;
+                    $totalGradeD +=$curing['SizeEmpat'] ;
+             }
+            
             if (isset($Panen)) {
                 $data['Mylea'] = $Panen;
             }
@@ -84,7 +97,11 @@ class CuringController extends Controller
         }
         
         return view('admin.Curing.Index', [
-            'Data' => $Data
+            'Data' => $Data,
+            'totalGradeA' => $totalGradeA,
+            'totalGradeB' => $totalGradeB,
+            'totalGradeC' => $totalGradeC,
+            'totalGradeD' => $totalGradeD,
         ]);
     }
 
