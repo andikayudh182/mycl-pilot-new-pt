@@ -323,7 +323,7 @@ class MyleaController extends Controller
     }
 
     public function HarvestSchedule(){
-        $date = Carbon::now();
+        $date = Carbon::now()->year(2023); // Tetapkan tahun ke 2023
         $date->toDateString();
         $MyleaDat = new MyleaData();
         $MyleaPanen = Produksi::orderBy('TanggalProduksi', 'asc')->whereYear('TanggalProduksi', $date)->get();
