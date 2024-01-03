@@ -57,7 +57,6 @@
             <table id="data-table" class="table table-striped" style="width:100%">
                 <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Time</th>
                         <th>Temperature</th>
                         <th>Humidity</th>
@@ -67,12 +66,10 @@
                     @foreach ( $MyleaRoom as $data)
                         <tr>
                             @if ($data['Temperature'] <= 20 || $data['Temperature'] > 30 || $data['Humidity'] > 90)
-                                <td style="color:red">{{ $data['id'] }}</td>
                                 <td style="color:red">{{ $data['Time'] }}</td>
                                 <td style="color:red">{{ $data['Temperature'] }}</td>
                                 <td style="color:red">{{ $data['Humidity'] }}</td>
                             @else
-                                <td>{{ $data['id'] }}</td>
                                 <td>{{ $data['Time'] }}</td>
                                 <td>{{ $data['Temperature'] }}</td>
                                 <td>{{ $data['Humidity'] }}</td>
@@ -82,7 +79,6 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th>ID</th>
                         <th>Time</th>
                         <th>Temperature</th>
                         <th>Humidity</th>

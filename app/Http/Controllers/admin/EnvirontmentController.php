@@ -42,7 +42,9 @@ class EnvirontmentController extends Controller
             }
         }
     
-        $MyleaRoom = $MyleaRoom->get();
+ 
+        // Gabungkan orderBy dengan get()
+        $MyleaRoom = $MyleaRoom->orderBy('Time', 'asc')->get();
 
 
     // Inisialisasi array untuk dataPoints Temperature dan Humidity
@@ -92,7 +94,7 @@ class EnvirontmentController extends Controller
             }
         }
     
-        $BaglogRoom = $BaglogRoom->get();
+        $BaglogRoom = $BaglogRoom->orderBy('Time', 'asc')->get();
 
 
     // Inisialisasi array untuk dataPoints Temperature dan Humidity
@@ -142,7 +144,7 @@ class EnvirontmentController extends Controller
             }
         }
     
-        $WorkingStationRoom = $WorkingStationRoom->get();
+        $WorkingStationRoom = $WorkingStationRoom->orderBy('Time', 'asc')->get();
 
 
     // Inisialisasi array untuk dataPoints Temperature dan Humidity
@@ -188,6 +190,12 @@ class EnvirontmentController extends Controller
                 'TemperatureHumidity' => 'required|mimes:xls,xlsx',
             ]);
 
+            $fileName = $request->file('TemperatureHumidity')->getClientOriginalName();
+            if (!Str::contains(strtolower($fileName), 'mylea')) {
+                return redirect()->route('temperature-humidity.mylea')
+                    ->with('error', 'File name must contain "mylea" or "Mylea"');
+            }
+
         try {
             // Menggunakan Maatwebsite Excel untuk membaca file
             $data = Excel::toArray(new Mylea, $request->file('TemperatureHumidity'));
@@ -219,6 +227,13 @@ class EnvirontmentController extends Controller
             $request->validate([
                 'TemperatureHumidity' => 'required|mimes:xls,xlsx',
             ]);
+
+            // Memeriksa nama file
+            $fileName = $request->file('TemperatureHumidity')->getClientOriginalName();
+            if (!Str::contains(strtolower($fileName), 'working')) {
+                return redirect()->route('temperature-humidity.working-station')
+                    ->with('error', 'File name must contain "working-station" or "Working"');
+            }
 
         try {
             // Menggunakan Maatwebsite Excel untuk membaca file
