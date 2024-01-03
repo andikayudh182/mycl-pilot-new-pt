@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\DB;
 class MyleaController extends Controller
 {
     public function Dashboard(){
-        $date = Carbon::now();
+        $date = Carbon::now()->year(2023);
         $date->toDateString();
         $ProduksiMylea = Produksi::orderBy('TanggalProduksi', 'asc')->whereYear('TanggalProduksi', $date)->get();
         Carbon::now()->month;

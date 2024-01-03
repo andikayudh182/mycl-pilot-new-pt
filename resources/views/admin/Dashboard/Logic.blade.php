@@ -2,7 +2,10 @@
     function MyleaSuccessRate($Mylea, $Month, $TodayDate){
         $Mylea = $Mylea->where('TanggalProduksi', $Month)->sortByDesc('TanggalPanen', SORT_NATURAL);
         $HarvestDone = $Mylea->first();
-        if($Mylea->sum('Jumlah') != 0){
+
+        $SuccessRate = 0;
+
+        if($Mylea->sum('Jumlah') !== 0){
             if($HarvestDone['TanggalPanen'] < $TodayDate){
                 $SuccessRate = round(($Mylea->sum('JumlahPanen')/$Mylea->sum('Jumlah') * 100), 2);
             } else {

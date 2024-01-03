@@ -28,7 +28,7 @@ Route::get('/dashboard-stock-card', [App\Http\Controllers\HomeController::class,
 //Admin
 //Route::get('/admin_dashboard', [App\Http\Controllers\admin\AdminDashboard::class, 'index'])->middleware('role:admin');
 //Route::get('/dashboard-production', [App\Http\Controllers\admin\AdminDashboard::class, 'DashboardProduction'])->name('DashboardProduction');
-Route::get('/admin_dashboard', [App\Http\Controllers\admin\AdminDashboard::class, 'DashboardProduction'])->middleware('role:admin');
+Route::get('/admin_dashboard', [App\Http\Controllers\admin\AdminDashboard::class, 'DashboardProduction'])->middleware('role:admin')->name('MyleaDashboardProduction');
 Route::post('/dashboard-production-target-submit', [App\Http\Controllers\admin\AdminDashboard::class, 'DashboardProductionTargetChanged'])->name('DashboardProduction');
 Route::get('/admin/baglog', [App\Http\Controllers\admin\AdminDashboard::class, 'baglog'])->middleware('role:admin');
 Route::get('/admin/mylea', [App\Http\Controllers\admin\MyleaController::class, 'Dashboard'])->middleware('role:admin');

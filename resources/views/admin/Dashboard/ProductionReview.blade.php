@@ -17,12 +17,48 @@
 
 </style>
 @section('content')
+
+{{-- {{ $DataKontam }} --}}
 <section class="body m-5 align-middle">
-    <div class="m-4">
+    <div class="">
         <p>
             <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
               Target Settings
             </a>
+            <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateYearModal">
+              Year Settings
+            </a>
+            {{-- Modal Year Settings --}}
+            <div class="modal fade" id="updateYearModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Update Year Settings</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="{{ route('MyleaDashboardProduction') }}" method="GET">
+                    <div class="modal-body">
+                        <div class="row mb-3">
+                            <label for="Year" class="col-sm-4 col-form-label col-form-label-sm">Year</label>
+                            <div class="col-md-8">
+                                <select name="Year" id="Year" class="form-control form-control-sm col-sm-4 @error('Year') is-invalid @enderror" id="colFormLabelSm" required>
+                                    <option value="2024" {{ $YearSetting == 2024 ? 'selected' : '' }}>2024</option>
+                                    <option value="2023" {{ $YearSetting == 2023 ? 'selected' : '' }}>2023</option>
+                                    <option value="2022" {{ $YearSetting == 2022 ? 'selected' : '' }}>2022</option>
+                                </select>
+                            </div>  
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="Submit" class="btn btn-primary" value="1" name="FilterYear">Submit</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            {{-- End Modal Year Settings --}}
         </p>
         <div class="collapse" id="collapseExample">
             <div class="card card-body">
@@ -128,6 +164,11 @@
                 </form>
             </div>
         </div>
+
+    </div>
+
+    <div class="title">
+        <h2>Mylea Dashboard {{ $YearSetting }}</h2>
     </div>
 
     <div class="table-responsive">

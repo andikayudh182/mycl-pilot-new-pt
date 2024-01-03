@@ -44,7 +44,11 @@ class AdminDashboard extends Controller
 
     public function DashboardProduction(Request $request)
     {
-        $date = Carbon::now();
+        $YearSetting = 2024;
+        if (isset($request->FilterYear)) {
+            $YearSetting = $request['Year'];
+        }
+        $date =  Carbon::now()->year($YearSetting);
         $date->toDateString();
         $Baglog = Pembibitan::orderBy('TanggalPengerjaan', 'desc')->whereYear('TanggalPengerjaan', $date)->get();
         foreach($Baglog as $Data){
@@ -55,8 +59,8 @@ class AdminDashboard extends Controller
 
         $Mylea = Produksi::orderBy('TanggalProduksi', 'desc')->whereYear('TanggalProduksi', $date)->get();
         foreach($Mylea as $Data){
-            $Kontaminasi = Kontaminasi::where('KodeProduksi', $Data['KodeProduksi'])->get();
-            $Data['JumlahKonta'] = $Kontaminasi->sum('JumlahKonta');
+            $KontamMylea = KontaMylea::where('KPMylea', $Data['KodeProduksi'])->get();
+            $Data['JumlahKonta'] = $KontamMylea->sum('Jumlah');
             $Panen = Panen::where('KPMylea', $Data['KodeProduksi'])->get();
             $Data['JumlahPanen'] = $Panen->sum('Jumlah');
 
@@ -75,6 +79,8 @@ class AdminDashboard extends Controller
             'TargetBaglog'=>$TargetBaglog,
             'TargetMylea'=>$TargetMylea,
             'TodayDate'=>$date,
+            'YearSetting'=>$YearSetting
+            // 'DataKontam'=>$GetKontamMylea,
         ]);
     }
 
