@@ -100,7 +100,7 @@ window.onload = function () {
  
 var chart = new CanvasJS.Chart("chartContainer3", {
 	title: {
-		text: "Mylea Production (Total)"
+		text:  "{!! 'Mylea Production (Total) '. $YearSetting!!}"
 	},
 	theme: "light2",
 	animationEnabled: true,
@@ -145,7 +145,7 @@ chart.render();
 
 var chart4 = new CanvasJS.Chart("chartContainer4", {
 		title: {
-			text: "Mylea Production Direct Transfer"
+			text:  "{!! 'Mylea Production Direct Transfer '. $YearSetting!!}"
 		},
 		theme: "light2",
 		animationEnabled: true,

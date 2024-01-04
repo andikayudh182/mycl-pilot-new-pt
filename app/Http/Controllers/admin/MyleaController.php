@@ -21,8 +21,14 @@ use Illuminate\Support\Facades\DB;
 
 class MyleaController extends Controller
 {
-    public function Dashboard(){
-        $date = Carbon::now()->year(2023);
+    public function Dashboard(Request $request){
+
+        $YearSetting = 2024;
+
+        if (isset($request->FilterYear)) {
+            $YearSetting = $request['Year'];
+        }
+        $date = Carbon::now()->year($YearSetting);
         $date->toDateString();
         $ProduksiMylea = Produksi::orderBy('TanggalProduksi', 'asc')->whereYear('TanggalProduksi', $date)->get();
         Carbon::now()->month;
@@ -157,6 +163,8 @@ class MyleaController extends Controller
             'DataPointDirect3'=>$DataPointDirect3,
             'DataPointDirect4'=>$DataPointDirect4,
             'DataMarkerDirect'=> $DataMarkerDirect,
+
+            'YearSetting'=>$YearSetting
         ]);
     }
 
