@@ -6,11 +6,11 @@
         $SuccessRate = 0;
 
         if($Mylea->sum('Jumlah') !== 0){
-            if($HarvestDone['TanggalPanen'] < $TodayDate){
+            // if($HarvestDone['TanggalPanen'] < $TodayDate){
                 $SuccessRate = round(($Mylea->sum('JumlahPanen')/$Mylea->sum('Jumlah') * 100), 2);
-            } else {
-                $SuccessRate = round((($Mylea->sum('Jumlah') - $Mylea->sum('JumlahKonta'))/$Mylea->sum('Jumlah') * 100), 2);
-            }
+            // } else {
+                // $SuccessRate = round((($Mylea->sum('Jumlah') - $Mylea->sum('JumlahKonta'))/$Mylea->sum('Jumlah') * 100), 2);
+            // }
             
         } else {
             $SuccessRate = 0;
@@ -73,6 +73,7 @@
         $Data['Capacity'] = round($Data['TotalProduction'] / ($MaxCapacity * 3) * 100, 2);
         if($Data['TotalProduction'] != 0){
             $Data['SuccessRate'] = round(($Data['TotalPanen'])/$Data['TotalProduction']*100, 2);
+            // $Data['SuccessRate'] = $Data['TotalPanen'];
         } else {
             $Data['SuccessRate'] = 0;
         }

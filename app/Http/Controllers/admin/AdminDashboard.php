@@ -14,6 +14,7 @@ use Carbon\Carbon;
 use App\Models\baglog\Kartu_Kendali;
 use App\Models\baglog\Mixing;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AdminDashboard extends Controller
 {
@@ -62,7 +63,15 @@ class AdminDashboard extends Controller
             $KontamMylea = KontaMylea::where('KPMylea', $Data['KodeProduksi'])->get();
             $Data['JumlahKonta'] = $KontamMylea->sum('Jumlah');
             $Panen = Panen::where('KPMylea', $Data['KodeProduksi'])->get();
-            $Data['JumlahPanen'] = $Panen->sum('Jumlah');
+            // $Data['JumlahPanen'] = $Panen->sum('Jumlah');
+
+            $selectTotalHarvest = DB::table('mylea_panen as m')
+            ->join('mylea_panen_details as mpd', 'm.id', '=', 'mpd.PanenID')
+            ->where('m.KPMylea', $Data['KodeProduksi'])
+            ->select(DB::raw('SUM(mpd.Jumlah) as TotalHarvest'))
+            ->first();
+
+            $Data['JumlahPanen'] = $selectTotalHarvest->TotalHarvest;
 
             $Panen = new MyleaData();
             $Data['TanggalPanen'] = $Panen->GetTanggalPanen($Data);

@@ -51,6 +51,18 @@
                             <td>{{$DataAll->sum('JumlahPanen')}}</td>
                             <td>pcs</td>
                         </tr>
+                        <tr>
+                            <td>Total Harvest Rate</td>
+                            <td>:</td>
+                            <td>{{round($DataAll->sum('JumlahPanen')/$DataAll->sum('Jumlah')*100,2)}}</td>
+                            <td>%</td>
+                        </tr>
+                        {{-- <tr>
+                            <td>Total Incubation Rate</td>
+                            <td>:</td>
+                            <td>{{round($DataAll->sum('InStock')/$DataAll->sum('Jumlah')*100,2)}}</td>
+                            <td>%</td>
+                        </tr> --}}
                     </table>
                 </div>
             </div>            
