@@ -141,7 +141,7 @@ class PostTreatmentController extends Controller
         $Dat = Panen::with('PostTreatment', 'Kerik')
             ->orderBy('TanggalPanen', 'desc')
             ->orderBy('KPMylea', 'desc')
-            ->paginate(50);
+            ->get();
 
         $totalJumlah = 0;
         $totalRejectPanen = 0;
@@ -152,22 +152,22 @@ class PostTreatmentController extends Controller
                 ->get();
   
 
-        if(isset($request->Submit)) {
-            $search = $request->SearchQuery;
-            $Dat = Panen::with('PostTreatment', 'Kerik')
-                    ->where('KPMylea', 'like', "%" . $search . "%")
-                    ->orderBy('TanggalPanen', 'desc')
-                    ->orderBy('KPMylea', 'desc')
-                    ->paginate(200);
+        // if(isset($request->Submit)) {
+        //     $search = $request->SearchQuery;
+        //     $Dat = Panen::with('PostTreatment', 'Kerik')
+        //             ->where('KPMylea', 'like', "%" . $search . "%")
+        //             ->orderBy('TanggalPanen', 'desc')
+        //             ->orderBy('KPMylea', 'desc')
+        //             ->paginate(200);
 
-            $DatAll = Panen::with('PostTreatment', 'Kerik')
-                    ->where('KPMylea', 'like', "%" . $search . "%")
-                    ->orderBy('TanggalPanen', 'desc')
-                    ->orderBy('KPMylea', 'desc')
-                    ->get();
+        //     $DatAll = Panen::with('PostTreatment', 'Kerik')
+        //             ->where('KPMylea', 'like', "%" . $search . "%")
+        //             ->orderBy('TanggalPanen', 'desc')
+        //             ->orderBy('KPMylea', 'desc')
+        //             ->get();
     
     
-        }
+        // }
         if(isset($request->Filter)){
             $Date1 = date('Y-m-d', strtotime($request['TanggalAwal']));
             $Date2 = date('Y-m-d', strtotime($request['TanggalAkhir']));
@@ -286,7 +286,7 @@ class PostTreatmentController extends Controller
                 //->whereRaw('Jumlah - (SELECT SUM(Jumlah) FROM post_treatment_details WHERE Panen_ID = mylea_panen.id) != 0')
                 ->orderBy('TanggalPanen', 'desc')
                 ->orderBy('KPMylea', 'desc')
-                ->paginate(50);
+                ->get();
 
         $DatAll = Panen::with('PostTreatment', 'Kerik')
                  ->orderBy('TanggalPanen', 'desc')
