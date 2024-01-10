@@ -286,7 +286,7 @@ class PostTreatmentController extends Controller
                 //->whereRaw('Jumlah - (SELECT SUM(Jumlah) FROM post_treatment_details WHERE Panen_ID = mylea_panen.id) != 0')
                 ->orderBy('TanggalPanen', 'desc')
                 ->orderBy('KPMylea', 'desc')
-                ->get();
+                ->paginate(50);
 
         $DatAll = Panen::with('PostTreatment', 'Kerik')
                  ->orderBy('TanggalPanen', 'desc')
