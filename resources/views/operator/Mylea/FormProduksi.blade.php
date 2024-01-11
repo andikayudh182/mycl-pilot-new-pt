@@ -11,10 +11,14 @@
     </nav>
 </div>
 <section class="m-5">
-    @if(session()->has('message'))
-    <div class="alert alert-success">
-        {{ session()->get('message') }}
-    </div>
+    @if(session()->has('success'))
+        <div class="alert alert-success">
+            {{ session()->get('success') }}
+        </div>
+    @elseif (session()->has('error'))
+        <div class="alert alert-danger">
+            {{ session()->get('error') }}
+        </div>
     @endif
     <h2>Produksi Mylea</h2>
     <form action="{{ url('/operator/mylea/form-produksi-submit') }}" method="POST">
@@ -134,10 +138,10 @@
                 <td>
                     <select name="data[0][KodeBaglog]" class="form-select" id="KodeBaglog">
                         @foreach ($Data as $item)
-                            <option value="{{$item['KodeProduksi']}}">{{$item['KodeProduksi']}}</option>
+                            <option value="{{$item['KodeProduksi'].",".$item['Type']}}">{{$item['KodeProduksi']}} ({{ $item['Type'] }})</option>
                         @endforeach
                         @foreach ($BaglogRnD as $data)
-                        <option value="{{$data['KodeProduksi']}}">{{$data['KodeProduksi']}}</option>
+                            <option value="{{$item['KodeProduksi'].",".$item['Type']}}">{{$data['KodeProduksi']}} ({{ $item['Type'] }})</option>
                         @endforeach
                     </select>
                 </td>

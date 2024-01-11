@@ -14,68 +14,114 @@ use App\Models\Mylea\PanenDetails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class MyleaController extends Controller
 {
     public function FormProduksi()
     {
         $Baglog = Pembibitan::where('StatusArchive', NULL)->where('StatusPanen', '1')->get();
+        foreach ($Baglog as $baglog) {
+            $baglog['Type'] = DB::table('baglog_resep as br')
+            ->join('baglog_mixing as bm', 'bm.resep_id', '=', 'br.id')
+            ->join('baglog_sterilisasi as bs', 'bs.mixing_id', '=', 'bm.id')
+            ->join('baglog_pemakaian_sterilisasi as bps', 'bps.SterilisasiID', '=', 'bs.id')
+            ->join('baglog_pembibitan as bp', 'bp.id', '=', 'bps.PembibitanID')
+            ->where('bp.KodeProduksi',$baglog['KodeProduksi'])
+            ->groupBy('br.Type')
+            ->pluck('br.Type');
+
+            $baglog['Type'] = isset($baglog['Type'][0]) ? $baglog['Type'][0] : '';
+        }
+        
         $BaglogRnD = BaglogRnD::where('StatusArchive', NULL)->orWhere('StatusArchive', '0')->get();
+        foreach ($BaglogRnD as $baglogRnD) {
+            $baglogRnD['Type'] = DB::table('baglog_resep as br')
+            ->join('baglog_mixing as bm', 'bm.resep_id', '=', 'br.id')
+            ->join('baglog_sterilisasi as bs', 'bs.mixing_id', '=', 'bm.id')
+            ->join('baglog_pemakaian_sterilisasi as bps', 'bps.SterilisasiID', '=', 'bs.id')
+            ->join('baglog_pembibitan as bp', 'bp.id', '=', 'bps.PembibitanID')
+            ->where('bp.KodeProduksi',$baglogRnD['KodeProduksi'])
+            ->groupBy('br.Type')
+            ->pluck('br.Type');
+            
+            $baglogRnD['Type'] = isset($baglogRnD['Type'][0]) ? $baglogRnD['Type'][0] : '';
+        }
         return view('operator.Mylea.FormProduksi', ['Data'=>$Baglog, 'BaglogRnD'=>$BaglogRnD,]);
     }
 
     public function FormProduksiSubmit(Request $request)
     {
-        $request->validate([
-            'TanggalProduksi' => 'Required',
-            'TanggalElus1' => 'Required',
-            'JamMulai' => 'Required',
-            'JamSelesai' =>'Required',
-            'JumlahTray' =>'Required',
-            'Method' =>'Required',
-            'Tray' =>'Required',
-        ]);
-
-        $id = Auth::user()->id;
-        $TanggalProduksi = $request['TanggalProduksi'];
-        $Keterangan = $request['Keterangan'];
-        $Method= $request['Method'];
-        $KodeProduksi = '';
-        $KodeProduksi =  "MYTP".$TanggalProduksi;
-
-        if (stristr($Method, 'Direct') !== false) {
-            $KodeProduksi .= 'D';
-        }
-        
-        // $Jumlah = '0';
-
-        foreach($request->data as $key => $value){
-            BaglogMylea::create([
-                'KPMylea'=>$KodeProduksi,
-                'KPBaglog'=>$value['KodeBaglog'],
-                'JumlahBaglog'=>$value['Jumlah'],
-                'KondisiBaglog'=>$value['KondisiBaglog'],
+        try {
+            $request->validate([
+                'TanggalProduksi' => 'Required',
+                'TanggalElus1' => 'Required',
+                'JamMulai' => 'Required',
+                'JamSelesai' =>'Required',
+                'JumlahTray' =>'Required',
+                'Method' =>'Required',
+                'Tray' =>'Required',
+                'SubstrateQty' =>'Required',
             ]);
-            // $Jumlah = $Jumlah + $value['Jumlah'];
-        }
+    
+            $id = Auth::user()->id;
+            $TanggalProduksi = $request['TanggalProduksi'];
+            $carbonDate = Carbon::parse($TanggalProduksi);
+            $twoDigitDate = $carbonDate->format('ymd');
 
-        Produksi::create([
-            'user_id'=>$id,
-            'KodeProduksi'=>$KodeProduksi,
-            'TanggalProduksi'=>$TanggalProduksi,
-            'TanggalElus'=>$request['TanggalElus1'],
-            'JamMulai'=>$request['JamMulai'],
-            'JamSelesai'=>$request['JamSelesai'],
-            'Keterangan'=>$Keterangan,
-            'Jumlah'=>$request['JumlahTray'],
-            'Method'=>$Method,
-            'Tray'=>$request['Tray'],
-            'SubstrateQty'=>$request['SubstrateQty'],
-            'StatusPanen'=>0,
-        ]);
-        
-        $Baglog = Pembibitan::where('StatusPanen', '1')->get();
-        return redirect()->back()->with('message', 'Form Submitted!');
+            $Keterangan = $request['Keterangan'];
+            $Method= $request['Method']; 
+            $Tray = $request['Tray'];
+            $SubstrateQty = $request['SubstrateQty'];
+            $KodeProduksi = '';
+            $Type = '';
+            // $KodeProduksi =  "MYTP".$TanggalProduksi;
+    
+       
+            
+            // $Jumlah = '0';
+    
+            foreach($request->data as $key => $value){
+                $valuesExplode = explode(",", $value['KodeBaglog']);
+                if(count($valuesExplode) == 2){
+                    $Type = substr($valuesExplode[1],0, -2);
+                    $KodeProduksi = 'MY'.$Type.'-'.$Tray.'-'.$SubstrateQty.'-'.$twoDigitDate;
+
+                    if (stristr($Method, 'Direct') !== false) {
+                        $KodeProduksi .= 'D';
+                    }
+                    BaglogMylea::create([
+                        'KPMylea'=>$KodeProduksi,
+                        'KPBaglog'=>$valuesExplode[0],
+                        'JumlahBaglog'=>$value['Jumlah'],
+                        'KondisiBaglog'=>$value['KondisiBaglog'],
+                    ]);
+                }
+         
+                // $Jumlah = $Jumlah + $value['Jumlah'];
+            }
+    
+            Produksi::create([
+                'user_id'=>$id,
+                'KodeProduksi'=>$KodeProduksi,
+                'TanggalProduksi'=>$TanggalProduksi,
+                'TanggalElus'=>$request['TanggalElus1'],
+                'JamMulai'=>$request['JamMulai'],
+                'JamSelesai'=>$request['JamSelesai'],
+                'Keterangan'=>$Keterangan,
+                'Jumlah'=>$request['JumlahTray'],
+                'Method'=>$Method,
+                'Tray'=>$Tray,
+                'SubstrateQty'=>$SubstrateQty,
+                'StatusPanen'=>0,
+            ]);
+            
+            // $Baglog = Pembibitan::where('StatusPanen', '1')->get();
+            return redirect()->back()->with('success', 'Form Submitted!');
+        } catch (\Exception $e) {
+            //throw $th;
+        }
+   
     }
 
     public function Monitoring()
