@@ -2,6 +2,9 @@
 
 @section('content')
 
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 
 <div class="m-5">
     <nav aria-label="breadcrumb">
@@ -24,37 +27,37 @@
                         <tr>
                             <td>Total Production</td>
                             <td>:</td>
-                            <td>{{$DataAll->sum('Jumlah')}}</td>
+                            <td>{{$Data->sum('Jumlah')}}</td>
                             <td>pcs</td>
                         </tr>
                         <tr>
                             <td width="50%">Total Under Incubation</td>
                             <td width="5%">:</td>
-                            <td width="17%">{{$DataAll->sum('InStock')}}</td>
+                            <td width="17%">{{$Data->sum('InStock')}}</td>
                             <td>pcs</td>
                         </tr>
                         <tr>
                             <td>Total Contamination</td>
                             <td>:</td>
-                            <td>{{$DataAll->sum('Konta')}}</td>
+                            <td>{{$Data->sum('Konta')}}</td>
                             <td>pcs</td>
                         </tr>
                         <tr>
                             <td>Total Contamination Rate</td>
                             <td>:</td>
-                            <td>@if($DataAll->sum('Jumlah')){{round($DataAll->sum('Konta')/$DataAll->sum('Jumlah')*100, 2)}}@endif</td>
+                            <td>@if($Data->sum('Jumlah')){{round($Data->sum('Konta')/$Data->sum('Jumlah')*100, 2)}}@endif</td>
                             <td>%</td>
                         </tr>
                         <tr>
                             <td>Total Harvest</td>
                             <td>:</td>
-                            <td>{{$DataAll->sum('JumlahPanen')}}</td>
+                            <td>{{$Data->sum('JumlahPanen')}}</td>
                             <td>pcs</td>
                         </tr>
                         <tr>
                             <td>Total Harvest Rate</td>
                             <td>:</td>
-                            <td>{{round($DataAll->sum('JumlahPanen')/$DataAll->sum('Jumlah')*100,2)}}</td>
+                            <td>{{round($Data->sum('JumlahPanen')/$Data->sum('Jumlah')*100,2)}}</td>
                             <td>%</td>
                         </tr>
                         {{-- <tr>
@@ -306,7 +309,241 @@
     </div>
 
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-        <table class="table text-center">
+    <table id="data-table" class="table table-hover" style="width:100%">
+        <thead>
+            <tr class="sticky-header">
+                <th style="vertical-align:top">Production Code</th>
+                <th style="vertical-align:top">Production Date</th>
+                <th style="vertical-align:top; width:10%">Notes</th>
+                <th style="vertical-align:top">Total Producition</th>
+                <th style="vertical-align:top">Contamination</th>
+                <th style="vertical-align:top">Contamination Rate</th>
+                <th style="vertical-align:top">Harvest</th>
+                <th style="vertical-align:top">Under Incubation</th>
+                <th style="vertical-align:top">Harvest Schedule</th>
+                <th style="vertical-align:top">Method</th>
+                <th style="vertical-align:top">Tray</th>
+                <th style="vertical-align:top"> Substrate Qty (kg)</th>
+                <th>
+                    <table class="table table-borderless baglog-table text-center">
+                        <tr class="sticky-header">
+                            <td colspan="7">Substrate Bag</td>
+                            <td>Total Conta</td>
+                            <td>% Conta</td>
+                            <td>Total Harvest</td>
+                           
+                        </tr>
+                        <tr class="sticky-header">
+                            <td>Substrate Bag Code</td>
+                            <td>Type</td>
+                            <td>Substrate Bag Qty</td>
+                            <td>Spawn Batch</td>
+                            <td>Spawn Code</td>
+                            <td>Spawn Age (Day)</td>
+                            <td>Substrate Bag Age (Week)</td>
+                        </tr>
+                    </table>    
+                </th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($Data as $data)
+            <tr class="text-center">
+                <td>{{ $data['KodeProduksi'] }}</td>
+                <td>{{ $data['TanggalProduksi'] }}</td>
+                <td>{{ $data['Keterangan'] }}</td>
+                <td>{{ $data['Jumlah'] }}</td>
+
+                @if ($data['Konta'] > 0)
+                    <td>
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#KontaminasiModal{{$data['id']}}" data-bs-dismiss="modal">  {{ $data['Konta'] }}</a>
+                        @include('admin.Mylea.KontaminasiPartial') 
+                    </td>
+                @else
+                    <td>
+                        {{ $data['Konta'] }}
+                    </td>
+                @endif
+                <td>{{round($data['Konta']/$data['Jumlah']*100, 2)}}%</td>
+                @if ($data['JumlahPanen'] > 0)
+                    <td>
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#PanenModal{{$data['id']}}">{{ $data['JumlahPanen'] }}</a>
+                        @include('admin.Mylea.PanenPartial') 
+                    </td>
+                @else
+                    <td>0</td>
+                @endif
+                <td>{{$data['InStock']}}</td>
+
+                @php
+                    $LastKodeProduksi = substr($data['KodeProduksi'], -1);
+
+                    $I3 = substr($data['KodeProduksi'], 11);
+                    $A3 = $data['TanggalProduksi'];
+                    if ($I3 === "MYCL2") {
+                        if ((date("D", strtotime($A3)) === "Tue") || (date("D", strtotime($A3)) === "Fri")) {
+                        if ($LastKodeProduksi === "D") {
+                            $result = date("Y-m-d", strtotime($A3 . "+41 days"));
+                        } else {
+                            $result = date("Y-m-d", strtotime($A3 . "+34 days"));
+                        }
+                        } else {
+                            if ($LastKodeProduksi === "D") {
+                                $result = date("Y-m-d", strtotime($A3 . "+42 days"));
+                            } else {
+                                $result = date("Y-m-d", strtotime($A3 . "+35 days"));
+                            }
+                        } 
+                    } else {
+                        if ((date("D", strtotime($A3)) === "Tue") || (date("D", strtotime($A3)) === "Fri")) {
+                        if ($LastKodeProduksi === "D") {
+                            $result = date("Y-m-d", strtotime($A3 . "+41 days"));
+                        } else {
+                            $result = date("Y-m-d", strtotime($A3 . "+34 days"));
+                        }
+                        } else {
+                            if ($LastKodeProduksi === "D") {
+                                $result = date("Y-m-d", strtotime($A3 . "+42 days"));
+                            } else {
+                                $result = date("Y-m-d", strtotime($A3 . "+35 days"));
+                            }
+                        } 
+                    }
+                @endphp
+                <td>{{ $result }}</td>
+                <td>{{ $data['Method'] }}</td>
+                <td>{{ $data['Tray'] }}</td>
+                <td>{{ $data['SubstrateQty'] }}</td>
+
+                <td>
+                    <table class="table-borderless table text-center baglog-table">
+
+                        @foreach($data['DataBaglog'] as $DataBaglog)
+
+                        @if( (!isset($_GET['RecipeSelected'])) || ($_GET['RecipeSelected'] == "") || $DataBaglog['Type'] === $_GET['RecipeSelected'])
+                            <tr>
+                                @if(substr($DataBaglog['KPBaglog'], 0, 2) != 'BL')
+                                    <td colspan="6" style="width: 49%" >{{$DataBaglog['KPBaglog']}}</td>
+                                @else
+                                <td>
+                                    <a href="{{url('/admin/baglog/report?TanggalAwal=&TanggalAkhir=&SearchQuery='.$DataBaglog['KPBaglog'].'&Submit=Search')}}">{{$DataBaglog['KPBaglog']}}</a>
+                                </td>
+                                <td>{{ $DataBaglog['Type'] }}</td>
+                                <td style= "width:7%">{{$DataBaglog['JumlahBaglog']}}</td>
+                                <td style= "width:7%">{{$DataBaglog['BatchBibitTerpakai']}} </td>
+                                <td style="width:7%">{{substr($DataBaglog['KPBaglog'], 11)}} </td>
+                                <td style="width:7%">{{$DataBaglog['UmurBibit']}}</td>
+                                <td>{{$DataBaglog['UmurBaglog']}}</td>
+                                @endif
+                                @php
+                                    $LastKodeProduksi = substr($data['KodeProduksi'], -1);
+                                    $DataBaglog['Konta'] = $data['DataKontaminasi']->where('KPBaglog', $DataBaglog['KPBaglog']);
+                                    $DataBaglog['Panen'] = $data['PanenBaglog']->where('KPBaglog', $DataBaglog['KPBaglog']);
+                                    foreach($DataBaglog['Konta'] as $konta){
+                                        $DataBaglog['TanggalKonta'] = $DataBaglog['TanggalKonta'].$konta['TanggalKontaminasi'].',';
+                                    }
+
+                                    foreach($DataBaglog['Panen'] as $Panen){
+                                        $DataBaglog['TanggalPanen'] = $DataBaglog['TanggalPanen'].$Panen['TanggalPanen'].',';
+                                    }
+
+
+                                    if($DataBaglog['TanggalKonta'] == null){
+                                        $DataBaglog['TanggalKonta'] = '0000-00-00';
+                                    }
+                                    if($DataBaglog['TanggalPanen'] == null){
+                                        $DataBaglog['TanggalPanen'] = '0000-00-00';
+                                    }
+
+                                    $I3 = substr($DataBaglog['KodeProduksi'], 11);
+                                    $A3 = $data['TanggalProduksi'];
+                                    if ($I3 === "MYCL2") {
+                                        if ((date("D", strtotime($A3)) === "Tue") || (date("D", strtotime($A3)) === "Fri")) {
+                                        if ($LastKodeProduksi === "D") {
+                                            $result = date("Y-m-d", strtotime($A3 . "+41 days"));
+                                        } else {
+                                            $result = date("Y-m-d", strtotime($A3 . "+34 days"));
+                                        }
+                                        } else {
+                                            if ($LastKodeProduksi === "D") {
+                                                $result = date("Y-m-d", strtotime($A3 . "+42 days"));
+                                            } else {
+                                                $result = date("Y-m-d", strtotime($A3 . "+35 days"));
+                                            }
+                                        } 
+                                    } else {
+                                        if ((date("D", strtotime($A3)) === "Tue") || (date("D", strtotime($A3)) === "Fri")) {
+                                        if ($LastKodeProduksi === "D") {
+                                            $result = date("Y-m-d", strtotime($A3 . "+41 days"));
+                                        } else {
+                                            $result = date("Y-m-d", strtotime($A3 . "+34 days"));
+                                        }
+                                        } else {
+                                            if ($LastKodeProduksi === "D") {
+                                                $result = date("Y-m-d", strtotime($A3 . "+42 days"));
+                                            } else {
+                                                $result = date("Y-m-d", strtotime($A3 . "+35 days"));
+                                            }
+                                        } 
+                                    }
+                                @endphp
+                                <td>{{ $DataBaglog['Konta']->sum('Jumlah') }}</td>
+                                <td style="width:7%">{{round($DataBaglog['Konta']->sum('Jumlah')/$data['Jumlah']*100, 2)}}%</td>
+                                {{-- <td>{{ $result }}</td> --}}
+                                <td>{{$DataBaglog['Panen']->sum('Jumlah')}}</td>
+                            </tr>
+                            @endif
+                        @endforeach
+                    </table>
+                </td>
+
+
+                <td>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ElusModal{{$data['id']}}" data-bs-dismiss="modal">
+                        Data Elus
+                    </button>
+                    @include('admin.Mylea.ElusPartial') 
+                </td>
+
+                <td>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#EditModal{{$data['id']}}">
+                        Edit
+                    </button>
+                    @include('admin.Mylea.EditPartial') 
+                </td>
+
+                <td>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#DeleteModal{{$data['id']}}">
+                        Delete
+                    </button>
+                    @include('admin.Mylea.DeleteConfirmPartial') 
+                </td>
+
+            </tr>
+            @endforeach
+        </tbody>
+        <tfoot>
+            <tr>
+                {{-- <th>Production Code</th>
+                <th>Production Date</th>
+                <th>Notes</th>
+                <th>Total Producition</th>
+                <th>Contamination</th>
+                <th>Contamination Rate</th>
+                <th>Harvest</th>
+                <th>Under Incubation</th>
+                <th>Harvest Schedule</th>
+                <th>Method</th>
+                <th>Tray</th>
+                <th>Substrate Qty(kg)</th> --}}
+                
+            </tr>
+        </tfoot>
+    </table>
+        {{-- <table class="table text-center">
             <tr class="sticky-header">
                 <th>@sortablelink('KodeProduksi','Production Code')</th>
                 <th>@sortablelink('TanggalProduksi','Production Date')</th>
@@ -383,7 +620,7 @@
                             <td>Total Conta</td>
                             <td>% Conta</td>
                             {{-- <td>Harvest Schedule</td> --}}
-                            <td>Total Harvest</td>
+                            {{-- <td>Total Harvest</td>
                         </tr>
                         <tr class="sticky-header">
                             <td>Substrate Bag Code</td>
@@ -397,11 +634,11 @@
                     </table>
                 </th>
 
-            </tr>
+            </tr> --}}
             {{-- {{ $Data[0] }} <br><br>
             {{ $Data[1] }} <br><br>
             {{ $Data[2] }} <br><br> --}}
-
+{{-- 
             @foreach ($Data as $data)
                 <tr>
                     <td>{{$data['KodeProduksi']}}</td>
@@ -463,8 +700,8 @@
                             }
                         } 
                     }
-                @endphp
-                    <td>{{ $result }}</td>
+                @endphp --}}
+                    {{-- <td>{{ $result }}</td>
                     
                     <td>{{ $data['Method'] }}</td>
                     <td>{{ $data['Tray'] }}</td>
@@ -543,13 +780,13 @@
                                     @endphp
                                     <td>{{ $DataBaglog['Konta']->sum('Jumlah') }}</td>
                                     <td style="width:7%">{{round($DataBaglog['Konta']->sum('Jumlah')/$data['Jumlah']*100, 2)}}%</td>
-                                    {{-- <td>{{ $result }}</td> --}}
-                                    <td>{{$DataBaglog['Panen']->sum('Jumlah')}}</td>
-                                </tr>
+                                    <td>{{ $result }}</td> --}}
+                                    {{-- <td>{{$DataBaglog['Panen']->sum('Jumlah')}}</td> --}}
+                                {{-- </tr>
                                 @endif
                             @endforeach
                         </table>
-                    </td>
+                    </td> --}}
              
 
                     {{-- <td>
@@ -564,19 +801,19 @@
                         </button>
                         @include('admin.Mylea.KontaminasiPartial') 
                     </td> --}}
-                    <td>
+                    {{-- <td>
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ElusModal{{$data['id']}}" data-bs-dismiss="modal">
                             Data Elus
                         </button>
                         @include('admin.Mylea.ElusPartial') 
-                    </td>
+                    </td> --}}
                     {{-- <td>
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#PanenModal{{$data['id']}}">
                             Data Panen
                         </button>
                         @include('admin.Mylea.PanenPartial') 
                     </td> --}}
-                    <td>
+                    {{-- <td>
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#EditModal{{$data['id']}}">
                             Edit
                         </button>
@@ -590,7 +827,7 @@
                     </td>
                 </tr>
             @endforeach
-        </table>
+        </table>  --}}
         {{-- <div class="d-flex justify-content-center">
             {!! $Data->links() !!}
          </div> --}}
@@ -747,14 +984,14 @@
 
     </tr>
     @foreach ($Data as $data)
-        <tr>
-                    <td rowspan="{{count($data['DataBaglog']) + 1}}">{{$data['KodeProduksi']}}</td>
-                    <td rowspan="{{count($data['DataBaglog']) + 1}}">{{$data['TanggalProduksi']}}</td>
-                    <td rowspan="{{count($data['DataBaglog']) + 1}}">{{$data['Jumlah']}}</td>
-                    <td rowspan="{{count($data['DataBaglog']) + 1}}">{{$data['Konta']}}</td>
-                    <td rowspan="{{count($data['DataBaglog']) + 1}}">{{round($data['Konta']/$data['Jumlah']*100, 2)}}</td>
-                    <td rowspan="{{count($data['DataBaglog']) + 1}}">{{$data['JumlahPanen']}}</td>
-                    <td rowspan="{{count($data['DataBaglog']) + 1}}">{{$data['InStock']}}</td>
+        <tr> 
+                <td rowspan="{{count($data['DataBaglog']) + 1}}">{{$data['KodeProduksi']}}</td>
+                <td rowspan="{{count($data['DataBaglog']) + 1}}">{{$data['TanggalProduksi']}}</td>
+                <td rowspan="{{count($data['DataBaglog']) + 1}}">{{$data['Jumlah']}}</td>
+                <td rowspan="{{count($data['DataBaglog']) + 1}}">{{$data['Konta']}}</td>
+                <td rowspan="{{count($data['DataBaglog']) + 1}}">{{round($data['Konta']/$data['Jumlah']*100, 2)}}</td>
+                <td rowspan="{{count($data['DataBaglog']) + 1}}">{{$data['JumlahPanen']}}</td>
+                <td rowspan="{{count($data['DataBaglog']) + 1}}">{{$data['InStock']}}</td>
         </tr>
         @foreach($data['DataBaglog'] as $DataBaglog)
         <tr>
@@ -844,7 +1081,12 @@
             XLSX.writeFile(wb, fn || ('ReportKontaminasiMylea_<?php echo $_GET['TanggalAwal'].'_'.$_GET['TanggalAkhir'];?>.' + (type || 'xlsx')));
     }  
   </script>
-  @endif
+  @endif 
   
 </section>
+<script>
+    $(document).ready(function() {
+        $('#data-table').DataTable();
+    });
+</script>
 @endsection

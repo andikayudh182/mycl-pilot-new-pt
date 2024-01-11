@@ -170,7 +170,7 @@ class MyleaController extends Controller
 
     public function Report(Request $request){
         $Mylea = Produksi::sortable()->orderBy('TanggalProduksi','desc')->get();
-        $MyleaAll = Produksi::sortable()->orderBy('TanggalProduksi','desc')->get();
+        // $MyleaAll = Produksi::sortable()->orderBy('TanggalProduksi','desc')->get();
         $resume = array();
         
         if (isset($request['TanggalAwal'])) {
@@ -192,7 +192,7 @@ class MyleaController extends Controller
             }
         
             $Mylea = $query->orderBy('TanggalProduksi', 'desc')->get();
-            $MyleaAll = $query->orderBy('TanggalProduksi', 'desc')->get();
+            // $MyleaAll = $query->orderBy('TanggalProduksi', 'desc')->get();
         }
         
         
@@ -278,33 +278,33 @@ class MyleaController extends Controller
 
         }
 
-        foreach ($MyleaAll as $datafull){
-            $datafull['DataKontaminasi'] = Kontaminasi::where('KPMylea', $datafull['KodeProduksi'])->get();
-            $datafull['Panen']= Panen::where('KPMylea', $datafull['KodeProduksi'])->get();
-            $datafull['PanenBaglog'] = PanenDetails::select([
-                'mylea_panen_details.*',
-                'mylea_panen.TanggalPanen'
-            ])
-            ->join('mylea_panen', 'mylea_panen.id', '=', 'mylea_panen_details.PanenID')
-            ->where('mylea_panen.KPMylea', $datafull['KodeProduksi'])->get();
+        // foreach ($MyleaAll as $datafull){
+        //     $datafull['DataKontaminasi'] = Kontaminasi::where('KPMylea', $datafull['KodeProduksi'])->get();
+        //     $datafull['Panen']= Panen::where('KPMylea', $datafull['KodeProduksi'])->get();
+        //     $datafull['PanenBaglog'] = PanenDetails::select([
+        //         'mylea_panen_details.*',
+        //         'mylea_panen.TanggalPanen'
+        //     ])
+        //     ->join('mylea_panen', 'mylea_panen.id', '=', 'mylea_panen_details.PanenID')
+        //     ->where('mylea_panen.KPMylea', $datafull['KodeProduksi'])->get();
 
             
-            foreach($datafull['Panen'] as $Panen){
-                $Panen['Baglog'] = PanenDetails::where('PanenID', $Panen['id'])->get();
+        //     foreach($datafull['Panen'] as $Panen){
+        //         $Panen['Baglog'] = PanenDetails::where('PanenID', $Panen['id'])->get();
                 
-            }
-            $datafull['Konta'] = $datafull['DataKontaminasi']->sum('Jumlah');
+        //     }
+        //     $datafull['Konta'] = $datafull['DataKontaminasi']->sum('Jumlah');
             
-            $selectTotalHarvest = DB::table('mylea_panen as m')
-                ->join('mylea_panen_details as mpd', 'm.id', '=', 'mpd.PanenID')
-                ->where('m.KPMylea', $datafull['KodeProduksi'])
-                ->select(DB::raw('SUM(mpd.Jumlah) as TotalHarvest'))
-                ->first();
+        //     $selectTotalHarvest = DB::table('mylea_panen as m')
+        //         ->join('mylea_panen_details as mpd', 'm.id', '=', 'mpd.PanenID')
+        //         ->where('m.KPMylea', $datafull['KodeProduksi'])
+        //         ->select(DB::raw('SUM(mpd.Jumlah) as TotalHarvest'))
+        //         ->first();
 
-            $datafull['JumlahPanen'] = $selectTotalHarvest->TotalHarvest;
-            $datafull['InStock'] = $datafull['Jumlah'] - $datafull['Konta'] - $datafull['JumlahPanen'];
-            $datafull['PersenKonta'] = $datafull['Konta']/$datafull['Jumlah']*100;
-        }
+        //     $datafull['JumlahPanen'] = $selectTotalHarvest->TotalHarvest;
+        //     $datafull['InStock'] = $datafull['Jumlah'] - $datafull['Konta'] - $datafull['JumlahPanen'];
+        //     $datafull['PersenKonta'] = $datafull['Konta']/$datafull['Jumlah']*100;
+        // }
 
         $Baglog = Pembibitan::where('StatusArchive', NULL)->where('StatusPanen', '1')->get();
         $BaglogRnD = BaglogRnD::where('StatusArchive', NULL)->orWhere('StatusArchive', '0')->get();
@@ -317,13 +317,13 @@ class MyleaController extends Controller
         $Mylea = $SortFilter->SortInStock($Mylea, $request['InStockDir']);
         // $Mylea = $Mylea->paginate(200);
 
-        $MyleaAll = $Mylea;
+        // $MyleaAll = $Mylea;
 
         
 
         return view('admin.Mylea.Report', [
             'Data' => $Mylea,
-            'DataAll' => $MyleaAll,
+            // 'DataAll' => $MyleaAll,
             'Resume'=>$resume,
             'DataBaglog'=> $Baglog,
             'BaglogRnD'=> $BaglogRnD,
