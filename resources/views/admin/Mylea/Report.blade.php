@@ -54,12 +54,12 @@
                             <td>{{$Data->sum('JumlahPanen')}}</td>
                             <td>pcs</td>
                         </tr>
-                        <tr>
+                        {{-- <tr>
                             <td>Total Harvest Rate</td>
                             <td>:</td>
                             <td>{{round($Data->sum('JumlahPanen')/$Data->sum('Jumlah')*100,2)}}</td>
                             <td>%</td>
-                        </tr>
+                        </tr> --}}
                         {{-- <tr>
                             <td>Total Incubation Rate</td>
                             <td>:</td>
