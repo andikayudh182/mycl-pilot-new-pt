@@ -411,7 +411,7 @@ class MyleaController extends Controller
             'SubstrateQty'=>$request['SubstrateQty'],
         ]);
 
-        return redirect(url('/admin/mylea/report'))->with('message', 'Data Produksi Updated!');
+        return redirect()->back()->with('message', 'Data Produksi Updated!');
     }
 
     public function ProduksiDelete($id, $KPMylea){
@@ -431,9 +431,9 @@ class MyleaController extends Controller
             Elus::where('KPMylea', $data->KodeProduksi)->delete();
             Produksi::where('id', '=', $id)->delete();
     
-            return redirect(url('/admin/mylea/report'))->with('message', 'Data Produksi Deleted!');
+            return redirect()->back()->with('message', 'Data Produksi Deleted!');
         } else {
-            return redirect(url('/admin/mylea/report'))->with('message', 'Data not found.');
+            return redirect()->back()->with('message', 'Data not found.');
         }
     }
 
