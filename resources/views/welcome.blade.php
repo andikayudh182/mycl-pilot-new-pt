@@ -46,9 +46,9 @@
                         <a href="{{ url('/dashboard') }}" class="btn btn-light btn-outline-dark" role="button"> Dashboard </a>
                         <a href="{{ route('GuestDashboard') }}" class="btn btn-light btn-outline-dark" role="button" > Guest </a>
                 </div>
-                <div class="text-center mt-3">
+                {{-- <div class="text-center mt-3">
                     <a href="{{ route('GuestDashboard') }}" class="btn btn-light btn-outline-dark" role="button" > Guest </a>
-                </div>
+                </div> --}}
             </div>
         </div>
     </body>
