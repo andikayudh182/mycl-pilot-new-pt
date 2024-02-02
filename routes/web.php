@@ -20,6 +20,10 @@ Route::get('/', function () {
 
 Auth::routes();
 
+// Guest Route
+Route::get('/guest/dashboard', [App\Http\Controllers\GuestController::class, 'dashboard'])->name('GuestDashboard');
+Route::get('/guest/chart', [App\Http\Controllers\GuestController::class, 'chart'])->name('GuestChart');
+// 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('dashboard');
 Route::get('/dashboard-monthly', [App\Http\Controllers\HomeController::class, 'Monthly'])->name('monthly');

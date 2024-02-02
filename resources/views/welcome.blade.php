@@ -45,6 +45,9 @@
                         <a href="{{ url('/register') }}" class="btn btn-primary" role="button"> Register </a>
                         <a href="{{ url('/dashboard') }}" class="btn btn-primary" role="button"> Dashboard </a>
                 </div>
+                <div class="text-center mt-3">
+                    <a href="{{ route('GuestDashboard') }}" class="btn btn-light btn-outline-dark btn-lg" role="button" > <b>Guest</b> </a>
+                </div>
             </div>
         </div>
     </body>
