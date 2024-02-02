@@ -283,7 +283,7 @@
                 <td>{{MyleaSuccessRate($Mylea, '11', $TodayDate)}} %</td>
                 <td>{{MyleaSuccessRate($Mylea, '12', $TodayDate)}} %</td>
             </tr>
-            <tr>
+            {{-- <tr>
                 <td class="title sticky-header-left bg-light">Target Harvest</td>
                 <td colspan="3" class="text-center">{{$TargetMylea['Q1']}}%</td>
                 <td colspan="3" class="text-center">{{$TargetMylea['Q2']}}%</td>
@@ -296,7 +296,7 @@
                 <td colspan="3" class="text-center {{SuccessRate(QuarterMylea($Mylea, 2, $TargetMylea['MaxCapacity']), $TargetMylea['Q2'])['Style']}}">{{SuccessRate(QuarterMylea($Mylea, 2, $TargetMylea['MaxCapacity']), $TargetMylea['Q2'])['Text']}}</td>
                 <td colspan="3" class="text-center {{SuccessRate(QuarterMylea($Mylea, 3, $TargetMylea['MaxCapacity']), $TargetMylea['Q3'])['Style']}}">{{SuccessRate(QuarterMylea($Mylea, 3, $TargetMylea['MaxCapacity']), $TargetMylea['Q3'])['Text']}}</td>
                 <td colspan="3" class="text-center {{SuccessRate(QuarterMylea($Mylea, 4, $TargetMylea['MaxCapacity']), $TargetMylea['Q4'])['Style']}}">{{SuccessRate(QuarterMylea($Mylea, 4, $TargetMylea['MaxCapacity']), $TargetMylea['Q4'])['Text']}}</td>
-            </tr>
+            </tr> --}}
         </table>
     </div>
 </section>
@@ -564,7 +564,7 @@
                 <td>{{MyleaSuccessRate($Mylea2024, '11', $TodayDate2024)}} %</td>
                 <td>{{MyleaSuccessRate($Mylea2024, '12', $TodayDate2024)}} %</td>
             </tr>
-            <tr>
+            {{-- <tr>
                 <td class="title sticky-header-left bg-light">Target Harvest</td>
                 <td colspan="3" class="text-center">{{$TargetMylea['Q1']}}%</td>
                 <td colspan="3" class="text-center">{{$TargetMylea['Q2']}}%</td>
@@ -577,7 +577,7 @@
                 <td colspan="3" class="text-center {{SuccessRate(QuarterMylea($Mylea2024, 2, $TargetMylea['MaxCapacity']), $TargetMylea['Q2'])['Style']}}">{{SuccessRate(QuarterMylea($Mylea2024, 2, $TargetMylea['MaxCapacity']), $TargetMylea['Q2'])['Text']}}</td>
                 <td colspan="3" class="text-center {{SuccessRate(QuarterMylea($Mylea2024, 3, $TargetMylea['MaxCapacity']), $TargetMylea['Q3'])['Style']}}">{{SuccessRate(QuarterMylea($Mylea2024, 3, $TargetMylea['MaxCapacity']), $TargetMylea['Q3'])['Text']}}</td>
                 <td colspan="3" class="text-center {{SuccessRate(QuarterMylea($Mylea2024, 4, $TargetMylea['MaxCapacity']), $TargetMylea['Q4'])['Style']}}">{{SuccessRate(QuarterMylea($Mylea2024, 4, $TargetMylea['MaxCapacity']), $TargetMylea['Q4'])['Text']}}</td>
-            </tr>
+            </tr> --}}
         </table>
     </div>
 </section>
