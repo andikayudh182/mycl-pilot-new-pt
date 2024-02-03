@@ -109,8 +109,174 @@ class GuestController extends Controller
         ]);
     }
 
-    public function chart() {
+    public function chart(Request $request) {
+
+        // For 2023
+        $YearSetting = 2023;
+
+        $date = Carbon::now()->year($YearSetting);
+        $date->toDateString();
+        $ProduksiMylea = Produksi::orderBy('TanggalProduksi', 'asc')->whereYear('TanggalProduksi', $date)->get();
+        // Carbon::now()->month;
+
+
+        if(isset($ProduksiMylea)){
+            $DataPoint = array();
+            $DataPoint2 = array();
+            $DataPoint3 = array();
+            $DataPoint4 = array();
+            $DataMarker = array();
+         
+
+            $Mylea = new MyleaData();
+            for($i = 1; $i < 13; $i++){
+                $produksi = 0;
+                $panen = 0;
+                $konta = 0;
+                $JadwalPanen = '';
+         
+                foreach($ProduksiMylea as $data){
+                    $TanggalPengerjaan = $data['TanggalProduksi'];
+                    $Panen = Panen::where('KPMylea', $data['KodeProduksi'])->get();
+                    
+                    $selectTotalHarvest = DB::table('mylea_panen as m')
+                    ->join('mylea_panen_details as mpd', 'm.id', '=', 'mpd.PanenID')
+                    ->where('m.KPMylea', $data['KodeProduksi'])
+                    ->select(DB::raw('SUM(mpd.Jumlah) as TotalHarvest'))
+                    ->first();
+    
+                    $data['JumlahPanen'] = $selectTotalHarvest->TotalHarvest;
+
+                    $Konta = KontaMylea::where('KPMylea', $data['KodeProduksi'])->get();
+                    $data['JumlahKonta'] = $Konta->sum('Jumlah');
+                   
+                    if(substr($TanggalPengerjaan, 5, 2) == $i){
+                        $produksi = $produksi + $data['Jumlah'];
+                        $panen = $panen + $data['JumlahPanen'];
+                        $konta = $konta + $data['JumlahKonta'];
+                        $JadwalPanen = $Mylea->GetTanggalPanen($data);
+                    }
+                }
+                $DataPoint[$i] = $produksi; 
+                $DataPoint2[$i] = $panen;
+                if(!($produksi == 0)){
+                    //check data yang sudah final/belum (panen)
+                    if(substr($JadwalPanen, 5, 2) < substr($date, 5, 2)) {
+                        $DataPoint3[$i]= round($panen/$produksi*100, 2);
+                    } else {
+                        $DataPoint3[$i]= round(($produksi - $konta)/$produksi*100, 2);
+                    }
+                    
+                    $DataPoint4[$i] = $produksi - $konta - $panen;
+                
+                } else {
+                    $DataPoint3[$i]= 0;
+                    $DataPoint4[$i]= 0;
+                }
+
+                if(substr($JadwalPanen, 5, 2) < substr($date, 5, 2)){
+                    $DataMarker[$i] = "#23BFAA";
+                } else {
+                    $DataMarker[$i] = 'red';
+                }
+              
+
+            }
+            
+        }
+        // 2024
+        $YearSetting2024 = 2024;
+
+        $date2024 = Carbon::now()->year($YearSetting2024);
+        $date2024->toDateString();
+        $ProduksiMylea2024 = Produksi::orderBy('TanggalProduksi', 'asc')->whereYear('TanggalProduksi',$date2024)->get();
+
+        if(isset($ProduksiMylea2024)){
+            $DataPoint2024 = array();
+            $DataPoint20242 = array();
+            $DataPoint20243 = array();
+            $DataPoint20244 = array();
+            $DataMarker2024 = array();
+         
+
+           $Mylea2024= new MyleaData();
+            for($i = 1; $i < 13; $i++){
+                $produksi = 0;
+                $panen = 0;
+                $konta = 0;
+                $JadwalPanen = '';
+         
+                foreach($ProduksiMylea2024 as $data){
+                    $TanggalPengerjaan = $data['TanggalProduksi'];
+                    $Panen = Panen::where('KPMylea', $data['KodeProduksi'])->get();
+                    
+                    $selectTotalHarvest = DB::table('mylea_panen as m')
+                    ->join('mylea_panen_details as mpd', 'm.id', '=', 'mpd.PanenID')
+                    ->where('m.KPMylea', $data['KodeProduksi'])
+                    ->select(DB::raw('SUM(mpd.Jumlah) as TotalHarvest'))
+                    ->first();
+    
+                    $data['JumlahPanen'] = $selectTotalHarvest->TotalHarvest;
+
+                    $Konta = KontaMylea::where('KPMylea', $data['KodeProduksi'])->get();
+                    $data['JumlahKonta'] = $Konta->sum('Jumlah');
+                   
+                    if(substr($TanggalPengerjaan, 5, 2) == $i){
+                        $produksi = $produksi + $data['Jumlah'];
+                        $panen = $panen + $data['JumlahPanen'];
+                        $konta = $konta + $data['JumlahKonta'];
+                        $JadwalPanen = $Mylea2024->GetTanggalPanen($data);
+                    }
+                }
+                $DataPoint2024[$i] = $produksi; 
+                $DataPoint20242[$i] = $panen;
+                if(!($produksi == 0)){
+                    //check data yang sudah final/belum (panen)
+                    if(substr($JadwalPanen, 5, 2) < substr($date, 5, 2)) {
+                        $DataPoint20243[$i]= round($panen/$produksi*100, 2);
+                    } else {
+                        $DataPoint20243[$i]= round(($produksi - $konta)/$produksi*100, 2);
+                    }
+                    
+                    $DataPoint20244[$i] = $produksi - $konta - $panen;
+                
+                } else {
+                    $DataPoint20243[$i]= 0;
+                    $DataPoint20244[$i]= 0;
+                }
+
+                if(substr($JadwalPanen, 5, 2) < substr($date, 5, 2)){
+                    $DataMarker2024[$i] = "#23BFAA";
+                } else {
+                    $DataMarker2024[$i] = 'red';
+                }
+              
+
+            }
+            
+        }
+
         
-        return view ('guest.chart');
+
+
+ 
+        
+        return view ('guest.chart', [
+            'DataPoint'=>$DataPoint,
+            'DataPoint2'=>$DataPoint2,
+            'DataPoint3'=>$DataPoint3,
+            'DataPoint4'=>$DataPoint4,
+            'DataMarker'=> $DataMarker,
+
+            'DataPoint2024'=>$DataPoint2024,
+            'DataPoint20242'=>$DataPoint20242,
+            'DataPoint20243'=>$DataPoint20243,
+            'DataPoint20244'=>$DataPoint20244,
+            'DataMarker2024'=> $DataMarker2024,
+
+            'YearSetting'=> $YearSetting,
+            'YearSetting2024'=> $YearSetting2024,
+        ]);
     }
+ 
 }
