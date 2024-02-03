@@ -331,11 +331,12 @@ class MyleaController extends Controller
     }
 
     public function HarvestSchedule(){
-        $date = Carbon::now()->year(2023); // Tetapkan tahun ke 2023
-        $date->toDateString();
+        $startDate = Carbon::now()->year(2023)->startOfMonth();
+        $endDate = Carbon::now()->year(2024)->endOfMonth();
         $MyleaDat = new MyleaData();
-        $MyleaPanen = Produksi::orderBy('TanggalProduksi', 'asc')->whereYear('TanggalProduksi', $date)->get();
-        Carbon::now()->month;
+        $MyleaPanen = Produksi::orderBy('TanggalProduksi', 'asc')
+        ->whereBetween('TanggalProduksi', [$startDate, $endDate])
+        ->get();
 
         foreach($MyleaPanen as $data){
             $data['JadwalPanen'] = $MyleaDat->GetTanggalPanen($data);
@@ -354,8 +355,11 @@ class MyleaController extends Controller
             $data['JumlahPanen'] = $selectTotalHarvest->TotalHarvest;
             $data['InStock'] = $data['Jumlah'] - $data['Konta'] - $data['JumlahPanen'];
         }
-        $TanggalPanen = Produksi::orderBy('TanggalProduksi', 'asc')->whereYear('TanggalProduksi', $date)->get();
         
+        $TanggalPanen = Produksi::orderBy('TanggalProduksi', 'asc')
+        ->whereBetween('TanggalProduksi', [$startDate, $endDate])
+        ->get();
+
         foreach($TanggalPanen as $data){
             $data['JadwalPanen'] = $MyleaDat->GetTanggalPanen($data);
             $data['JadwalPanen'] = substr($data['JadwalPanen'], 0, 7);
