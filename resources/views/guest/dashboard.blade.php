@@ -21,14 +21,14 @@
 }
 
 /* Gaya untuk layar kecil atau perangkat seluler */
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
     .title {
         min-width: 100%;
     }
-}
+} */
 
 /* Gaya untuk layar sangat kecil, seperti perangkat seluler di posisi landscape */
-@media (max-width: 489px) {
+@media (max-width: 576px) {
     .title {
         font-size: 15px; /* Mengurangi ukuran font untuk layar yang lebih kecil */
     }
