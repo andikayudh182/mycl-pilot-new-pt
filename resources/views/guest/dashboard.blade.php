@@ -200,78 +200,78 @@
         <table class="table table-hover table-bordered">
             <tr>
                 <th rowspan="2" class="table-dark border-white sticky-header-left"></th>
-                <th colspan="3" class="text-center table-dark border-white">Q1</th>
-                <th colspan="3" class="text-center table-dark border-white">Q2</th>
-                <th colspan="3" class="text-center table-dark border-white">Q3</th>
-                <th colspan="3" class="text-center table-dark border-white">Q4</th>
+                <th colspan="3" class="title text-center table-dark border-white">Q1</th>
+                <th colspan="3" class="title text-center table-dark border-white">Q2</th>
+                <th colspan="3" class="title text-center table-dark border-white">Q3</th>
+                <th colspan="3" class="title text-center table-dark border-white">Q4</th>
             </tr>
             <tr>
-                <th class="table-dark border-white">Jan</th>
-                <th class="table-dark border-white">Feb</th>
-                <th class="table-dark border-white">Mar</th>
-                <th class="table-dark border-white">Apr</th>
-                <th class="table-dark border-white">May</th>
-                <th class="table-dark border-white">Jun</th>
-                <th class="table-dark border-white">Jul</th>
-                <th class="table-dark border-white">Aug</th>
-                <th class="table-dark border-white">Sep</th>
-                <th class="table-dark border-white">Oct</th>
-                <th class="table-dark border-white">Nov</th>
-                <th class="table-dark border-white">Dec</th>
+                <th class="title table-dark border-white">Jan</th>
+                <th class="title table-dark border-white">Feb</th>
+                <th class="title table-dark border-white">Mar</th>
+                <th class="title table-dark border-white">Apr</th>
+                <th class="title table-dark border-white">May</th>
+                <th class="title table-dark border-white">Jun</th>
+                <th class="title table-dark border-white">Jul</th>
+                <th class="title table-dark border-white">Aug</th>
+                <th class="title table-dark border-white">Sep</th>
+                <th class="title table-dark border-white">Oct</th>
+                <th class="title table-dark border-white">Nov</th>
+                <th class="title table-dark border-white">Dec</th>
             </tr>
 
             <tr>
                 <th class="title sticky-header-left bg-light">Substrate Bag Production</th>
-                <td>{{$Baglog->where('TanggalPengerjaan', '01')->sum('JumlahBaglog')}}</td>
-                <td>{{$Baglog->where('TanggalPengerjaan', '02')->sum('JumlahBaglog')}}</td>
-                <td>{{$Baglog->where('TanggalPengerjaan', '03')->sum('JumlahBaglog')}}</td>
-                <td>{{$Baglog->where('TanggalPengerjaan', '04')->sum('JumlahBaglog')}}</td>
-                <td>{{$Baglog->where('TanggalPengerjaan', '05')->sum('JumlahBaglog')}}</td>
-                <td>{{$Baglog->where('TanggalPengerjaan', '06')->sum('JumlahBaglog')}}</td>
-                <td>{{$Baglog->where('TanggalPengerjaan', '07')->sum('JumlahBaglog')}}</td>
-                <td>{{$Baglog->where('TanggalPengerjaan', '08')->sum('JumlahBaglog')}}</td>
-                <td>{{$Baglog->where('TanggalPengerjaan', '09')->sum('JumlahBaglog')}}</td>
-                <td>{{$Baglog->where('TanggalPengerjaan', '10')->sum('JumlahBaglog')}}</td>
-                <td>{{$Baglog->where('TanggalPengerjaan', '11')->sum('JumlahBaglog')}}</td>
-                <td>{{$Baglog->where('TanggalPengerjaan', '12')->sum('JumlahBaglog')}}</td>
+                <td class="title">{{$Baglog->where('TanggalPengerjaan', '01')->sum('JumlahBaglog')}}</td>
+                <td class="title">{{$Baglog->where('TanggalPengerjaan', '02')->sum('JumlahBaglog')}}</td>
+                <td class="title">{{$Baglog->where('TanggalPengerjaan', '03')->sum('JumlahBaglog')}}</td>
+                <td class="title">{{$Baglog->where('TanggalPengerjaan', '04')->sum('JumlahBaglog')}}</td>
+                <td class="title">{{$Baglog->where('TanggalPengerjaan', '05')->sum('JumlahBaglog')}}</td>
+                <td class="title">{{$Baglog->where('TanggalPengerjaan', '06')->sum('JumlahBaglog')}}</td>
+                <td class="title">{{$Baglog->where('TanggalPengerjaan', '07')->sum('JumlahBaglog')}}</td>
+                <td class="title">{{$Baglog->where('TanggalPengerjaan', '08')->sum('JumlahBaglog')}}</td>
+                <td class="title">{{$Baglog->where('TanggalPengerjaan', '09')->sum('JumlahBaglog')}}</td>
+                <td class="title">{{$Baglog->where('TanggalPengerjaan', '10')->sum('JumlahBaglog')}}</td>
+                <td class="title">{{$Baglog->where('TanggalPengerjaan', '11')->sum('JumlahBaglog')}}</td>
+                <td class="title">{{$Baglog->where('TanggalPengerjaan', '12')->sum('JumlahBaglog')}}</td>
             </tr>
 
             <tr>
                 <td class="title sticky-header-left bg-light">Percentage mylea production to max capacity</td>
-                <td colspan="3" class="text-center">{{QuarterMylea($Mylea, 1, $TargetMylea['MaxCapacity'])['Capacity']}}%</td>
-                <td colspan="3" class="text-center">{{QuarterMylea($Mylea, 2, $TargetMylea['MaxCapacity'])['Capacity']}}%</td>
-                <td colspan="3" class="text-center">{{QuarterMylea($Mylea, 3, $TargetMylea['MaxCapacity'])['Capacity']}}%</td>
-                <td colspan="3" class="text-center">{{QuarterMylea($Mylea, 4, $TargetMylea['MaxCapacity'])['Capacity']}}%</td>
+                <td colspan="3" class="title text-center">{{QuarterMylea($Mylea, 1, $TargetMylea['MaxCapacity'])['Capacity']}}%</td>
+                <td colspan="3" class="title text-center">{{QuarterMylea($Mylea, 2, $TargetMylea['MaxCapacity'])['Capacity']}}%</td>
+                <td colspan="3" class="title text-center">{{QuarterMylea($Mylea, 3, $TargetMylea['MaxCapacity'])['Capacity']}}%</td>
+                <td colspan="3" class="title text-center">{{QuarterMylea($Mylea, 4, $TargetMylea['MaxCapacity'])['Capacity']}}%</td>
             </tr>
             <tr>
                 <th class="title sticky-header-left bg-light">Mylea Production</th>
-                <td>{{$Mylea->where('TanggalProduksi', '01')->sum('Jumlah')}}</td>
-                <td>{{$Mylea->where('TanggalProduksi', '02')->sum('Jumlah')}}</td>
-                <td>{{$Mylea->where('TanggalProduksi', '03')->sum('Jumlah')}}</td>
-                <td>{{$Mylea->where('TanggalProduksi', '04')->sum('Jumlah')}}</td>
-                <td>{{$Mylea->where('TanggalProduksi', '05')->sum('Jumlah')}}</td>
-                <td>{{$Mylea->where('TanggalProduksi', '06')->sum('Jumlah')}}</td>
-                <td>{{$Mylea->where('TanggalProduksi', '07')->sum('Jumlah')}}</td>
-                <td>{{$Mylea->where('TanggalProduksi', '08')->sum('Jumlah')}}</td>
-                <td>{{$Mylea->where('TanggalProduksi', '09')->sum('Jumlah')}}</td>
-                <td>{{$Mylea->where('TanggalProduksi', '10')->sum('Jumlah')}}</td>
-                <td>{{$Mylea->where('TanggalProduksi', '11')->sum('Jumlah')}}</td>
-                <td>{{$Mylea->where('TanggalProduksi', '12')->sum('Jumlah')}}</td>
+                <td class="title">{{$Mylea->where('TanggalProduksi', '01')->sum('Jumlah')}}</td>
+                <td class="title">{{$Mylea->where('TanggalProduksi', '02')->sum('Jumlah')}}</td>
+                <td class="title">{{$Mylea->where('TanggalProduksi', '03')->sum('Jumlah')}}</td>
+                <td class="title">{{$Mylea->where('TanggalProduksi', '04')->sum('Jumlah')}}</td>
+                <td class="title">{{$Mylea->where('TanggalProduksi', '05')->sum('Jumlah')}}</td>
+                <td class="title">{{$Mylea->where('TanggalProduksi', '06')->sum('Jumlah')}}</td>
+                <td class="title">{{$Mylea->where('TanggalProduksi', '07')->sum('Jumlah')}}</td>
+                <td class="title">{{$Mylea->where('TanggalProduksi', '08')->sum('Jumlah')}}</td>
+                <td class="title">{{$Mylea->where('TanggalProduksi', '09')->sum('Jumlah')}}</td>
+                <td class="title">{{$Mylea->where('TanggalProduksi', '10')->sum('Jumlah')}}</td>
+                <td class="title">{{$Mylea->where('TanggalProduksi', '11')->sum('Jumlah')}}</td>
+                <td class="title">{{$Mylea->where('TanggalProduksi', '12')->sum('Jumlah')}}</td>
             </tr>
             <tr>
                 <td class="title sticky-header-left bg-light">Harvest Rate</td>
-                <td>{{MyleaSuccessRate($Mylea, '01', $TodayDate)}} %</td>
-                <td>{{MyleaSuccessRate($Mylea, '02', $TodayDate)}} %</td>
-                <td>{{MyleaSuccessRate($Mylea, '03', $TodayDate)}} %</td>
-                <td>{{MyleaSuccessRate($Mylea, '04', $TodayDate)}} %</td>
-                <td>{{MyleaSuccessRate($Mylea, '05', $TodayDate)}} %</td>
-                <td>{{MyleaSuccessRate($Mylea, '06', $TodayDate)}} %</td>
-                <td>{{MyleaSuccessRate($Mylea, '07', $TodayDate)}} %</td>
-                <td>{{MyleaSuccessRate($Mylea, '08', $TodayDate)}} %</td>
-                <td>{{MyleaSuccessRate($Mylea, '09', $TodayDate)}} %</td>
-                <td>{{MyleaSuccessRate($Mylea, '10', $TodayDate)}} %</td>
-                <td>{{MyleaSuccessRate($Mylea, '11', $TodayDate)}} %</td>
-                <td>{{MyleaSuccessRate($Mylea, '12', $TodayDate)}} %</td>
+                <td class="title">{{MyleaSuccessRate($Mylea, '01', $TodayDate)}} %</td>
+                <td class="title">{{MyleaSuccessRate($Mylea, '02', $TodayDate)}} %</td>
+                <td class="title">{{MyleaSuccessRate($Mylea, '03', $TodayDate)}} %</td>
+                <td class="title">{{MyleaSuccessRate($Mylea, '04', $TodayDate)}} %</td>
+                <td class="title">{{MyleaSuccessRate($Mylea, '05', $TodayDate)}} %</td>
+                <td class="title">{{MyleaSuccessRate($Mylea, '06', $TodayDate)}} %</td>
+                <td class="title">{{MyleaSuccessRate($Mylea, '07', $TodayDate)}} %</td>
+                <td class="title">{{MyleaSuccessRate($Mylea, '08', $TodayDate)}} %</td>
+                <td class="title">{{MyleaSuccessRate($Mylea, '09', $TodayDate)}} %</td>
+                <td class="title">{{MyleaSuccessRate($Mylea, '10', $TodayDate)}} %</td>
+                <td class="title">{{MyleaSuccessRate($Mylea, '11', $TodayDate)}} %</td>
+                <td class="title">{{MyleaSuccessRate($Mylea, '12', $TodayDate)}} %</td>
             </tr>
         </table>
     </div>
