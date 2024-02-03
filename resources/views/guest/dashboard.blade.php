@@ -30,7 +30,7 @@
 /* Gaya untuk layar sangat kecil, seperti perangkat seluler di posisi landscape */
 @media (max-width: 576px) {
     .title {
-        font-size: 15px; /* Mengurangi ukuran font untuk layar yang lebih kecil */
+        font-size: 10px; /* Mengurangi ukuran font untuk layar yang lebih kecil */
     }
 
     /* Menyembunyikan tombol Target Settings pada layar kecil */
