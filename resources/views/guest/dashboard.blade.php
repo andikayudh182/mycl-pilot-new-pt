@@ -430,7 +430,7 @@
     </div>
 
     <div class="table-responsive">
-        <table class="table table-hover table-bordered">
+        <table class="title table table-hover table-bordered">
             <tr>
                 <th rowspan="2" class="table-dark border-white sticky-header-left"></th>
                 <th colspan="3" class="text-center table-dark border-white">Q1</th>
