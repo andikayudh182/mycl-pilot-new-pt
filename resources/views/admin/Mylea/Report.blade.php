@@ -402,32 +402,16 @@
                         } 
                     } else {
                         if ((date("D", strtotime($A3)) === "Tue") || (date("D", strtotime($A3)) === "Fri")) {
-                            if (date('Y', strtotime($A3)) !== '2024') {
-                                if ($LastKodeProduksi === "D") {
-                                    $result = date("Y-m-d", strtotime($A3 . "+".(41-$hariPenambahan)." days"));
-                                } else {
-                                    $result = date("Y-m-d", strtotime($A3 . "+".(34-$hariPenambahan)." days"));
-                                }
-                            } else {
-                                if ($LastKodeProduksi === "D") {
-                                    $result = date("Y-m-d", strtotime($A3 . "+".(41-$hariPenambahan)." days"));
-                                } else {
-                                    $result = date("Y-m-d", strtotime($A3 . "+".(42-$hariPenambahan)." days"));
-                                }
-                            }
+                        if ($LastKodeProduksi === "D") {
+                            $result = date("Y-m-d", strtotime($A3 . "+41 days"));
                         } else {
-                            if (date('Y', strtotime($A3)) !== '2024') {
-                                if ($LastKodeProduksi === "D") {
-                                    $result = date("Y-m-d", strtotime($A3 . "+".(42-$hariPenambahan)." days"));
-                                } else {
-                                    $result = date("Y-m-d", strtotime($A3 . "+".(35-$hariPenambahan)." days"));
-                                }
+                            $result = date("Y-m-d", strtotime($A3 . "+34 days"));
+                        }
+                        } else {
+                            if ($LastKodeProduksi === "D") {
+                                $result = date("Y-m-d", strtotime($A3 . "+42 days"));
                             } else {
-                                if ($LastKodeProduksi === "D") {
-                                    $result = date("Y-m-d", strtotime($A3 . "+".(42-$hariPenambahan)." days"));
-                                } else {
-                                    $result = date("Y-m-d", strtotime($A3 . "+".(35-$hariPenambahan)." days"));
-                                }
+                                $result = date("Y-m-d", strtotime($A3 . "+35 days"));
                             }
                         }
                     }
