@@ -409,7 +409,7 @@
                                     $result = date("Y-m-d", strtotime($A3 . "+".(34-$hariPenambahan)." days"));
                                 }
                             } else {
-                                $result = date("Y-m-d", strtotime($A3 . "+".(34-$hariPenambahan)." days"));
+                                $result = date("Y-m-d", strtotime($A3 . "+".(42-$hariPenambahan)." days"));
                             }
                         } else {
                             if (date('Y', strtotime($A3)) !== '2024') {
@@ -421,7 +421,7 @@
                             } else {
                                 $result = date("Y-m-d", strtotime($A3 . "+".(35-$hariPenambahan)." days"));
                             }
-                        } 
+                        }
                     }
                 @endphp
                 <td>{{ $result }}</td>
