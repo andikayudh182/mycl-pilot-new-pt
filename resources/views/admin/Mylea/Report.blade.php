@@ -426,7 +426,7 @@
                                 if ($LastKodeProduksi === "D") {
                                     $result = date("Y-m-d", strtotime($A3 . "+".(42-$hariPenambahan)." days"));
                                 } else {
-                                    $result = date("Y-m-d", strtotime($A3 . "+".(42-$hariPenambahan)." days"));
+                                    $result = date("Y-m-d", strtotime($A3 . "+".(35-$hariPenambahan)." days"));
                                 }
                             }
                         }
