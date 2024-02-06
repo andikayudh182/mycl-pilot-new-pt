@@ -384,7 +384,7 @@
                     $I3 = substr($data['KodeProduksi'], 11);
                     $A3 = $data['TanggalProduksi'];
                     $Tray = $data['Tray']; 
-                    $hariPenambahan = ($Tray === 'T0' && date('Y', strtotime($A3)) !== '2024') ? 7 : 0; 
+                    $hariPenambahan = ($Tray === 'T0' && date('Y', strtotime($A3)) !== '2024') ? 7 : 0;
 
                     if ($I3 === "MYCL2") {
                         if ((date("D", strtotime($A3)) === "Tue") || (date("D", strtotime($A3)) === "Fri")) {
@@ -409,7 +409,11 @@
                                     $result = date("Y-m-d", strtotime($A3 . "+".(34-$hariPenambahan)." days"));
                                 }
                             } else {
-                                $result = date("Y-m-d", strtotime($A3 . "+".(42-$hariPenambahan)." days"));
+                                if ($LastKodeProduksi === "D") {
+                                    $result = date("Y-m-d", strtotime($A3 . "+".(41-$hariPenambahan)." days"));
+                                } else {
+                                    $result = date("Y-m-d", strtotime($A3 . "+".(42-$hariPenambahan)." days"));
+                                }
                             }
                         } else {
                             if (date('Y', strtotime($A3)) !== '2024') {
@@ -419,7 +423,11 @@
                                     $result = date("Y-m-d", strtotime($A3 . "+".(35-$hariPenambahan)." days"));
                                 }
                             } else {
-                                $result = date("Y-m-d", strtotime($A3 . "+".(35-$hariPenambahan)." days"));
+                                if ($LastKodeProduksi === "D") {
+                                    $result = date("Y-m-d", strtotime($A3 . "+".(42-$hariPenambahan)." days"));
+                                } else {
+                                    $result = date("Y-m-d", strtotime($A3 . "+".(42-$hariPenambahan)." days"));
+                                }
                             }
                         }
                     }
