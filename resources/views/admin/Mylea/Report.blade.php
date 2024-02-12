@@ -384,15 +384,16 @@
                     $I3 = substr($data['KodeProduksi'], 11);
                     $A3 = $data['TanggalProduksi'];
                     $Tray = $data['Tray']; 
-                    $hariPenambahan = ($Tray === 'T0' && date('Y', strtotime($A3)) !== '2024') ? 7 : 0;
+                    $Year = date('Y', strtotime($A3));
+                    // $hariPenambahan = ($Tray === 'T0' && date('Y', strtotime($A3)) !== '2024') ? 7 : 0;
 
                     if ($I3 === "MYCL2") {
                         if ((date("D", strtotime($A3)) === "Tue") || (date("D", strtotime($A3)) === "Fri")) {
-                        if ($LastKodeProduksi === "D") {
-                            $result = date("Y-m-d", strtotime($A3 . "+41 days"));
-                        } else {
-                            $result = date("Y-m-d", strtotime($A3 . "+34 days"));
-                        }
+                            if ($LastKodeProduksi === "D") {
+                                $result = date("Y-m-d", strtotime($A3 . "+41 days"));
+                            } else {
+                                $result = date("Y-m-d", strtotime($A3 . "+34 days"));
+                            }
                         } else {
                             if ($LastKodeProduksi === "D") {
                                 $result = date("Y-m-d", strtotime($A3 . "+42 days"));
@@ -402,11 +403,15 @@
                         } 
                     } else {
                         if ((date("D", strtotime($A3)) === "Tue") || (date("D", strtotime($A3)) === "Fri")) {
-                        if ($LastKodeProduksi === "D") {
-                            $result = date("Y-m-d", strtotime($A3 . "+41 days"));
-                        } else {
-                            $result = date("Y-m-d", strtotime($A3 . "+34 days"));
-                        }
+                            if ($LastKodeProduksi === "D" && $Tray == 'T1' && $Year !== '2024' ) {
+                                $result = date("Y-m-d", strtotime($A3 . "+41 days"));
+                            } else if ($LastKodeProduksi === "D" && $Tray == 'T0' && $Year !== '2024' ) {
+                                $result = date("Y-m-d", strtotime($A3 . "+34 days"));
+                            } else if ($LastKodeProduksi === "D" && $Tray == 'T0' && $Year == '2024') {
+                                $result = date("Y-m-d", strtotime($A3 . "+34 days"));
+                            } else if ($LastKodeProduksi === "D" && $Tray == 'T1' && $Year == '2024') {
+                                $result = date("Y-m-d", strtotime($A3 . "+34 days"));
+                            }
                         } else {
                             if ($LastKodeProduksi === "D") {
                                 $result = date("Y-m-d", strtotime($A3 . "+42 days"));
