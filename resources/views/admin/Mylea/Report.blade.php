@@ -410,13 +410,17 @@
                             } else if ($LastKodeProduksi === "D" && $Tray == 'T0' && $Year == '2024') {
                                 $result = date("Y-m-d", strtotime($A3 . "+34 days"));
                             } else if ($LastKodeProduksi === "D" && $Tray == 'T1' && $Year == '2024') {
-                                $result = date("Y-m-d", strtotime($A3 . "+34 days"));
+                                $result = date("Y-m-d", strtotime($A3 . "+41 days"));
                             }
                         } else {
-                            if ($LastKodeProduksi === "D") {
+                            if ($LastKodeProduksi === "D" && $Tray == 'T1' && $Year !== '2024' ) {
                                 $result = date("Y-m-d", strtotime($A3 . "+42 days"));
-                            } else {
+                            } else if ($LastKodeProduksi === "D" && $Tray == 'T0' && $Year !== '2024' ) {
                                 $result = date("Y-m-d", strtotime($A3 . "+35 days"));
+                            } else if ($LastKodeProduksi === "D" && $Tray == 'T0' && $Year == '2024') {
+                                $result = date("Y-m-d", strtotime($A3 . "+35 days"));
+                            } else if ($LastKodeProduksi === "D" && $Tray == 'T1' && $Year == '2024') {
+                                $result = date("Y-m-d", strtotime($A3 . "+42 days"));
                             }
                         }
                     }
