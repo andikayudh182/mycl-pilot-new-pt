@@ -320,10 +320,10 @@
                 <th style="vertical-align:top">Contamination Rate</th>
                 <th style="vertical-align:top">Harvest</th>
                 <th style="vertical-align:top">Under Incubation</th>
-                <th style="vertical-align:top">Harvest Schedule</th>
+                {{-- <th style="vertical-align:top">Harvest Schedule</th>
                 <th style="vertical-align:top">Method</th>
                 <th style="vertical-align:top">Tray</th>
-                <th style="vertical-align:top"> Substrate Qty (kg)</th>
+                <th style="vertical-align:top"> Substrate Qty (kg)</th> --}}
                 <th>
                     <table class="table table-borderless baglog-table text-center">
                         <tr class="sticky-header">
@@ -430,10 +430,10 @@
                         }
                     }
                 @endphp
-                <td>{{ $result }}</td>
-                <td>{{ $data['Method'] }}</td>
+                {{-- <td>{{ $result }}</td> --}}
+                {{-- <td>{{ $data['Method'] }}</td>
                 <td>{{ $data['Tray'] }}</td>
-                <td>{{ $data['SubstrateQty'] }}</td>
+                <td>{{ $data['SubstrateQty'] }}</td> --}}
 
                 <td>
                     <table class="table-borderless table text-center baglog-table">
