@@ -238,15 +238,16 @@ class MyleaController extends Controller
             $data['Baglog'] = '';
             foreach($Baglog as $baglog){
                 $data['Baglog'] = $data['Baglog'].$baglog['KPBaglog'].', ';
-                // $baglog['Type'] = DB::table('baglog_resep as br')
-                //                 ->join('baglog_mixing as bm', 'bm.resep_id', '=', 'br.id')
-                //                 ->join('baglog_sterilisasi as bs', 'bs.mixing_id', '=', 'bm.id')
-                //                 ->join('baglog_pemakaian_sterilisasi as bps', 'bps.SterilisasiID', '=', 'bs.id')
-                //                 ->join('baglog_pembibitan as bp', 'bp.id', '=', 'bps.PembibitanID')
-                //                 ->where('bp.KodeProduksi',$baglog['KPBaglog'])
-                //                 ->groupBy('br.Type')
-                //                 ->pluck('br.Type');
-                // $baglog['Type'] = isset($baglog['Type'][0]) ? $baglog['Type'][0] : '';
+                // buka for v2
+                $baglog['Type'] = DB::table('baglog_resep as br')
+                                ->join('baglog_mixing as bm', 'bm.resep_id', '=', 'br.id')
+                                ->join('baglog_sterilisasi as bs', 'bs.mixing_id', '=', 'bm.id')
+                                ->join('baglog_pemakaian_sterilisasi as bps', 'bps.SterilisasiID', '=', 'bs.id')
+                                ->join('baglog_pembibitan as bp', 'bp.id', '=', 'bps.PembibitanID')
+                                ->where('bp.KodeProduksi',$baglog['KPBaglog'])
+                                ->groupBy('br.Type')
+                                ->pluck('br.Type');
+                $baglog['Type'] = isset($baglog['Type'][0]) ? $baglog['Type'][0] : '';
             
 
                 $startDate = new \DateTime($baglog['BatchBibitTerpakai']);
