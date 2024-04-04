@@ -103,7 +103,7 @@ class BaglogController extends Controller
                 'Hickory' => '0',
                 'MCHickory' => '0',
                 'Status' => '0',
-                'Approval' => '0',
+                'Approval' => '1',
             ]);
     
             return redirect(url('/operator/baglog/calcrecipe'))->with('success', 'Data Telah Ditambahkan');
